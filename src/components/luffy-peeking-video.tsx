@@ -26,6 +26,7 @@ export default function LuffyPeekingVideo({
   useEffect(() => {
     if (isVisible && videoRef.current) {
       videoRef.current.currentTime = 0;
+      videoRef.current.playbackRate = 2.0; // Play video at 2x speed
       endedCalledRef.current = false;
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
@@ -39,7 +40,10 @@ export default function LuffyPeekingVideo({
   const handleTimeUpdate = () => {
     if (
       videoRef.current &&
-      (videoRef.current.ended || videoRef.current.currentTime >= 9.8) &&
+      (videoRef.current.ended ||
+        (videoRef.current.duration &&
+          videoRef.current.currentTime >= videoRef.current.duration - 0.15) ||
+        videoRef.current.currentTime >= 9.8) &&
       !endedCalledRef.current
     ) {
       endedCalledRef.current = true;
