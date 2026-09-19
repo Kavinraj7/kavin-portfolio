@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CursiveNameIntro from './cursive-name-intro';
 import LuffyRig from './LuffyRig';
@@ -38,35 +38,48 @@ export default function LuffyPushIntro({ onComplete }: LuffyPushIntroProps) {
     badgeMessage = 'Drag the fist → to explore';
   }
 
+  const destroyedLettersRef = useRef(destroyedLetters);
+  useEffect(() => {
+    destroyedLettersRef.current = destroyedLetters;
+  }, [destroyedLetters]);
+
+  const isFinalPunchedRef = useRef(isFinalPunched);
+  useEffect(() => {
+    isFinalPunchedRef.current = isFinalPunched;
+  }, [isFinalPunched]);
+
   // Collision detection between Luffy's fist and target letters
   const handleFistMove = useCallback(
     (fistImpactX: number) => {
+      const newlyHit: number[] = [];
       letterRefs.current.forEach((ref, index) => {
-        if (ref && !destroyedLetters.has(index)) {
+        if (ref && !destroyedLettersRef.current.has(index)) {
           const letterBounds = ref.getBoundingClientRect();
           if (fistImpactX >= letterBounds.left + 5) {
-            setDestroyedLetters((prev) => {
-              if (prev.has(index)) return prev;
-              const next = new Set(prev);
-              next.add(index);
-              return next;
-            });
-
-            // Final letter 'M' (index 8) hit trigger -> transition to Classic Welcome
-            if (index === NAME_LETTERS.length - 1 && !isFinalPunched) {
-              setIsFinalPunched(true);
-              setTimeout(() => {
-                setIsWelcomeStage(true);
-                setTimeout(() => {
-                  onComplete();
-                }, 1800);
-              }, 400);
-            }
+            newlyHit.push(index);
           }
         }
       });
+
+      if (newlyHit.length > 0) {
+        setDestroyedLetters((prev) => {
+          const next = new Set(prev);
+          newlyHit.forEach((idx) => next.add(idx));
+          return next;
+        });
+
+        if (newlyHit.includes(NAME_LETTERS.length - 1) && !isFinalPunchedRef.current) {
+          setIsFinalPunched(true);
+          setTimeout(() => {
+            setIsWelcomeStage(true);
+            setTimeout(() => {
+              onComplete();
+            }, 1800);
+          }, 400);
+        }
+      }
     },
-    [destroyedLetters, isFinalPunched, onComplete]
+    [onComplete]
   );
 
   return (

@@ -20,6 +20,12 @@ export default function LuffyRig({
         useRef<HTMLDivElement | null>(null);
     const redCircleRef =
         useRef<HTMLDivElement | null>(null);
+    const svgElementRef =
+        useRef<SVGSVGElement | null>(null);
+    const impactPtRef =
+        useRef<SVGPoint | null>(null);
+    const fistPtRef =
+        useRef<SVGPoint | null>(null);
 
     const onFistMoveRef = useRef(onFistMove);
     useEffect(() => {
@@ -238,6 +244,10 @@ export default function LuffyRig({
                     );
                     return;
                 }
+
+                svgElementRef.current = svg;
+                impactPtRef.current = svg.createSVGPoint();
+                fistPtRef.current = svg.createSVGPoint();
 
                 // =====================================================
                 // SVG DISPLAY SETTINGS
@@ -794,7 +804,7 @@ export default function LuffyRig({
                         // =================================================
 
                         const bounds = fistVisibleBounds.current;
-                        const svgElement = svgContainerRef.current?.querySelector('svg');
+                        const svgElement = svgElementRef.current;
                         if (svgElement) {
                             const matrix = svgElement.getScreenCTM();
                             if (matrix) {
@@ -804,7 +814,7 @@ export default function LuffyRig({
                                 const impactSvgX = fistX + clampedOffset + (bounds ? (bounds.right / canvasWidth) * fistWidth : 780);
                                 const impactSvgY = fistY + (bounds ? ((bounds.top + bounds.bottom) / 2 / canvasHeight) * fistHeight : 200);
 
-                                const impactPt = svgElement.createSVGPoint();
+                                const impactPt = impactPtRef.current || svgElement.createSVGPoint();
                                 impactPt.x = impactSvgX;
                                 impactPt.y = impactSvgY;
                                 const screenImpact = impactPt.matrixTransform(matrix);
@@ -817,7 +827,7 @@ export default function LuffyRig({
                                     const fistCenterSvgX = fistX + clampedOffset + (bounds ? ((bounds.left + bounds.right) / 2 / canvasWidth) * fistWidth : 700);
                                     const fistCenterSvgY = fistY + (bounds ? ((bounds.top + bounds.bottom) / 2 / canvasHeight) * fistHeight : 200);
 
-                                    const fistPt = svgElement.createSVGPoint();
+                                    const fistPt = fistPtRef.current || svgElement.createSVGPoint();
                                     fistPt.x = fistCenterSvgX;
                                     fistPt.y = fistCenterSvgY;
                                     const screenFist = fistPt.matrixTransform(matrix);
