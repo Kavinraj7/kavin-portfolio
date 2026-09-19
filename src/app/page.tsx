@@ -17,6 +17,35 @@ export default function Home() {
   const [sfxEnabled, setSfxEnabled] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false); // Light mode by default
 
+  // Initialize theme from localStorage on client mount (safely defaulting to Light)
+  useEffect(() => {
+    try {
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme === 'dark') {
+        setIsDarkMode(true);
+        document.documentElement.classList.add('dark');
+      } else {
+        setIsDarkMode(false);
+        document.documentElement.classList.remove('dark');
+      }
+    } catch {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const handleSetDarkMode = (val: boolean) => {
+    setIsDarkMode(val);
+    try {
+      localStorage.setItem('theme', val ? 'dark' : 'light');
+    } catch {}
+    if (val) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
   // Sync dark mode class on <html> element
   useEffect(() => {
     if (isDarkMode) {
@@ -84,7 +113,7 @@ export default function Home() {
               selectedPerspective={selectedPerspective}
               onSelectPerspective={handleSelectPerspective}
               isDarkMode={isDarkMode}
-              setIsDarkMode={setIsDarkMode}
+              setIsDarkMode={handleSetDarkMode}
               onOpenTerminal={() => setIsTerminalOpen(true)}
             />
 

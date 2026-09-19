@@ -33,7 +33,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dancingScript.variable} ${cinzel.variable} ${plusJakartaSans.variable}`} style={{ '--font-heading': 'var(--font-body)' } as React.CSSProperties}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${dancingScript.variable} ${cinzel.variable} ${plusJakartaSans.variable}`}
+      style={{ '--font-heading': 'var(--font-body)' } as React.CSSProperties}
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="bg-white text-black antialiased selection:bg-black selection:text-white">
         <SmoothScrollProvider>
           {children}

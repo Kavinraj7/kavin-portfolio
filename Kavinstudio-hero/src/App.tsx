@@ -20,7 +20,36 @@ export default function App() {
   const [isFastPathOpen, setIsFastPathOpen] = useState(false);
   const [isEngagementModalOpen, setIsEngagementModalOpen] = useState(false);
   const [sfxEnabled, setSfxEnabled] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Initialize theme from localStorage on client mount (safely defaulting to Light)
+  useEffect(() => {
+    try {
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme === 'dark') {
+        setIsDarkMode(true);
+        document.documentElement.classList.add('dark');
+      } else {
+        setIsDarkMode(false);
+        document.documentElement.classList.remove('dark');
+      }
+    } catch {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const handleSetDarkMode = (val: boolean) => {
+    setIsDarkMode(val);
+    try {
+      localStorage.setItem('theme', val ? 'dark' : 'light');
+    } catch {}
+    if (val) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   // Sync dark mode class on <html> element
   useEffect(() => {
@@ -97,7 +126,7 @@ export default function App() {
         activeView={activeView}
         setActiveView={setActiveView}
         isDarkMode={isDarkMode}
-        setIsDarkMode={setIsDarkMode}
+        setIsDarkMode={handleSetDarkMode}
         onOpenEngagement={() => setIsEngagementModalOpen(true)}
         onOpenProfile={() => setActiveView('biography')}
       />
