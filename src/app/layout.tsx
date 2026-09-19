@@ -18,7 +18,7 @@ const cinzel = Cinzel({
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -33,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dancingScript.variable} ${cinzel.variable} ${plusJakartaSans.variable}`}>
-      <body className="bg-[#FDFBF7] text-[#1A1715] antialiased selection:bg-[#E8DCC4] selection:text-[#1A1715]">
+    <html lang="en" className={`${dancingScript.variable} ${cinzel.variable} ${plusJakartaSans.variable}`} style={{ '--font-heading': 'var(--font-body)' } as React.CSSProperties}>
+      <body className="bg-white text-black antialiased selection:bg-black selection:text-white">
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>

@@ -1,0 +1,6 @@
+{
+  "name": "Kavin — Interactive Editorial Hero",
+  "description": "An interactive editorial portfolio hero featuring multi-perspective archetype exploration, reactive AI dialogue avatar, recruiter fast track, and full dossier views.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
