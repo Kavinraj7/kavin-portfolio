@@ -8,27 +8,33 @@ interface SmoothScrollProviderProps {
 
 export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   useEffect(() => {
-    let lenis: any;
-    import('lenis').then((Lenis) => {
-      lenis = new Lenis.default({
-        duration: 1.2,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        touchMultiplier: 2,
+    let lenisInstance: any = null;
+    let reqId: number;
+
+    import('lenis').then(({ default: Lenis }) => {
+      lenisInstance = new Lenis({
+        lerp: 0.08,
+        duration: 1.4,
+        smoothWheel: true,
+        wheelMultiplier: 1.05,
+        touchMultiplier: 1.5,
+        infinite: false,
       });
 
       function raf(time: number) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
+        lenisInstance.raf(time);
+        reqId = requestAnimationFrame(raf);
       }
 
-      requestAnimationFrame(raf);
+      reqId = requestAnimationFrame(raf);
     }).catch(() => {
-      // Fallback if Lenis is unavailable
+      // Graceful fallback
     });
 
     return () => {
-      if (lenis) {
-        lenis.destroy();
+      if (reqId) cancelAnimationFrame(reqId);
+      if (lenisInstance) {
+        lenisInstance.destroy();
       }
     };
   }, []);

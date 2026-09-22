@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Dancing_Script, Cinzel, Plus_Jakarta_Sans } from "next/font/google";
+import { Dancing_Script, Cinzel, Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 
@@ -13,6 +13,12 @@ const cinzel = Cinzel({
   subsets: ["latin"],
   variable: "--font-title",
   weight: ["400", "700", "900"],
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -36,7 +42,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dancingScript.variable} ${cinzel.variable} ${plusJakartaSans.variable}`}
+      className={`${dancingScript.variable} ${cinzel.variable} ${plusJakartaSans.variable} ${playfair.variable}`}
       style={{ '--font-heading': 'var(--font-body)' } as React.CSSProperties}
     >
       <head>
@@ -57,7 +63,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-white text-black antialiased selection:bg-black selection:text-white">
+      <body className="bg-[#FAFAFC] dark:bg-[#09080F] text-black dark:text-white antialiased selection:bg-black selection:text-white">
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>

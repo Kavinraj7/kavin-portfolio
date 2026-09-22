@@ -4,20 +4,26 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { PerspectiveKey } from '@/types';
 import { PERSPECTIVES_DATA } from '@/data/perspectivesData';
-import { Header } from '@/components/Header';
+import { Header, NavTab } from '@/components/Header';
+import { GrowHeroSection } from '@/components/GrowHeroSection';
+import { MoreThanOnePerspectiveSection } from '@/components/MoreThanOnePerspectiveSection';
+import { ProjectsSection } from '@/components/ProjectsSection';
+import { BeyondTheScreenSection } from '@/components/BeyondTheScreenSection';
+import { WhereDoYouWannaLandSection } from '@/components/WhereDoYouWannaLandSection';
+import { ContactSection } from '@/components/ContactSection';
+import { JourneyCardsSection } from '@/components/JourneyCardsSection';
 import { HeroPerspectiveView } from '@/components/HeroPerspectiveView';
 import { TerminalModal } from '@/components/TerminalModal';
 import { soundFx } from '@/utils/audio';
-import WaterWaveIntro from '@/components/water-wave-intro';
 
 export default function Home() {
-  const [introCompleted, setIntroCompleted] = useState(false);
+  const [activeTab, setActiveTab] = useState<NavTab>('home');
   const [selectedPerspective, setSelectedPerspective] = useState<PerspectiveKey | null>(null);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [sfxEnabled, setSfxEnabled] = useState(true);
-  const [isDarkMode, setIsDarkMode] = useState(false); // Light mode by default
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Initialize theme from localStorage on client mount (safely defaulting to Light)
+  // Initialize theme from localStorage on client mount
   useEffect(() => {
     try {
       const storedTheme = localStorage.getItem('theme');
@@ -89,54 +95,110 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAFC] dark:bg-[#09090B] text-black dark:text-zinc-100 transition-colors duration-300">
-      <AnimatePresence mode="wait">
-        {!introCompleted ? (
-          <motion.div
-            key="intro"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="fixed inset-0 z-50"
-          >
-            <WaterWaveIntro onComplete={() => setIntroCompleted(true)} />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="main-app"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="flex-1 flex flex-col w-full"
-          >
-            {/* Top Header */}
-            <Header
-              selectedPerspective={selectedPerspective}
-              onSelectPerspective={handleSelectPerspective}
-              isDarkMode={isDarkMode}
-              setIsDarkMode={handleSetDarkMode}
-              onOpenTerminal={() => setIsTerminalOpen(true)}
-            />
+      {/* Top Fixed Header with Home and Journey tabs */}
+      <Header
+        activeTab={activeTab}
+        onSelectTab={setActiveTab}
+        isDarkMode={isDarkMode}
+        setIsDarkMode={handleSetDarkMode}
+        onOpenTerminal={() => setIsTerminalOpen(true)}
+      />
 
-            {/* Main Hero Stage */}
-            <main className="flex-1 pt-16">
-              <HeroPerspectiveView
-                perspectives={PERSPECTIVES_DATA}
-                selectedKey={selectedPerspective}
-                onSelectPerspective={handleSelectPerspective}
+      {/* Main Content Area */}
+      <main className="flex-1 pt-16 flex flex-col w-full">
+        <AnimatePresence mode="wait">
+          {activeTab === 'home' ? (
+            <motion.div
+              key="home-section"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="w-full flex flex-col items-center"
+            >
+              {/* Section 1: Home Hero Section */}
+              <GrowHeroSection
                 onOpenTerminal={() => setIsTerminalOpen(true)}
-                sfxEnabled={sfxEnabled}
-                onToggleSfx={handleToggleSfx}
+                onNavigateJourney={() => setActiveTab('journey')}
               />
-            </main>
 
-            {/* Interactive Terminal Modal */}
-            <TerminalModal
-              isOpen={isTerminalOpen}
-              onClose={() => setIsTerminalOpen(false)}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+              {/* Section 2: MORE THAN ONE PERSPECTIVE (Circular Carousel) */}
+              <div className="w-full">
+                <MoreThanOnePerspectiveSection
+                  onExploreJourney={() => setActiveTab('journey')}
+                />
+              </div>
+
+              {/* Section 3: Projects that made me (Elastic Gallery) */}
+              <div className="w-full">
+                <ProjectsSection
+                  onOpenTerminal={() => setIsTerminalOpen(true)}
+                  onExploreJourney={() => setActiveTab('journey')}
+                />
+              </div>
+
+              {/* Section 4: Beyond the screen (Feature Carousel) */}
+              <div className="w-full">
+                <BeyondTheScreenSection
+                  onOpenTerminal={() => setIsTerminalOpen(true)}
+                  onExploreJourney={() => setActiveTab('journey')}
+                />
+              </div>
+
+              {/* Section 5: Where do you wanna land next? (Liquid Glass Buttons) */}
+              <div className="w-full">
+                <WhereDoYouWannaLandSection
+                  onNavigateJourney={() => setActiveTab('journey')}
+                  onNavigateAbout={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  onNavigateProjects={() => {
+                    const el = document.getElementById('projects-section');
+                    el?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                />
+              </div>
+
+              {/* Section 6: Get in Touch with us (Contact Form) */}
+              <div className="w-full">
+                <ContactSection
+                  onOpenTerminal={() => setIsTerminalOpen(true)}
+                />
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="journey-section"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="w-full flex flex-col items-center"
+            >
+              {/* Journey Section 1: Interactive Perspectives View */}
+              <div className="w-full flex justify-center py-4 sm:py-6">
+                <HeroPerspectiveView
+                  perspectives={PERSPECTIVES_DATA}
+                  selectedKey={selectedPerspective}
+                  onSelectPerspective={handleSelectPerspective}
+                  onOpenTerminal={() => setIsTerminalOpen(true)}
+                  sfxEnabled={sfxEnabled}
+                  onToggleSfx={handleToggleSfx}
+                />
+              </div>
+
+              {/* Journey Section 2: Seven Scroll-Animated Milestone Cards */}
+              <div id="journey-milestones" className="w-full">
+                <JourneyCardsSection />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
+
+      {/* Interactive Terminal Modal */}
+      <TerminalModal
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+      />
     </div>
   );
 }
