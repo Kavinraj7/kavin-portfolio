@@ -101,7 +101,7 @@ export function ElasticGallery({
               )}
             >
               {/* Background Image Layer */}
-              <div className="absolute inset-0 h-full w-full">
+              <div className="relative inset-0 h-full w-full">
                 <Image
                   src={item.src}
                   alt={item.alt}

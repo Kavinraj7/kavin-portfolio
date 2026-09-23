@@ -13,6 +13,7 @@ import { WhereDoYouWannaLandSection } from '@/components/WhereDoYouWannaLandSect
 import { ContactSection } from '@/components/ContactSection';
 import { JourneyCardsSection } from '@/components/JourneyCardsSection';
 import { HeroPerspectiveView } from '@/components/HeroPerspectiveView';
+import { AboutSection } from '@/components/AboutSection';
 import { TerminalModal } from '@/components/TerminalModal';
 import { soundFx } from '@/utils/audio';
 
@@ -22,6 +23,17 @@ export default function Home() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [sfxEnabled, setSfxEnabled] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Read tab parameter from URL on client mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab === 'journey' || tab === 'about') {
+        setActiveTab(tab as NavTab);
+      }
+    }
+  }, []);
 
   // Initialize theme from localStorage on client mount
   useEffect(() => {
@@ -94,8 +106,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAFAFC] dark:bg-[#09090B] text-black dark:text-zinc-100 transition-colors duration-300">
-      {/* Top Fixed Header with Home and Journey tabs */}
+    <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
+      {/* Top Fixed Header with Home, About, and Journey tabs */}
       <Header
         activeTab={activeTab}
         onSelectTab={setActiveTab}
@@ -149,7 +161,11 @@ export default function Home() {
               <div className="w-full">
                 <WhereDoYouWannaLandSection
                   onNavigateJourney={() => setActiveTab('journey')}
-                  onNavigateAbout={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  onNavigateAbout={() => {
+                    soundFx.playSelect();
+                    setActiveTab('about');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                   onNavigateProjects={() => {
                     const el = document.getElementById('projects-section');
                     el?.scrollIntoView({ behavior: 'smooth' });
@@ -163,6 +179,34 @@ export default function Home() {
                   onOpenTerminal={() => setIsTerminalOpen(true)}
                 />
               </div>
+            </motion.div>
+          ) : activeTab === 'about' ? (
+            <motion.div
+              key="about-section"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="w-full flex flex-col items-center"
+            >
+              <AboutSection
+                onNavigateHome={() => {
+                  soundFx.playSelect();
+                  setActiveTab('home');
+                }}
+                onNavigateJourney={() => {
+                  soundFx.playSelect();
+                  setActiveTab('journey');
+                }}
+                onNavigateProjects={() => {
+                  soundFx.playSelect();
+                  setActiveTab('home');
+                  setTimeout(() => {
+                    document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                onOpenTerminal={() => setIsTerminalOpen(true)}
+              />
             </motion.div>
           ) : (
             <motion.div
@@ -188,6 +232,13 @@ export default function Home() {
               {/* Journey Section 2: Seven Scroll-Animated Milestone Cards */}
               <div id="journey-milestones" className="w-full">
                 <JourneyCardsSection />
+              </div>
+
+              {/* Universal Dark Theme Contact Footer */}
+              <div className="w-full">
+                <ContactSection
+                  onOpenTerminal={() => setIsTerminalOpen(true)}
+                />
               </div>
             </motion.div>
           )}
