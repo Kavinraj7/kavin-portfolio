@@ -12,6 +12,10 @@ import { BeyondTheScreenSection } from '@/components/BeyondTheScreenSection';
 import { WhereDoYouWannaLandSection } from '@/components/WhereDoYouWannaLandSection';
 import { ContactSection } from '@/components/ContactSection';
 import { JourneyCardsSection } from '@/components/JourneyCardsSection';
+import { NeverGiveUpMarquee } from '@/components/NeverGiveUpMarquee';
+import { ExperienceTimelineSection } from '@/components/ExperienceTimelineSection';
+import { AchievementsSection } from '@/components/AchievementsSection';
+import { ThingsThatShapedMeSection } from '@/components/ThingsThatShapedMeSection';
 import { HorizonHeroSection } from '@/components/ui/horizon-hero-section';
 import { AboutSection } from '@/components/AboutSection';
 import { TerminalModal } from '@/components/TerminalModal';
@@ -222,9 +226,29 @@ export default function Home() {
                 <HorizonHeroSection />
               </div>
 
-              {/* Journey Section 2: Seven Scroll-Animated Milestone Cards */}
-              <div id="journey-milestones" className="w-full">
+              {/* Journey Section 2: Seven Scroll-Animated Milestone Cards (How Multidisciplinary Thinking Came Together) */}
+              <div id="journey-milestones" className="w-full relative z-10">
                 <JourneyCardsSection />
+              </div>
+
+              {/* Dynamic Typography Marquee: NEVER GIVE UP (Left-to-Right) */}
+              <div className="w-full relative z-20">
+                <NeverGiveUpMarquee />
+              </div>
+
+              {/* Journey Section 3: My Experience Interactive Timeline */}
+              <div id="experience" className="w-full relative z-30 bg-background">
+                <ExperienceTimelineSection />
+              </div>
+
+              {/* Journey Section 4: My Achievements Zoom Slider */}
+              <div id="achievements-section" className="w-full relative z-30">
+                <AchievementsSection />
+              </div>
+
+              {/* Journey Section 5: Things That Shaped Me Bento Grid */}
+              <div id="things-shaped-me" className="w-full relative z-30">
+                <ThingsThatShapedMeSection />
               </div>
 
               {/* Universal Dark Theme Contact Footer */}

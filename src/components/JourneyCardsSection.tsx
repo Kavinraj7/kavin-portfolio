@@ -307,7 +307,7 @@ const JourneyCard: React.FC<JourneyCardProps> = ({ card, index, total }) => {
 
 export const JourneyCardsSection: React.FC = () => {
   return (
-    <section className="relative w-full min-h-screen py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#FAFAFC] dark:bg-[#09080F] transition-colors duration-300">
+    <section className="relative w-full min-h-screen pt-16 sm:pt-24 pb-6 sm:pb-8 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#FAFAFC] dark:bg-[#09080F] transition-colors duration-300 overflow-clip">
       
       {/* SECTION HEADER */}
       <div className="w-full max-w-[1180px] mx-auto text-center mb-14 sm:mb-20">
@@ -353,7 +353,7 @@ export const JourneyCardsSection: React.FC = () => {
       </div>
 
       {/* 7 STACKING SCROLL CARDS */}
-      <div className="w-full max-w-[1420px] mx-auto relative pb-20">
+      <div className="w-full max-w-[1420px] mx-auto relative pb-4 sm:pb-6">
         {JOURNEY_CARDS_DATA.map((card, index) => (
           <JourneyCard
             key={card.id}
