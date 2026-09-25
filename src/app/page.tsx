@@ -12,7 +12,7 @@ import { BeyondTheScreenSection } from '@/components/BeyondTheScreenSection';
 import { WhereDoYouWannaLandSection } from '@/components/WhereDoYouWannaLandSection';
 import { ContactSection } from '@/components/ContactSection';
 import { JourneyCardsSection } from '@/components/JourneyCardsSection';
-import { HeroPerspectiveView } from '@/components/HeroPerspectiveView';
+import { HorizonHeroSection } from '@/components/ui/horizon-hero-section';
 import { AboutSection } from '@/components/AboutSection';
 import { TerminalModal } from '@/components/TerminalModal';
 import { soundFx } from '@/utils/audio';
@@ -217,16 +217,9 @@ export default function Home() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="w-full flex flex-col items-center"
             >
-              {/* Journey Section 1: Interactive Perspectives View */}
-              <div className="w-full flex justify-center py-4 sm:py-6">
-                <HeroPerspectiveView
-                  perspectives={PERSPECTIVES_DATA}
-                  selectedKey={selectedPerspective}
-                  onSelectPerspective={handleSelectPerspective}
-                  onOpenTerminal={() => setIsTerminalOpen(true)}
-                  sfxEnabled={sfxEnabled}
-                  onToggleSfx={handleToggleSfx}
-                />
+              {/* Journey Section 1: 3D Horizon / Cosmos Hero Section */}
+              <div className="w-full -mt-16">
+                <HorizonHeroSection />
               </div>
 
               {/* Journey Section 2: Seven Scroll-Animated Milestone Cards */}

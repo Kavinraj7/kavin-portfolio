@@ -172,7 +172,7 @@ const JourneyCard: React.FC<JourneyCardProps> = ({ card, index, total }) => {
   return (
     <div 
       ref={cardRef} 
-      className="sticky top-20 sm:top-24 mb-12 sm:mb-16 md:mb-20 last:mb-0 w-full flex justify-center"
+      className="sticky top-20 sm:top-24 md:top-28 mb-16 sm:mb-20 md:mb-28 last:mb-0 w-full flex justify-center"
       style={{
         zIndex: index + 10,
       }}
@@ -183,45 +183,45 @@ const JourneyCard: React.FC<JourneyCardProps> = ({ card, index, total }) => {
           opacity,
           y,
         }}
-        className="relative w-full max-w-[1180px] bg-[#F6F6FC] dark:bg-[#161324] rounded-[28px] sm:rounded-[36px] md:rounded-[40px] p-6 sm:p-8 md:p-10 lg:p-12 border border-purple-200/60 dark:border-purple-900/40 shadow-[0_20px_60px_-15px_rgba(124,58,237,0.07)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)] overflow-hidden transition-colors duration-300"
+        className="relative w-full max-w-[1380px] min-h-[440px] sm:min-h-[480px] lg:min-h-[540px] flex flex-col justify-center bg-[#F6F6FC] dark:bg-[#161324] rounded-[32px] sm:rounded-[44px] md:rounded-[52px] p-8 sm:p-10 md:p-14 lg:p-16 border border-purple-200/60 dark:border-purple-900/40 shadow-[0_25px_70px_-15px_rgba(124,58,237,0.08)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)] overflow-hidden transition-colors duration-300"
       >
         {/* Soft Ambient Radial Background Glow */}
         <div 
-          className="absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl opacity-25 dark:opacity-35 pointer-events-none"
+          className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full blur-3xl opacity-25 dark:opacity-35 pointer-events-none"
           style={{ backgroundColor: card.accentColor }}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center w-full">
           
           {/* LEFT SIDE: Step Number, Category, Headline, Description, Tags */}
-          <div className="lg:col-span-7 flex flex-col justify-between z-10">
+          <div className="lg:col-span-7 flex flex-col justify-center z-10 space-y-4 sm:space-y-6">
             
             {/* Step Badge & Category */}
-            <div className="flex items-center gap-3 mb-4">
-              <span className="flex items-center justify-center px-2.5 py-1 rounded-md bg-[#EDE9FE] dark:bg-purple-950/70 text-[#7C3AED] dark:text-[#A78BFA] font-bold text-xs tracking-wider font-mono shadow-xs">
+            <div className="flex items-center gap-3.5">
+              <span className="flex items-center justify-center px-3.5 py-1.5 rounded-lg bg-[#EDE9FE] dark:bg-purple-950/70 text-[#7C3AED] dark:text-[#A78BFA] font-black text-sm tracking-wider font-mono shadow-xs">
                 {card.step}
               </span>
-              <span className="text-[11px] sm:text-xs font-bold text-zinc-500 dark:text-zinc-400 tracking-widest uppercase">
+              <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 tracking-widest uppercase">
                 {card.category}
               </span>
             </div>
 
             {/* Headline */}
-            <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-extrabold text-zinc-900 dark:text-white tracking-tight leading-[1.2] mb-3">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[40px] font-extrabold text-zinc-900 dark:text-white tracking-tight leading-[1.18]">
               {card.headline}
             </h3>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-xl mb-6 font-normal">
+            <p className="text-base sm:text-lg lg:text-[18px] text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-2xl font-normal">
               {card.description}
             </p>
 
             {/* Tags Pills */}
-            <div className="flex flex-wrap items-center gap-2 pt-2">
+            <div className="flex flex-wrap items-center gap-2.5 pt-2">
               {card.tags.map((tag, tIdx) => (
                 <span
                   key={tIdx}
-                  className="px-3 py-1 rounded-full bg-white/90 dark:bg-zinc-800/80 text-zinc-700 dark:text-zinc-200 text-xs font-semibold border border-purple-100 dark:border-purple-900/30 shadow-xs hover:border-purple-300 dark:hover:border-purple-600 transition-colors"
+                  className="px-3.5 py-1.5 rounded-full bg-white/95 dark:bg-zinc-800/90 text-zinc-800 dark:text-zinc-200 text-xs sm:text-sm font-semibold border border-purple-100 dark:border-purple-900/30 shadow-xs hover:border-purple-300 dark:hover:border-purple-600 transition-colors"
                 >
                   {tag}
                 </span>
@@ -231,51 +231,51 @@ const JourneyCard: React.FC<JourneyCardProps> = ({ card, index, total }) => {
           </div>
 
           {/* RIGHT SIDE: Concept Graphic + "Knowledge Added" Floating Card */}
-          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[280px] sm:min-h-[300px]">
+          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[320px] sm:min-h-[380px]">
             
             {/* Background Concept Line Illustration & Neural Glow */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-30 dark:opacity-25 pointer-events-none select-none">
-              {/* Detailed SVG Brain / Network Diagram matching reference */}
-              <svg className="w-64 h-64 sm:w-72 sm:h-72 text-purple-600 dark:text-purple-400" viewBox="0 0 200 200" fill="none" stroke="currentColor">
+            <div className="absolute inset-0 flex items-center justify-center opacity-35 dark:opacity-30 pointer-events-none select-none">
+              {/* Detailed SVG Brain / Network Diagram */}
+              <svg className="w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 text-purple-600 dark:text-purple-400" viewBox="0 0 200 200" fill="none" stroke="currentColor">
                 {/* Brain Outline and Lobes */}
                 <path d="M100 30 C70 30, 40 50, 40 85 C40 105, 50 115, 45 135 C40 155, 60 170, 85 170 C100 170, 110 160, 120 160 C135 160, 155 170, 165 150 C175 130, 160 110, 165 90 C170 65, 140 30, 100 30 Z" strokeWidth="1.2" strokeDasharray="3 2" />
                 <path d="M70 60 C85 70, 115 55, 130 75 C145 95, 125 125, 140 145" strokeWidth="1" />
                 <path d="M55 90 C75 100, 80 120, 75 140" strokeWidth="0.8" />
                 <path d="M95 80 C110 95, 105 130, 120 140" strokeWidth="0.8" />
-                {/* Highlighted Lobe Area (Soft Glowing Polygon) */}
+                {/* Highlighted Lobe Area */}
                 <path d="M115 85 C135 95, 145 120, 135 140 C120 145, 105 135, 110 110 Z" fill={card.accentColor} fillOpacity="0.25" stroke={card.accentColor} strokeWidth="1.5" />
               </svg>
             </div>
 
-            {/* Floating Glassmorphic "Knowledge Added" Box */}
+            {/* Floating Glassmorphic "Knowledge Added" Box (Enlarged) */}
             <motion.div
               whileHover={{ y: -4, scale: 1.02 }}
               transition={{ duration: 0.25 }}
-              className="relative z-10 w-full max-w-[310px] bg-white/95 dark:bg-[#1C182A]/95 backdrop-blur-2xl rounded-3xl p-5 sm:p-6 shadow-[0_20px_50px_-10px_rgba(124,58,237,0.12)] dark:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] border border-white dark:border-purple-800/40"
+              className="relative z-10 w-full max-w-[360px] sm:max-w-[380px] bg-white/95 dark:bg-[#1C182A]/95 backdrop-blur-2xl rounded-[28px] sm:rounded-[32px] p-6 sm:p-7 shadow-[0_20px_50px_-10px_rgba(124,58,237,0.12)] dark:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] border border-white dark:border-purple-800/40"
             >
               {/* Box Title */}
-              <div className="flex items-center gap-2.5 mb-4">
+              <div className="flex items-center gap-3 mb-5">
                 <div 
-                  className="w-2.5 h-2.5 rounded-full animate-pulse shadow-sm"
+                  className="w-3 h-3 rounded-full animate-pulse shadow-sm"
                   style={{ backgroundColor: card.accentColor }}
                 />
-                <h4 className="text-sm font-extrabold text-zinc-900 dark:text-white tracking-tight">
+                <h4 className="text-base font-extrabold text-zinc-900 dark:text-white tracking-tight">
                   Knowledge Added
                 </h4>
               </div>
 
               {/* Bullet Points with Checkmarks */}
-              <ul className="space-y-3">
+              <ul className="space-y-3.5">
                 {card.knowledgeAdded.map((item, kIdx) => (
-                  <li key={kIdx} className="flex items-center gap-2.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200">
+                  <li key={kIdx} className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-zinc-800 dark:text-zinc-200">
                     <div 
-                      className="w-4.5 h-4.5 rounded-md flex items-center justify-center shrink-0 shadow-xs"
+                      className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 shadow-xs"
                       style={{ 
                         backgroundColor: `${card.accentColor}20`,
                         color: card.accentColor 
                       }}
                     >
-                      <CheckCircle2 className="w-3.5 h-3.5 fill-current" />
+                      <CheckCircle2 className="w-4 h-4 fill-current" />
                     </div>
                     <span className="leading-snug">{item}</span>
                   </li>
@@ -283,7 +283,7 @@ const JourneyCard: React.FC<JourneyCardProps> = ({ card, index, total }) => {
               </ul>
 
               {/* Card Footer Progress Indicator */}
-              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-[10px] font-mono text-zinc-500 dark:text-zinc-400 font-bold">
+              <div className="mt-5 pt-3.5 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-[11px] font-mono text-zinc-500 dark:text-zinc-400 font-bold">
                 <span>PHASE {card.step} OF 0{total}</span>
                 <span style={{ color: card.accentColor }}>COMPLETE</span>
               </div>
@@ -291,7 +291,7 @@ const JourneyCard: React.FC<JourneyCardProps> = ({ card, index, total }) => {
 
             {/* Subtle Annotation Arrow */}
             {card.annotation && (
-              <div className="hidden sm:flex items-center gap-1 absolute -bottom-5 right-1 text-[11px] font-mono text-zinc-500 dark:text-zinc-400 italic max-w-[260px] text-right pointer-events-none select-none font-medium">
+              <div className="hidden sm:flex items-center gap-1 absolute -bottom-6 right-2 text-xs font-mono text-zinc-500 dark:text-zinc-400 italic max-w-[280px] text-right pointer-events-none select-none font-medium">
                 <span>↳</span>
                 <span className="truncate">{card.annotation}</span>
               </div>
@@ -353,7 +353,7 @@ export const JourneyCardsSection: React.FC = () => {
       </div>
 
       {/* 7 STACKING SCROLL CARDS */}
-      <div className="w-full max-w-[1240px] mx-auto relative pb-20">
+      <div className="w-full max-w-[1420px] mx-auto relative pb-20">
         {JOURNEY_CARDS_DATA.map((card, index) => (
           <JourneyCard
             key={card.id}
