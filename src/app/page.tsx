@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { PerspectiveKey } from '@/types';
 import { PERSPECTIVES_DATA } from '@/data/perspectivesData';
 import { Header, NavTab } from '@/components/Header';
+import { UrbanHeroSection } from '@/components/UrbanHeroSection';
 import { GrowHeroSection } from '@/components/GrowHeroSection';
 import { MoreThanOnePerspectiveSection } from '@/components/MoreThanOnePerspectiveSection';
 import { ProjectsSection } from '@/components/ProjectsSection';
@@ -18,6 +19,7 @@ import { AchievementsSection } from '@/components/AchievementsSection';
 import { ThingsThatShapedMeSection } from '@/components/ThingsThatShapedMeSection';
 import { HorizonHeroSection } from '@/components/ui/horizon-hero-section';
 import { AboutSection } from '@/components/AboutSection';
+import { ProjectsTab } from '@/components/ProjectsTab';
 import { TerminalModal } from '@/components/TerminalModal';
 import { soundFx } from '@/utils/audio';
 
@@ -33,7 +35,7 @@ export default function Home() {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const tab = params.get('tab');
-      if (tab === 'journey' || tab === 'about') {
+      if (tab === 'journey' || tab === 'about' || tab === 'projects' || tab === 'home') {
         setActiveTab(tab as NavTab);
       }
     }
@@ -111,7 +113,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
-      {/* Top Fixed Header with Home, About, and Journey tabs */}
+      {/* Top Fixed Header with Home, About, Projects, and Journey tabs */}
       <Header
         activeTab={activeTab}
         onSelectTab={setActiveTab}
@@ -129,13 +131,28 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              style={{ willChange: 'opacity' }}
               className="w-full flex flex-col items-center"
             >
-              {/* Section 1: Home Hero Section */}
-              <GrowHeroSection
+              {/* Section 1: Home Hero Section (Urban / Built for the Bold Editorial) */}
+              <UrbanHeroSection
                 onOpenTerminal={() => setIsTerminalOpen(true)}
-                onNavigateJourney={() => setActiveTab('journey')}
+                onNavigateJourney={() => {
+                  soundFx.playSelect();
+                  setActiveTab('journey');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                onNavigateProjects={() => {
+                  soundFx.playSelect();
+                  setActiveTab('projects');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                onNavigateAbout={() => {
+                  soundFx.playSelect();
+                  setActiveTab('about');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
               />
 
               {/* Section 2: MORE THAN ONE PERSPECTIVE (Circular Carousel) */}
@@ -164,15 +181,20 @@ export default function Home() {
               {/* Section 5: Where do you wanna land next? (Liquid Glass Buttons) */}
               <div className="w-full">
                 <WhereDoYouWannaLandSection
-                  onNavigateJourney={() => setActiveTab('journey')}
+                  onNavigateJourney={() => {
+                    soundFx.playSelect();
+                    setActiveTab('journey');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                   onNavigateAbout={() => {
                     soundFx.playSelect();
                     setActiveTab('about');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   onNavigateProjects={() => {
-                    const el = document.getElementById('projects-section');
-                    el?.scrollIntoView({ behavior: 'smooth' });
+                    soundFx.playSelect();
+                    setActiveTab('projects');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                 />
               </div>
@@ -187,10 +209,11 @@ export default function Home() {
           ) : activeTab === 'about' ? (
             <motion.div
               key="about-section"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              style={{ willChange: 'opacity, transform' }}
               className="w-full flex flex-col items-center"
             >
               <AboutSection
@@ -204,21 +227,41 @@ export default function Home() {
                 }}
                 onNavigateProjects={() => {
                   soundFx.playSelect();
-                  setActiveTab('home');
-                  setTimeout(() => {
-                    document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
+                  setActiveTab('projects');
                 }}
                 onOpenTerminal={() => setIsTerminalOpen(true)}
+              />
+            </motion.div>
+          ) : activeTab === 'projects' ? (
+            <motion.div
+              key="projects-tab-section"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              style={{ willChange: 'opacity, transform' }}
+              className="w-full flex flex-col items-center"
+            >
+              <ProjectsTab
+                onOpenTerminal={() => setIsTerminalOpen(true)}
+                onNavigateJourney={() => {
+                  soundFx.playSelect();
+                  setActiveTab('journey');
+                }}
+                onNavigateHome={() => {
+                  soundFx.playSelect();
+                  setActiveTab('home');
+                }}
               />
             </motion.div>
           ) : (
             <motion.div
               key="journey-section"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              style={{ willChange: 'opacity, transform' }}
               className="w-full flex flex-col items-center"
             >
               {/* Journey Section 1: 3D Horizon / Cosmos Hero Section */}

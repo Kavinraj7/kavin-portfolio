@@ -75,9 +75,14 @@
   }
 
   html {
+    /* Let Lenis control smooth scroll — do NOT use CSS scroll-behavior: smooth here */
     scroll-behavior: auto;
     overscroll-behavior: none;
     overscroll-behavior-y: none;
+    /* Force GPU rasterization for the entire page */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -87,6 +92,11 @@
     overscroll-behavior-y: none;
     background-color: var(--bg-page);
     color: var(--text-primary);
+    /* Ensure the body is a GPU compositing root */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent highlight flash on mobile tap */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
   }
 
   .font-display {
@@ -101,9 +111,28 @@
   .font-cursive {
     font-family: var(--font-cursive), 'Dancing Script', cursive;
   }
+
+  /* Ensure all images render crisply */
+  img, video, canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Focusable elements: remove default outline, add custom */
+  button, a, [tabindex] {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 }
 
-/* Lenis Smooth Scroll CSS */
+/* ======================================================
+   LENIS SMOOTH SCROLL CSS — required classes
+====================================================== */
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -124,23 +153,77 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Spin slow animation */
+/* ======================================================
+   GPU COMPOSITING HINTS — promote animated elements
+====================================================== */
+/* Promote motion elements to their own GPU layer for smooth 60fps */
+[data-gpu],
+.motion-gpu {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* ======================================================
+   REDUCED MOTION SUPPORT — respect system preferences
+====================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ======================================================
+   ANIMATIONS
+====================================================== */
 @keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .animate-spin-slow {
   animation: spinSlow 20s linear infinite;
 }
 
-/* Custom Scrollbar */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* ======================================================
+   CUSTOM SCROLLBAR — minimalist, cross-browser
+====================================================== */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -148,10 +231,55 @@ html.lenis, html.lenis body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: rgba(63, 63, 70, 0.6);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #71717a;
+  background: rgba(113, 113, 122, 0.8);
 }
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(63, 63, 70, 0.6) transparent;
+}
+
+/* ======================================================
+   HORIZONTAL SCROLL CONTAINERS — hide scrollbar
+====================================================== */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ======================================================
+   MOBILE-SPECIFIC HELPERS
+====================================================== */
+/* Full-bleed mobile sections */
+@media (max-width: 640px) {
+  .mobile-full-bleed {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Prevent text overflow on tiny screens */
+  .mobile-text-clip {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+/* ======================================================
+   SAFE AREA INSETS — for notched phones
+====================================================== */
+.safe-top    { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.safe-left   { padding-left: env(safe-area-inset-left); }
+.safe-right  { padding-right: env(safe-area-inset-right); }

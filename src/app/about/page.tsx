@@ -46,6 +46,8 @@ export default function AboutPage() {
       router.push('/');
     } else if (tab === 'journey') {
       router.push('/?tab=journey');
+    } else if (tab === 'projects') {
+      router.push('/?tab=projects');
     } else {
       setActiveTab('about');
     }

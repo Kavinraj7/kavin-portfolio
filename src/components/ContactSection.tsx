@@ -86,10 +86,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenTerminal }
                 </div>
                 <button
                   onClick={handleCopyEmail}
-                  className="mt-1 flex items-center gap-2.5 text-2xl sm:text-3xl font-bold text-white hover:text-purple-400 transition-colors cursor-pointer text-left"
+                  className="mt-1 flex items-center gap-2.5 text-xl sm:text-2xl lg:text-3xl font-bold text-white hover:text-purple-400 transition-colors cursor-pointer text-left break-all sm:break-normal"
                 >
                   <span>kavinraj.dev@gmail.com</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg bg-zinc-800 text-xs font-mono font-normal text-zinc-300">
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg bg-zinc-800 text-xs font-mono font-normal text-zinc-300 shrink-0">
                     {copiedEmail ? 'Copied!' : <Copy className="w-4 h-4" />}
                   </span>
                 </button>

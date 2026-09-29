@@ -28,7 +28,9 @@ export interface PerspectiveItem {
 export interface TerminalMessage {
   id: string;
   sender: 'system' | 'user' | 'ai';
+  senderName?: string;
   text: string;
   timestamp: string;
+  status?: string;
   actionHint?: string;
 }
