@@ -6,19 +6,19 @@ import { Sparkles, Zap, Flame, Star } from 'lucide-react';
 
 export const NeverGiveUpMarquee: React.FC = () => {
   const marqueeItems = [
-    { text: "NEVER GIVE UP", filled: true, icon: Sparkles },
-    { text: "NEVER GIVE UP", filled: false, icon: Zap },
-    { text: "NEVER GIVE UP", filled: true, icon: Star },
-    { text: "NEVER GIVE UP", filled: false, icon: Flame },
-    { text: "NEVER GIVE UP", filled: true, icon: Sparkles },
-    { text: "NEVER GIVE UP", filled: false, icon: Zap },
-    { text: "NEVER GIVE UP", filled: true, icon: Star },
-    { text: "NEVER GIVE UP", filled: false, icon: Flame },
+    { text: "KEEP EVOLVING", filled: true, icon: Sparkles },
+    { text: "KEEP EVOLVING", filled: false, icon: Zap },
+    { text: "KEEP EVOLVING", filled: true, icon: Star },
+    { text: "KEEP EVOLVING", filled: false, icon: Flame },
+    { text: "KEEP EVOLVING", filled: true, icon: Sparkles },
+    { text: "KEEP EVOLVING", filled: false, icon: Zap },
+    { text: "KEEP EVOLVING", filled: true, icon: Star },
+    { text: "KEEP EVOLVING", filled: false, icon: Flame },
   ];
 
   return (
     <div className="relative z-20 w-full py-6 sm:py-8 overflow-hidden bg-background border-y border-zinc-200/60 dark:border-zinc-800/60 select-none">
-      
+
       {/* Ambient background glow behind marquee */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-24 bg-purple-500/10 dark:bg-purple-600/15 blur-3xl rounded-full pointer-events-none" />
 
@@ -43,11 +43,10 @@ export const NeverGiveUpMarquee: React.FC = () => {
             return (
               <div key={index} className="flex items-center gap-8 sm:gap-12 shrink-0">
                 <span
-                  className={`text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter transition-all duration-300 ${
-                    item.filled
+                  className={`text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter transition-all duration-300 ${item.filled
                       ? 'text-zinc-950 dark:text-white drop-shadow-xs'
                       : 'text-transparent [-webkit-text-stroke:1.5px_#71717A] dark:[-webkit-text-stroke:1.5px_#52525B] hover:text-zinc-950 dark:hover:text-white'
-                  }`}
+                    }`}
                   style={{
                     fontFamily: 'var(--font-geist-sans), system-ui, sans-serif',
                   }}

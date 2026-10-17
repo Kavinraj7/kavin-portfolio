@@ -35,9 +35,9 @@ export const ProjectsTab: React.FC<ProjectsTabProps> = ({
   };
 
   return (
-    <div className="relative w-full min-h-screen -mt-16 pt-16 bg-[#dce4e6] dark:bg-[#0c1015] overflow-y-auto overflow-x-hidden select-none scroll-smooth">
+    <div className="relative w-full min-h-screen bg-[#dce4e6] dark:bg-[#0c1015] overflow-x-hidden select-none scroll-smooth">
       {/* 1. Hero Section (Full Viewport) */}
-      <div className="w-full h-[calc(100vh-4rem)] min-h-[640px] relative">
+      <div className="w-full h-screen min-h-[700px] relative">
         <CyberProjectsHero
           onSelectDomain={handleSelectDomainFromHero}
           onOpenTerminal={onOpenTerminal}

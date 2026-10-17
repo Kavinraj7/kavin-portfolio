@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { soundFx } from '@/utils/audio';
@@ -19,18 +20,24 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
   onNavigateJourney,
   onNavigateProjects,
   onNavigateAbout,
-  heroImageSrc = '/Darkoutimage.png',
+  heroImageSrc = '/kavin1.png',
   insetThumbnailSrc = '/images/urban_sunglasses_inset.jpg',
 }) => {
+  const [mounted, setMounted] = useState(false);
   const [isHoveringView, setIsHoveringView] = useState(false);
   const [loadingPercent, setLoadingPercent] = useState(0);
   const [isCurtainWiped, setIsCurtainWiped] = useState(false);
+  const [curtainRemoved, setCurtainRemoved] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Typewriter states matching Frame 00:01 -> 00:03 of hani.mp4
   const [typedTitle, setTypedTitle] = useState('');
   const [typedTagline, setTypedTagline] = useState('');
-  const fullTitle = '1. SUNCTRL';
-  const fullTagline = 'Command the light.';
+  const fullTitle = 'HEY THERE';
+  const fullTagline = "I'M KAVIN";
 
   // 1. Percentage Counter (00% -> 100%) - Frame 00:00
   useEffect(() => {
@@ -45,6 +52,9 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
         setTimeout(() => {
           setIsCurtainWiped(true);
           soundFx.playConfirm();
+          setTimeout(() => {
+            setCurtainRemoved(true);
+          }, 1100);
         }, 150);
       } else {
         setLoadingPercent(current);
@@ -109,10 +119,10 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
   };
 
   const socialLinks = [
-    { name: 'Instagram', href: 'https://instagram.com' },
-    { name: 'Facebook', href: 'https://facebook.com' },
-    { name: 'Youtube', href: 'https://youtube.com' },
-    { name: 'X', href: 'https://x.com' },
+    { name: 'Linkedin', href: 'https://instagram.com' },
+    { name: 'Github', href: 'https://facebook.com' },
+    { name: 'Whatsapp', href: 'https://youtube.com' },
+
   ];
 
   return (
@@ -120,26 +130,29 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
       id="urban-hero"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[calc(100vh-4rem)] min-h-[660px] max-h-[960px] bg-white dark:bg-white text-zinc-950 font-sans selection:bg-[#FFEE00] selection:text-black overflow-hidden isolate transition-colors duration-300"
+      className="relative w-full h-screen min-h-[700px] bg-white dark:bg-white text-zinc-950 font-sans selection:bg-[#FFEE00] selection:text-black overflow-hidden isolate transition-colors duration-300"
     >
       {/* ============================================================ */}
       {/* 0. YELLOW PRELOADER CURTAIN WITH 00% -> 100% WIPE (Frame 00) */}
       {/* ============================================================ */}
-      <motion.div
-        initial={{ x: '0%' }}
-        animate={{ x: isCurtainWiped ? '100%' : '0%' }}
-        transition={{
-          duration: 0.85,
-          ease: [0.76, 0, 0.24, 1], // Exact slick curtain wipe curve
-        }}
-        className="absolute inset-0 z-50 bg-[#FFEE00] flex flex-col justify-end p-8 sm:p-12 md:p-16 pointer-events-none shadow-[20px_0_50px_rgba(0,0,0,0.25)]"
-      >
-        {/* Counter at Bottom-Left: 00% -> 100% */}
-        <div className="font-black text-6xl sm:text-8xl md:text-9xl text-black font-sans tracking-tight select-none flex items-baseline">
-          <span>{loadingPercent < 10 ? `0${loadingPercent}` : loadingPercent}</span>
-          <span className="text-4xl sm:text-6xl md:text-7xl ml-1">%</span>
-        </div>
-      </motion.div>
+      {mounted && !curtainRemoved && createPortal(
+        <motion.div
+          initial={{ x: '0%' }}
+          animate={{ x: isCurtainWiped ? '100%' : '0%' }}
+          transition={{
+            duration: 0.85,
+            ease: [0.76, 0, 0.24, 1], // Exact slick curtain wipe curve
+          }}
+          className="fixed inset-0 z-[999] bg-[#FFEE00] flex flex-col justify-end p-8 sm:p-12 md:p-16 pointer-events-none shadow-[20px_0_50px_rgba(0,0,0,0.25)]"
+        >
+          {/* Counter at Bottom-Left: 00% -> 100% */}
+          <div className="font-black text-6xl sm:text-8xl md:text-9xl text-black font-sans tracking-tight select-none flex items-baseline">
+            <span>{loadingPercent < 10 ? `0${loadingPercent}` : loadingPercent}</span>
+            <span className="text-4xl sm:text-6xl md:text-7xl ml-1">%</span>
+          </div>
+        </motion.div>,
+        document.body
+      )}
 
       {/* Subtle Ambient Studio Light Background */}
       <motion.div
@@ -154,7 +167,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
       {/* ============================================================ */}
       <div
         style={{ transform: 'none' }}
-        className="absolute left-8 sm:left-12 md:left-16 lg:left-20 xl:left-24 top-6 sm:top-8 md:top-10 lg:top-12 z-20 flex flex-col items-start select-none pointer-events-auto"
+        className="absolute left-8 sm:left-12 md:left-16 lg:left-20 xl:left-24 top-20 sm:top-24 md:top-28 z-20 flex flex-col items-start select-none pointer-events-auto"
       >
         <motion.div style={{ x: textX, y: textY }} className="flex flex-col items-start">
           {/* SKU Number */}
@@ -167,10 +180,10 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
             transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-zinc-500 uppercase"
           >
-            SKU #202525
+            KAVINRAJ M. / 2026
           </motion.div>
 
-          {/* 1. SUNCTRL_ with Typewriter reveal + active blinking cursor */}
+          {/* HEY THERE with Typewriter reveal + active blinking cursor */}
           <motion.h3
             initial={{ opacity: 0, x: -30 }}
             animate={{
@@ -180,7 +193,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
             transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="text-xl sm:text-2xl lg:text-[26px] font-black text-zinc-950 tracking-tight mt-1 flex items-center min-h-[32px]"
           >
-            <span>{typedTitle || '1.'}</span>
+            <span>{typedTitle || 'HEY'}</span>
             <motion.span
               animate={{ opacity: [1, 0, 1] }}
               transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
@@ -207,7 +220,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
       {/* ============================================================ */}
       {/* 2. CENTER HERO SUBJECT (Frame 00:01 - Scales up and glides) */}
       {/* ============================================================ */}
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[82%] sm:h-[88%] lg:h-[93%] max-h-[800px] w-full max-w-[620px] z-10 flex items-end justify-center pointer-events-none">
+      <div className="absolute left-1/2 -translate-x-1/2 -bottom-12 sm:-bottom-16 md:-bottom-20 lg:-bottom-24 h-[86%] sm:h-[92%] lg:h-[98%] max-h-[940px] w-full max-w-[780px] lg:max-w-[920px] xl:max-w-[1040px] z-10 flex items-end justify-center pointer-events-none">
         <motion.div
           initial={{ opacity: 0, scale: 0.88, y: 50 }}
           animate={{
@@ -227,18 +240,18 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
               scale: isCurtainWiped ? 1 : 0.6,
             }}
             transition={{ duration: 1.0, delay: 0.2 }}
-            className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[460px] h-[340px] sm:h-[460px] bg-[#FFEE00]/20 rounded-full blur-[90px] -z-10"
+            className="absolute top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] sm:w-[560px] md:w-[680px] h-[420px] sm:h-[560px] md:h-[680px] bg-[#FFEE00]/22 rounded-full blur-[100px] -z-10"
           />
 
           {/* Portrait Image */}
-          <div className="relative w-full h-full flex items-end justify-center overflow-visible">
+          <div className="relative w-full h-full flex items-end justify-center overflow-visible scale-105 sm:scale-110 lg:scale-115 origin-bottom">
             <Image
               src={heroImageSrc}
               alt="Urban Hero Subject"
               fill
               priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
-              className="object-contain object-bottom"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+              className="object-contain object-bottom drop-shadow-2xl"
             />
           </div>
         </motion.div>
@@ -249,7 +262,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
       {/* ============================================================ */}
       <div
         style={{ transform: 'none' }}
-        className="absolute right-8 sm:right-12 md:right-16 lg:right-20 xl:right-24 top-6 sm:top-8 md:top-10 lg:top-12 z-20 flex flex-col items-start max-w-[240px] sm:max-w-[270px] md:max-w-[290px] select-none pointer-events-auto"
+        className="absolute right-8 sm:right-12 md:right-16 lg:right-20 xl:right-24 top-20 sm:top-24 md:top-28 z-20 flex flex-col items-start max-w-[240px] sm:max-w-[270px] md:max-w-[290px] select-none pointer-events-auto"
       >
         <motion.div style={{ x: textX, y: textY }} className="flex flex-col items-start w-full">
           {/* #2 Badge - Pop in with bounce (Frame 00:02) */}
@@ -264,7 +277,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
             whileHover={{ scale: 1.08, rotate: 3 }}
             className="bg-[#FFEE00] text-black font-black text-lg sm:text-xl px-2.5 py-0.5 tracking-tight shadow-sm inline-block cursor-default"
           >
-            #2
+            KAVIN-AI
           </motion.div>
 
           {/* Description text - Fade & slide in */}
@@ -277,7 +290,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
             transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="text-[11px] sm:text-[12px] md:text-[12.5px] text-zinc-700 font-medium leading-[1.42] tracking-normal mt-3"
           >
-            Crafted for clarity, built for the bold, SUNCTRL_ frames fuse street precision with timeless attitude. Designed to elevate every glance.
+            Click VIEW and meet Kavin-AI — an interactive way to explore my journey, skills, projects, experience, and everything that shaped me.
           </motion.p>
 
           {/* Inset Model Thumbnail Card with VIEW Circle (Frame 00:02 -> 00:03) */}
@@ -330,13 +343,13 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
       </div>
 
       {/* ============================================================ */}
-      {/* 4. MASSIVE DISPLAY TYPOGRAPHY: "BUILT FOR THE BOLD" (CENTER) */}
+      {/* 4. MASSIVE DISPLAY TYPOGRAPHY: "MANY SIDES ONE STORY" (CENTER) */}
       {/* ============================================================ */}
-      <div className="absolute left-1/2 -translate-x-1/2 bottom-[14%] sm:bottom-[16%] md:bottom-[18%] z-20 w-full max-w-[1440px] px-4 text-center flex flex-col items-center justify-center select-none pointer-events-none">
-        <div className="flex flex-col items-center leading-[0.80] tracking-[-0.04em]">
-          
-          {/* Row 1: BUILT FOR - Upward Mask Reveal */}
-          <div className="overflow-hidden">
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-[4.7%] sm:bottom-[6.7%] md:bottom-[7.7%] z-20 w-full max-w-[1440px] px-4 text-center flex flex-col items-center justify-center select-none pointer-events-none">
+        <div className="flex flex-col items-center leading-[0.88] tracking-[-0.035em]">
+
+          {/* Row 1: MANY SIDES - Upward Mask Reveal with clearance */}
+          <div className="overflow-hidden py-1 sm:py-2">
             <motion.h1
               initial={{ y: '120%', opacity: 0 }}
               animate={{
@@ -344,17 +357,17 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
                 opacity: isCurtainWiped ? 1 : 0,
               }}
               transition={{ duration: 0.85, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] font-black text-[#FFEE00] uppercase font-sans drop-shadow-[0_2px_18px_rgba(0,0,0,0.15)]"
+              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] font-black text-[#FFEE00] uppercase font-sans drop-shadow-[0_2px_18px_rgba(0,0,0,0.15)] pb-1"
               style={{
                 WebkitTextStroke: '1.5px rgba(0,0,0,0.08)',
               }}
             >
-              BUILT FOR
+              MANY SIDES
             </motion.h1>
           </div>
 
-          {/* Row 2: THE BOLD - Staggered Upward Mask Reveal */}
-          <div className="overflow-hidden relative flex items-baseline justify-center">
+          {/* Row 2: ONE STORY - Staggered Upward Mask Reveal with clearance */}
+          <div className="overflow-hidden relative flex items-baseline justify-center py-1 sm:py-2">
             <motion.h2
               initial={{ y: '120%', opacity: 0 }}
               animate={{
@@ -362,15 +375,15 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
                 opacity: isCurtainWiped ? 1 : 0,
               }}
               transition={{ duration: 0.85, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] font-black text-[#FFEE00] uppercase font-sans drop-shadow-[0_2px_18px_rgba(0,0,0,0.15)]"
+              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] font-black text-[#FFEE00] uppercase font-sans drop-shadow-[0_2px_18px_rgba(0,0,0,0.15)] pb-1"
               style={{
                 WebkitTextStroke: '1.5px rgba(0,0,0,0.08)',
               }}
             >
-              THE BOLD
+              ONE STORY
             </motion.h2>
 
-            {/* VIEW action link: positioned to the right of THE BOLD */}
+            {/* VIEW action link: positioned to the right of ONE STORY */}
             <motion.button
               initial={{ opacity: 0, x: 25 }}
               animate={{
@@ -384,7 +397,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
                 soundFx.playSelect();
                 onNavigateProjects?.();
               }}
-              className="absolute -right-12 sm:-right-16 bottom-2 sm:bottom-3 z-25 pointer-events-auto hidden sm:flex items-center text-xs sm:text-[13px] font-bold tracking-widest text-zinc-900 hover:text-black uppercase cursor-pointer transition-colors"
+              className="absolute -right-12 sm:-right-16 bottom-3 sm:bottom-4 z-25 pointer-events-auto hidden sm:flex items-center text-xs sm:text-[13px] font-bold tracking-widest text-zinc-900 hover:text-black uppercase cursor-pointer transition-colors"
             >
               <span>VIEW</span>
             </motion.button>
@@ -438,17 +451,6 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
           }}
           transition={{ duration: 0.4, delay: 0.7 }}
         >
-          <motion.button
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              soundFx.playSelect();
-              onOpenTerminal?.();
-            }}
-            className="cursor-pointer hover:text-black transition-colors duration-200 text-xs sm:text-[13px] font-bold"
-          >
-            Privacy Policy
-          </motion.button>
         </motion.div>
       </motion.footer>
 

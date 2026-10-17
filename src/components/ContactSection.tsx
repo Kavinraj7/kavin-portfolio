@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Copy, MessageSquare, Phone, Mail, Sparkles, Send, Terminal } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CheckCircle2, Copy, FileText, MessageSquare, Phone, Mail, Sparkles, Send, Terminal } from 'lucide-react';
 import { soundFx } from '@/utils/audio';
 
 interface ContactSectionProps {
@@ -50,15 +50,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenTerminal }
 
   return (
     <footer id="contact-section" className="relative w-full pt-12 sm:pt-16 pb-8 sm:pb-10 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#08070F] text-zinc-100 overflow-hidden border-t border-zinc-800/80">
-      
+
       {/* Ambient Violet Glow */}
       <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[550px] bg-gradient-to-tr from-purple-500/15 via-violet-600/10 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
 
       <div className="w-full max-w-[1360px] mx-auto flex flex-col gap-8">
-        
+
         {/* Main 2-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
-          
+
           {/* LEFT COLUMN: Contact Typography & Meta Information */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -70,14 +70,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenTerminal }
             <div>
               {/* Header */}
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.08] font-sans">
-                Get in —<br />
-                <span className="text-zinc-200">touch with us</span>
+                Let's connect<br />
+                <span className="text-zinc-200">and grow</span>
               </h2>
 
               {/* Subtitle description */}
               <p className="text-base sm:text-lg text-zinc-400 mt-4 leading-relaxed font-normal max-w-md">
-                We&apos;re here to help! Whether you have a question about our systems, need assistance with your architecture, or want to discuss a new venture, our team is ready to assist you.
-              </p>
+                Open to exciting career opportunities, meaningful collaborations, and conversations with people building the future. I'd love to hear from you.</p>
 
               {/* Email Block */}
               <div className="mt-6 sm:mt-7 group">
@@ -88,7 +87,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenTerminal }
                   onClick={handleCopyEmail}
                   className="mt-1 flex items-center gap-2.5 text-xl sm:text-2xl lg:text-3xl font-bold text-white hover:text-purple-400 transition-colors cursor-pointer text-left break-all sm:break-normal"
                 >
-                  <span>kavinraj.dev@gmail.com</span>
+                  <span>itskavinoffc@gmail.com</span>
                   <span className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg bg-zinc-800 text-xs font-mono font-normal text-zinc-300 shrink-0">
                     {copiedEmail ? 'Copied!' : <Copy className="w-4 h-4" />}
                   </span>
@@ -101,10 +100,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenTerminal }
                   Phone:
                 </div>
                 <div className="text-xl sm:text-2xl font-bold text-white mt-0.5">
-                  +91 98765 43210
-                </div>
-                <div className="text-xs sm:text-sm text-zinc-400 mt-0.5 font-medium">
-                  Available Monday to Friday, 9 AM - 6 PM GMT
+                  +91 88259 70517
                 </div>
               </div>
             </div>
@@ -119,7 +115,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenTerminal }
             className="lg:col-span-7 bg-[#13111C] rounded-[32px] sm:rounded-[40px] p-6 sm:p-8 lg:p-9 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] border border-zinc-800/90 relative"
           >
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5">
-              
+
               {/* Top Row: First Name & Last Name */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 {/* First Name */}
@@ -219,7 +215,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenTerminal }
 
         </div>
 
-        {/* BOTTOM ACTION ROW: Live Chat on Left + Social Logos to the Right below the form */}
+        {/* BOTTOM ACTION ROW: My Resume on Left + Social Logos to the Right below the form */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -227,19 +223,23 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenTerminal }
           transition={{ duration: 0.5, delay: 0.2 }}
           className="w-full flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-zinc-800/80"
         >
-          {/* Live Chat Button */}
-          <motion.button
+          {/* My Resume Button */}
+          <motion.a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => soundFx.playSelect()}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
-            onClick={handleLiveChat}
-            className="inline-flex items-center gap-3 px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-zinc-200 text-black font-semibold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all cursor-pointer group active:scale-95"
+            className="inline-flex items-center gap-2.5 px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-zinc-200 text-black font-semibold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all cursor-pointer group active:scale-95"
+            title="View My Resume"
           >
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Live Chat</span>
-            <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
-              <ArrowRight className="w-3.5 h-3.5" />
+            <FileText className="w-4 h-4 text-zinc-900" />
+            <span>My Resume</span>
+            <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
+              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-900" />
             </div>
-          </motion.button>
+          </motion.a>
 
           {/* Social Logos */}
           <div className="flex items-center gap-2.5 sm:gap-3">

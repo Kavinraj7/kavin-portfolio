@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils";
 export interface FeatureItem {
   id: string;
   label: string;
+  title: string;
   icon: LucideIcon;
   image: string;
   description: string;
@@ -30,93 +31,73 @@ export interface FeatureItem {
 export const DEFAULT_ACHIEVEMENTS: FeatureItem[] = [
   {
     id: "impact",
-    label: "Enterprise Impact",
+    label: "WEB & APP DEVELOPMENT CLUB",
+    title: "Club President",
     icon: Trophy,
     image:
       "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop",
-    description: "$42M+ in cumulative career impact through high-velocity software engineering and platform scalability.",
-    metric: "$42M+ Impact",
+    description: "Leading the Web & App Development Club while learning, building, and helping others grow with technology.",
+    metric: "Club Leadership",
   },
   {
-    id: "hackathon",
-    label: "Hackathon Winner",
-    icon: Award,
-    image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200&auto=format&fit=crop",
-    description: "1st Place Global Systems & AI Hackathon building autonomous agentic reasoning pipelines.",
-    metric: "1st Place Global",
+    id: "gdsc",
+    label: "GOOGLE DEVELOPER STUDENT CLUB",
+    title: "AIML Lead",
+    icon: Trophy,
+    image: "...",
+    description:
+      "Leading AIML initiatives, encouraging technical exploration, and helping students discover practical applications of AI.",
+    metric: "AIML Leadership",
   },
   {
-    id: "leadership",
-    label: "Scaled 65+ Engineers",
-    icon: Users,
-    image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop",
-    description: "Directed distributed engineering pods from 8 to 65+ engineers across multiple international hubs.",
-    metric: "65+ Headcount",
+    id: "gdg",
+    label: "GOOGLE DEVELOPER GROUP",
+    title: "Management Lead",
+    icon: Trophy,
+    image: "...",
+    description:
+      "Managing community activities, coordinating people and events, and helping turn technical ideas into engaging experiences.",
+    metric: "Management Leadership",
   },
   {
-    id: "reliability",
-    label: "99.99% Availability",
-    icon: ShieldCheck,
-    image:
-      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop",
-    description: "Architected fault-tolerant cloud backbones exceeding strict enterprise SLA requirements over 3+ years.",
-    metric: "99.99% SLA",
+    id: "lingua",
+    label: "LINGUA CLUB",
+    title: "Club President",
+    icon: Trophy,
+    image: "...",
+    description:
+      "Leading a communication-focused community that encouraged students to express, collaborate, participate, and grow.",
+    metric: "People & Culture",
   },
   {
-    id: "performance",
-    label: "Sub-15ms Latency",
-    icon: Zap,
-    image:
-      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop",
-    description: "Built high-frequency streaming engine handling 120k+ concurrent WebSocket connections globally.",
-    metric: "120k Streams",
+    id: "hackathons",
+    label: "24hrs HACKATHON",
+    title: "Hackathon Organizer",
+    icon: Trophy,
+    image: "...",
+    description:
+      "Organizing large-scale hackathons by bringing participants, teams, mentors, judges, and ideas together.",
+    metric: "200+ Participants",
   },
   {
-    id: "speaking",
-    label: "Keynote Speaker",
-    icon: Mic2,
-    image:
-      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1200&auto=format&fit=crop",
-    description: "Invited speaker at international developer conferences on modern web architectures and AI agents.",
-    metric: "15+ Talks",
+    id: "symposiums",
+    label: "TECHNICAL SYMPOSIUMS",
+    title: "Event Organizer",
+    icon: Trophy,
+    image: "...",
+    description:
+      "Planning and coordinating technical events while managing people, activities, communication, and on-ground execution.",
+    metric: "Event Operations",
   },
   {
-    id: "opensource",
-    label: "Open Source Craft",
-    icon: GitBranch,
-    image:
-      "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=1200&auto=format&fit=crop",
-    description: "Creator and maintainer of open-source UI libraries and utility frameworks with 5,000+ GitHub stars.",
-    metric: "5k+ Stars",
-  },
-  {
-    id: "culture",
-    label: "Zero Attrition",
-    icon: HeartHandshake,
-    image:
-      "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop",
-    description: "Achieved 0% regrettable attrition across core technical leads over a sustained 24-month horizon.",
-    metric: "96.2% Retention",
-  },
-  {
-    id: "ai-patent",
-    label: "Autonomous AI Engine",
-    icon: Bot,
-    image:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
-    description: "Engineered context-aware self-grounding agentic workflows saving 1,200 quarterly engineering hours.",
-    metric: "60% Task Automation",
-  },
-  {
-    id: "mentorship",
-    label: "Community Mentor",
-    icon: Globe2,
-    image:
-      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop",
-    description: "Coached 500+ aspiring software engineers and students through workshops, hackathons, and 1:1 mentorship.",
-    metric: "500+ Mentees",
+    id: "paper-presentations",
+    label: "PAPER PRESENTATIONS",
+    title: "Paper Presenter",
+    icon: Trophy,
+    image: "...",
+    description:
+      "Presenting technical ideas and research across competitions, developing the ability to explain complex concepts with clarity.",
+    metric: "5+ Recognitions",
   },
 ];
 
@@ -173,20 +154,14 @@ export function FeatureCarousel({
   return (
     <div className={cn("w-full max-w-7xl mx-auto md:p-4 lg:p-6", className)}>
       <div className="relative overflow-hidden rounded-[2.2rem] lg:rounded-[3.5rem] flex flex-col lg:flex-row min-h-[560px] lg:min-h-[600px] border border-zinc-200/90 dark:border-white/10 shadow-2xl bg-zinc-950">
-        
+
         {/* Left Column: Vertical Floating Carousel Menu */}
         <div className="w-full lg:w-[42%] min-h-[340px] md:min-h-[420px] lg:h-auto relative z-30 flex flex-col items-start justify-center overflow-hidden px-6 sm:px-10 md:px-14 lg:pl-14 bg-gradient-to-br from-[#7C3AED] via-[#6366F1] to-[#4F46E5] dark:from-[#5B21B6] dark:via-[#4338CA] dark:to-[#312E81]">
           {/* Top & Bottom Vignette Mask */}
           <div className="absolute inset-x-0 top-0 h-14 md:h-20 lg:h-18 bg-gradient-to-b from-[#7C3AED] dark:from-[#5B21B6] via-[#7C3AED]/80 dark:via-[#5B21B6]/80 to-transparent z-40 pointer-events-none" />
           <div className="absolute inset-x-0 bottom-0 h-14 md:h-20 lg:h-18 bg-gradient-to-t from-[#4F46E5] dark:from-[#312E81] via-[#4F46E5]/80 dark:via-[#312E81]/80 to-transparent z-40 pointer-events-none" />
-          
-          {/* Menu Title Pill */}
-          <div className="absolute top-5 left-6 sm:left-10 lg:left-14 z-50">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white font-mono text-[10px] font-bold uppercase tracking-widest border border-white/30 shadow-xs">
-              <Sparkles className="w-3 h-3" />
-              <span>Milestone Explorer</span>
-            </span>
-          </div>
+
+
 
           <div className="relative w-full h-full flex items-center justify-center lg:justify-start z-20 py-12">
             {features.map((feature, index) => {
@@ -252,7 +227,7 @@ export function FeatureCarousel({
 
         {/* Right Column: 3D Animated Card Showcase */}
         <div className="flex-1 min-h-[460px] md:min-h-[540px] lg:h-auto relative bg-[#0E0C16] dark:bg-[#07060B] flex items-center justify-center py-12 md:py-16 lg:py-12 px-4 sm:px-8 lg:px-10 overflow-hidden border-t lg:border-t-0 lg:border-l border-zinc-800/80">
-          
+
           {/* Ambient Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-purple-600/15 blur-3xl rounded-full pointer-events-none" />
 
@@ -320,16 +295,24 @@ export function FeatureCarousel({
                         transition={{ duration: 0.4, delay: 0.1 }}
                         className="absolute inset-x-0 bottom-0 p-6 sm:p-8 pt-24 flex flex-col justify-end pointer-events-none z-10"
                       >
-                        {feature.metric && (
-                          <div className="bg-purple-500/80 text-white px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider w-fit shadow-md mb-2.5 border border-purple-300/40 backdrop-blur-md">
-                            {feature.metric}
-                          </div>
-                        )}
+                        {/* Label Badge & Metric Tag */}
+                        <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                          <span className="bg-white/15 text-white px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider backdrop-blur-md border border-white/20">
+                            {feature.label}
+                          </span>
+                          {feature.metric && (
+                            <div className="bg-purple-500/80 text-white px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider shadow-md border border-purple-300/40 backdrop-blur-md">
+                              {feature.metric}
+                            </div>
+                          )}
+                        </div>
 
+                        {/* Title */}
                         <h4 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white font-sans leading-tight">
-                          {feature.label}
+                          {feature.title || feature.label}
                         </h4>
 
+                        {/* Description */}
                         <p className="text-zinc-300 font-normal text-xs sm:text-sm leading-relaxed mt-2 drop-shadow-sm max-w-sm">
                           {feature.description}
                         </p>

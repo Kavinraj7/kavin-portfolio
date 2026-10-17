@@ -30,29 +30,24 @@ interface TimelineProps {
 
 const defaultItems: TimelineItem[] = [
   {
-    year: "2025",
+    year: "2026",
     company: "Praskla",
     companySubtitle: "Technology",
+    logoImage: "/praskla.jpg",
     tags: [
-      "TECHNICAL LEADERSHIP",
-      "SYSTEM ARCHITECTURE",
-      "PRODUCT STRATEGY",
-      "CLIENT COLLABORATION",
-      "AGILE DELIVERY"
+      "ADMINISTRATION",
+      "MANAGEMENT OPERATIONS",
+      "WORKFLOW OPTIMIZATION",
+      "TEAM COORDINATION",
+      "ORGANIZATIONAL LEADERSHIP"
     ],
-    viewLink: "#",
+    viewLink: "https://prasklatechnology.com/",
     roles: [
       {
-        role: "Technical Project Lead",
-        period: "Present",
+        role: "Technical Project Manager",
+        period: "November 2025 – Present",
         description:
-          "Leading the engineering team taught me to look beyond code. I now focus on technical architecture, solving complex problems, guiding developers, and making decisions that shape the product."
-      },
-      {
-        role: "Founding Developer",
-        period: "February 2025",
-        description:
-          "Building products from day one taught me ownership. Working with overseas clients and shipping enterprise applications showed me how thoughtful engineering creates products people can trust."
+          "Managing technical projects taught me to connect business needs with engineering execution. I coordinated client requirements, team workflows, project progress, and delivery to keep projects aligned with their goals."
       }
     ],
     logoSvg: (
@@ -86,29 +81,30 @@ const defaultItems: TimelineItem[] = [
     )
   },
   {
-    year: "2024",
-    company: "Autonomous AI",
-    companySubtitle: "Labs & Platform",
+    year: "2025",
+    company: "Praskla",
+    companySubtitle: "Technology",
+    logoImage: "/praskla.jpg",
     tags: [
-      "LLM ORCHESTRATION",
-      "AI AGENTS & MCP",
-      "NEURAL ARCHITECTURE",
-      "FULL STACK SCALE",
-      "PERFORMANCE"
+      "TECHNICAL LEADERSHIP",
+      "PROJECT MANAGEMENT",
+      "CLIENT COLLABORATION",
+      "SOFTWARE DEVELOPMENT",
+      "TEAM COORDINATION"
     ],
-    viewLink: "#",
+    viewLink: "https://prasklatechnology.com/",
     roles: [
       {
-        role: "Senior AI & Full-Stack Engineer",
-        period: "2024 - 2025",
+        role: "Technical Team Lead",
+        period: "June 2025 – September 2025",
         description:
-          "Spearheaded agentic workflow integration and custom LLM microservices. Built scalable agent toolsets connecting external data sources with high-throughput inference."
+          "Taking responsibility for the team helped me grow beyond individual development. I guided technical work, coordinated tasks, supported management activities, and helped keep the team aligned with project goals."
       },
       {
-        role: "Core Platform Contributor",
-        period: "Early 2024",
+        role: "Software Developer & Management Associate",
+        period: "March 2025 – May 2025",
         description:
-          "Engineered developer toolkits and real-time streaming interfaces, reducing end-to-end API inference latency by 40% across distributed services."
+          "Building software while assisting with management activities gave me a broader view of the business. I contributed to development tasks while supporting coordination, workflows, and day-to-day operational needs."
       }
     ],
     logoSvg: (
@@ -124,29 +120,24 @@ const defaultItems: TimelineItem[] = [
     )
   },
   {
-    year: "2023",
-    company: "CloudScale",
-    companySubtitle: "Infrastructure",
+    year: "2025",
+    company: "CubeAI",
+    companySubtitle: "Solutions",
+    logoImage: "/cubeai.jpg",
     tags: [
-      "CLOUD ARCHITECTURE",
-      "KUBERNETES & AWS",
-      "CI/CD PIPELINES",
-      "MICROSERVICES",
-      "ZERO DOWNTIME"
+      "DATA ANALYTICS",
+      "PYTHON",
+      "SQL",
+      "POWER BI",
+      "DATA VISUALIZATION"
     ],
-    viewLink: "#",
+    viewLink: "https://www.cubeaisolutions.com/",
     roles: [
       {
-        role: "Cloud & Distributed Systems Engineer",
-        period: "2023 - 2024",
+        role: "Data Analytics Intern",
+        period: "January 2025 – March 2025",
         description:
-          "Designed resilient cloud infrastructure, automated multi-region deployments, and zero-downtime microservice orchestration using Kubernetes and AWS."
-      },
-      {
-        role: "Backend Infrastructure Developer",
-        period: "Early 2023",
-        description:
-          "Constructed high-throughput REST and GraphQL services with Redis caching, serving thousands of concurrent active client requests."
+          "Working with data introduced me to the process of turning raw information into useful insights. I explored data preparation, analysis, querying, and visualization to support clearer reporting and data-driven decisions."
       }
     ],
     logoSvg: (
@@ -158,29 +149,24 @@ const defaultItems: TimelineItem[] = [
     )
   },
   {
-    year: "2022",
-    company: "Interactive Web",
-    companySubtitle: "Studio",
+    year: "2024",
+    company: "Object Automation",
+    companySubtitle: "System Solutions Pvt. Ltd.",
+    logoImage: "/objectautomation.jpg",
     tags: [
-      "FRONTEND ARCHITECTURE",
-      "REACT & NEXT.JS",
-      "THREE.JS / WEBGL",
-      "DESIGN SYSTEMS",
-      "MOTION UX"
+      "ARTIFICIAL INTELLIGENCE",
+      "MACHINE LEARNING",
+      "PYTHON",
+      "DATA PREPROCESSING",
+      "MODEL EVALUATION"
     ],
-    viewLink: "#",
+    viewLink: "https://object-automation.com/",
     roles: [
       {
-        role: "Lead Frontend Architect",
-        period: "2022 - 2023",
+        role: "AIML Intern",
+        period: "July 2024 – August 2024",
         description:
-          "Crafted high-fidelity web applications with fluid animations, WebGL 3D visualizations, and sub-second load times across cross-platform environments."
-      },
-      {
-        role: "UI/UX Engineering Specialist",
-        period: "2022",
-        description:
-          "Standardized design tokens and atomic UI component libraries, accelerating sprint velocity and visual consistency across products."
+          "My introduction to AI and machine learning helped me understand how data becomes a predictive model. I explored programming, data preparation, machine learning concepts, and the fundamentals of developing and evaluating models."
       }
     ],
     logoSvg: (
@@ -191,29 +177,24 @@ const defaultItems: TimelineItem[] = [
     )
   },
   {
-    year: "2021",
-    company: "Genesis Tech",
-    companySubtitle: "Innovations",
+    year: "2023",
+    company: "ATmega Software",
+    companySubtitle: "Technologies LLP",
+    logoImage: "/atmega.jpg",
     tags: [
-      "FULL STACK FOUNDATION",
-      "DATA STRUCTURES",
-      "RESTFUL APIS",
-      "AGILE DEVELOPMENT",
-      "CLEAN CODE"
+      "PROJECT MANAGEMENT",
+      "JIRA",
+      "KANBAN",
+      "TASK TRACKING",
+      "PROJECT COORDINATION"
     ],
-    viewLink: "#",
+    viewLink: "https://www.atmega.in/",
     roles: [
       {
-        role: "Full Stack Software Engineer",
-        period: "2021 - 2022",
+        role: "Project Management Intern",
+        period: "April 2023 – May 2023",
         description:
-          "Built end-to-end web applications, mastering full lifecycle product engineering, database design, and agile team delivery workflows."
-      },
-      {
-        role: "Junior Software Developer",
-        period: "2021",
-        description:
-          "Contributed to core feature rollouts, bug resolution, and automated unit testing suites with strong adherence to engineering best practices."
+          "This internship introduced me to structured project execution and team workflows. I explored Jira, task tracking, Kanban boards, and project coordination, building an early understanding of how teams plan and manage work."
       }
     ],
     logoSvg: (
@@ -443,7 +424,7 @@ export const Timeline = ({
               className="w-full bg-[#18181B] dark:bg-[#151419] text-white border border-zinc-800/90 rounded-[28px] sm:rounded-[36px] p-5 sm:p-7 lg:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col justify-between min-h-[380px] sm:min-h-[420px] lg:min-h-[440px] overflow-hidden"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start w-full">
-                
+
                 {/* LEFT CONTENT AREA: Company Header & Role Timeline List */}
                 <div className="lg:col-span-7 flex flex-col">
                   {/* Company Name Header */}
@@ -486,23 +467,47 @@ export const Timeline = ({
 
                 {/* RIGHT CONTENT AREA: Centered Logo Box on Top, View Button & Skill Tags Below */}
                 <div className="lg:col-span-5 flex flex-col items-center justify-center text-center gap-4 w-full lg:pl-4">
-                  
+
                   {/* 1. Square Logo Box (Centered) */}
-                  <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-36 lg:h-36 shrink-0 bg-white rounded-2xl p-3 flex items-center justify-center shadow-xl border border-zinc-200/20 mx-auto">
-                    {activeItem.logoSvg ? (
-                      activeItem.logoSvg
-                    ) : activeItem.logoImage ? (
-                      <img
-                        src={activeItem.logoImage}
-                        alt={activeItem.company}
-                        className="w-full h-full object-contain p-2"
-                      />
-                    ) : (
-                      <div className="w-16 h-16 rounded-xl bg-zinc-900 flex items-center justify-center text-white font-black text-xl">
-                        {activeItem.company.charAt(0)}
-                      </div>
-                    )}
-                  </div>
+                  {activeItem.viewLink ? (
+                    <a
+                      href={activeItem.viewLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-32 h-32 sm:w-36 sm:h-36 lg:w-36 lg:h-36 shrink-0 bg-white rounded-2xl p-3 flex items-center justify-center shadow-xl border border-zinc-200/20 mx-auto overflow-hidden hover:scale-105 transition-all duration-300 group/logo cursor-pointer"
+                      title={`Visit ${activeItem.company} Website`}
+                    >
+                      {activeItem.logoImage ? (
+                        <img
+                          src={activeItem.logoImage}
+                          alt={activeItem.company}
+                          className="w-full h-full object-contain rounded-xl p-1 group-hover/logo:scale-105 transition-transform duration-300"
+                        />
+                      ) : activeItem.logoSvg ? (
+                        activeItem.logoSvg
+                      ) : (
+                        <div className="w-16 h-16 rounded-xl bg-zinc-900 flex items-center justify-center text-white font-black text-xl">
+                          {activeItem.company.charAt(0)}
+                        </div>
+                      )}
+                    </a>
+                  ) : (
+                    <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-36 lg:h-36 shrink-0 bg-white rounded-2xl p-3 flex items-center justify-center shadow-xl border border-zinc-200/20 mx-auto overflow-hidden">
+                      {activeItem.logoImage ? (
+                        <img
+                          src={activeItem.logoImage}
+                          alt={activeItem.company}
+                          className="w-full h-full object-contain rounded-xl p-1"
+                        />
+                      ) : activeItem.logoSvg ? (
+                        activeItem.logoSvg
+                      ) : (
+                        <div className="w-16 h-16 rounded-xl bg-zinc-900 flex items-center justify-center text-white font-black text-xl">
+                          {activeItem.company.charAt(0)}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* 2. Action Button & Skills Tags (Centered Below Logo Area) */}
                   <div className="w-full flex flex-col items-center justify-center text-center gap-3">

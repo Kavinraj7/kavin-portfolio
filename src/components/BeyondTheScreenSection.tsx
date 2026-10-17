@@ -16,26 +16,14 @@ export const BeyondTheScreenSection: React.FC<BeyondTheScreenSectionProps> = ({
 }) => {
   return (
     <section className="relative w-full py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#F3F2F6] dark:bg-[#0E0C16] text-black dark:text-zinc-100 transition-colors duration-300 overflow-hidden border-t border-zinc-200/80 dark:border-zinc-800/80">
-      
+
       {/* Background Ambient Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-purple-500/12 via-indigo-600/8 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
 
       <div className="w-full max-w-[1400px] mx-auto flex flex-col items-center">
-        
+
         {/* Section Header */}
         <div className="w-full max-w-4xl mx-auto flex flex-col items-center text-center mb-8 sm:mb-12">
-          
-          {/* Pill Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100/90 dark:bg-purple-950/70 border border-purple-200 dark:border-purple-800/50 text-purple-700 dark:text-purple-300 text-[11px] font-bold font-mono uppercase tracking-wider mb-3 shadow-2xs"
-          >
-            <Trophy className="w-3.5 h-3.5" />
-            <span>Honors & Milestones</span>
-          </motion.div>
 
           {/* Requested Headline: Beyond the screen */}
           <motion.h2
@@ -56,8 +44,7 @@ export const BeyondTheScreenSection: React.FC<BeyondTheScreenSectionProps> = ({
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 mt-3 max-w-2xl mx-auto font-normal leading-relaxed"
           >
-            Key career milestones, global hackathon victories, high-impact organizational leadership, and community mentorship beyond day-to-day code.
-          </motion.p>
+            The communities I led, the events I built, and the experiences that shaped me beyond code.          </motion.p>
         </div>
 
         {/* Feature Carousel Component */}

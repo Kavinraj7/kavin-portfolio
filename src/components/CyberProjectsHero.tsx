@@ -55,7 +55,7 @@ export const CyberProjectsHero: React.FC<CyberProjectsHeroProps> = ({
   onSelectDomain,
 }) => {
   return (
-    <div className="relative w-full h-full bg-[#dce4e6] dark:bg-[#0c1015] text-[#111417] dark:text-[#f2f6f9] overflow-hidden flex flex-col justify-between pt-2 sm:pt-4 pb-4 sm:pb-5 px-4 sm:px-8 md:px-12 lg:px-16 font-sans select-none">
+    <div className="relative w-full h-full bg-[#dce4e6] dark:bg-[#0c1015] text-[#111417] dark:text-[#f2f6f9] overflow-hidden flex flex-col justify-between pt-16 sm:pt-20 pb-4 sm:pb-6 px-4 sm:px-8 md:px-12 lg:px-16 font-sans select-none">
 
       {/* 1. TOP VERTICAL RADIANT LIGHT BEAM */}
       <motion.div
@@ -78,10 +78,10 @@ export const CyberProjectsHero: React.FC<CyberProjectsHeroProps> = ({
           className="relative
             w-[280px] h-[62vh]
             sm:w-[520px] sm:h-[82vh]
-            md:w-[700px] md:h-[92vh]
+            md:w-[700px] md:h-[90vh]
             lg:w-[840px] lg:h-[94vh]
             xl:w-[940px] xl:h-[96vh]
-            max-h-[640px]
+            max-h-[860px]
             flex items-end justify-center"
         >
           <Image
@@ -108,7 +108,7 @@ export const CyberProjectsHero: React.FC<CyberProjectsHeroProps> = ({
               transition={{ duration: 0.75, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="text-[3.2rem] font-black tracking-[-0.065em] text-black dark:text-white uppercase leading-[0.85]"
             >
-              MEET MY
+              CHECK MY
             </motion.h1>
           </div>
           <div className="overflow-hidden">
@@ -165,7 +165,7 @@ export const CyberProjectsHero: React.FC<CyberProjectsHeroProps> = ({
                 transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className="text-6xl sm:text-7xl md:text-8xl lg:text-[6.8rem] xl:text-[8.5rem] font-black tracking-[-0.07em] text-black dark:text-white uppercase leading-[0.82] select-none pr-1"
               >
-                MEE T
+                CHECK
               </motion.h1>
             </div>
 
@@ -198,7 +198,7 @@ export const CyberProjectsHero: React.FC<CyberProjectsHeroProps> = ({
                 transition={{ duration: 0.7, delay: 0.8 }}
                 className="max-w-[260px] sm:max-w-xs text-xs sm:text-[13px] font-medium text-black/70 dark:text-white/70 leading-relaxed"
               >
-                Step into effortless style with our refined and comfortable essentials
+                Want to know more? Chat with my AI and explore my work, ideas, and journey.
               </motion.p>
 
               <motion.div
@@ -212,7 +212,7 @@ export const CyberProjectsHero: React.FC<CyberProjectsHeroProps> = ({
                 }}
               >
                 <div className="bg-black dark:bg-white text-white dark:text-black px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm tracking-tight shadow-lg group-hover:bg-black/90 transition-all">
-                  Explore Our Store
+                  ASK KAVIN AI
                 </div>
                 <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shadow-lg group-hover:scale-105 active:scale-95 transition-all">
                   <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

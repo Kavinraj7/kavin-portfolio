@@ -65,7 +65,7 @@ export default function AboutPage() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 pt-16 flex flex-col w-full">
+      <main className="flex-1 flex flex-col w-full">
         <AboutSection
           onNavigateHome={() => router.push('/')}
           onNavigateJourney={() => router.push('/?tab=journey')}

@@ -61,8 +61,8 @@ function subtext(c: Ctx, headline: string, desc: string, ink: string) {
 const METHODOLOGY_PLATES = [
   {
     item: {
-      title: 'Deep Inquiry & Discovery',
-      caption: 'Stage 01 • Problem framing, technical constraints & stakeholder alignment',
+      title: 'Understand First',
+      caption: 'Stage 01 • Problem discovery, requirements & stakeholder alignment',
       alt: 'Deep Inquiry & Discovery plate',
     },
     bg: '#F8FAFC',
@@ -82,19 +82,19 @@ const METHODOLOGY_PLATES = [
         c.lineTo(x, H);
         c.stroke();
       }
-      plate(c, '01', '#0F172A', 'Phase 01 — Inquiry & Research');
+      plate(c, '01', '#0F172A', 'Phase 01 — UNDERSTAND');
       subtext(
         c,
-        'DISCOVERY & MAPPING',
-        'Deconstruct complex domain challenges into fundamental architectural prerequisites.',
+        'CONTEXT BEFORE CODE',
+        'Understand the problem, people, requirements, constraints, and desired outcome before deciding what to build.',
         '#0F172A'
       );
     },
   },
   {
     item: {
-      title: 'First Principles Blueprint',
-      caption: 'Stage 02 • System topology, schema architecture & interface design',
+      title: 'Strategic Blueprint',
+      caption: 'Stage 02 • Architecture, workflows & execution planning',
       alt: 'First Principles Blueprint plate',
     },
     bg: '#0F172A',
@@ -117,19 +117,19 @@ const METHODOLOGY_PLATES = [
       disc(c, 1280, 220, 8, '#38BDF8');
       disc(c, 1200, 520, 8, '#38BDF8');
       disc(c, 380, 580, 8, '#38BDF8');
-      plate(c, '02', '#F8FAFC', 'Phase 02 — System Architecture');
+      plate(c, '02', '#F8FAFC', 'Phase 02 — PLAN');
       subtext(
         c,
-        'BLUEPRINT & PRINCIPLES',
-        'Model scalable schemas, decoupling dependencies for high reliability and throughput.',
+        'BLUEPRINT THE SOLUTION',
+        'Break the problem into clear goals, workflows, technologies, responsibilities, and measurable milestones.',
         '#F8FAFC'
       );
     },
   },
   {
     item: {
-      title: 'Agile Velocity & Build',
-      caption: 'Stage 03 • Fast feedback loops, continuous delivery & clean code',
+      title: 'Build & Iterate',
+      caption: 'Stage 03 • Development, analysis & collaborative execution',
       alt: 'Agile Velocity & Build plate',
     },
     bg: '#F8FAFC',
@@ -146,19 +146,19 @@ const METHODOLOGY_PLATES = [
       for (const [x, y, w, h, fill] of rays) {
         rect(c, x, y, w, h, fill, 0.85);
       }
-      plate(c, '03', '#0F172A', 'Phase 03 — Agile Engineering');
+      plate(c, '03', '#0F172A', 'Phase 03 — BUILD');
       subtext(
         c,
-        'EXECUTION & VELOCITY',
-        'Iterative delivery with automated testing, CI/CD pipelines, and zero-defect focus.',
+        'TURN IDEAS INTO SYSTEMS',
+        'Build iteratively, combining the right technologies, data, people, and processes to create a practical solution.',
         '#0F172A'
       );
     },
   },
   {
     item: {
-      title: 'Talent, Culture & Governance',
-      caption: 'Stage 04 • Cross-team synergy, rigorous code reviews & developer growth',
+      title: 'Refine & Validate',
+      caption: 'Stage 04 • Testing, feedback, analysis & continuous improvement',
       alt: 'Talent & Culture plate',
     },
     bg: '#18181B',
@@ -167,19 +167,19 @@ const METHODOLOGY_PLATES = [
       disc(c, 1050, 380, 190, '#F43F5E', 0.25);
       disc(c, 1180, 460, 140, '#FB7185', 0.3);
       shape(c, 'M850 560 C 950 420, 1200 420, 1300 560 Z', '#E11D48', 0.7);
-      plate(c, '04', '#F9FAFB', 'Phase 04 — Team Culture');
+      plate(c, '04', '#F9FAFB', 'Phase 04 — VALIDATE');
       subtext(
         c,
-        'COLLABORATION & GOVERNANCE',
-        'Fostering high-trust team environments with structured RFCs and actionable mentorship.',
+        'MAKE IT BETTER',
+        'Test assumptions, evaluate outcomes, gather feedback, and refine the solution until it works for both users and objectives.',
         '#F9FAFB'
       );
     },
   },
   {
     item: {
-      title: 'Measured Impact & Scaling',
-      caption: 'Stage 05 • Telemetry monitoring, performance tuning & resilient scale',
+      title: 'Deliver With Purpose',
+      caption: 'Stage 05 • Deployment, communication & measurable outcomes',
       alt: 'Measured Impact & Scale plate',
     },
     bg: '#F8FAFC',
@@ -190,11 +190,11 @@ const METHODOLOGY_PLATES = [
       disc(c, 1100, 420, 220, '#6366F1', 0.12);
       disc(c, 1100, 420, 130, '#4F46E5', 0.85);
       disc(c, 1100, 420, 60, '#FFFFFF');
-      plate(c, '05', '#0F172A', 'Phase 05 — Scale & Impact');
+      plate(c, '05', '#0F172A', 'Phase 05 — DELIVER');
       subtext(
         c,
-        'OPTIMIZATION & SCALE',
-        'Continuous telemetry, bottleneck elimination, and resilient infrastructure growth.',
+        'FROM WORK TO IMPACT',
+        'Bring everything together for delivery, communicate the outcome clearly, and measure what the work achieves.',
         '#0F172A'
       );
     },
@@ -232,13 +232,13 @@ export const HowIWorkSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
         <div className="flex flex-col items-center text-center">
           <span className="text-xs sm:text-sm font-mono tracking-[0.25em] text-zinc-500 font-bold mb-3 uppercase">
-            Execution &bull; Engineering Process
+            THINKING • EXECUTION • DELIVERY
           </span>
           <h2 className="font-display font-black tracking-tight text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-zinc-950 uppercase leading-none">
             HOW I WORK
           </h2>
           <p className="mt-4 text-sm sm:text-base text-zinc-600 max-w-xl">
-            Drag the edge or flick each sheet to explore the 5 core phases of my product & engineering methodology.
+            I understand what needs to be solved, build with intent, test what matters, and deliver what works.
           </p>
         </div>
       </div>

@@ -21,9 +21,11 @@ import { HorizonHeroSection } from '@/components/ui/horizon-hero-section';
 import { AboutSection } from '@/components/AboutSection';
 import { ProjectsTab } from '@/components/ProjectsTab';
 import { TerminalModal } from '@/components/TerminalModal';
+import { IntroCanvasScreen } from '@/components/IntroCanvasScreen';
 import { soundFx } from '@/utils/audio';
 
 export default function Home() {
+  const [hasExplored, setHasExplored] = useState(false);
   const [activeTab, setActiveTab] = useState<NavTab>('home');
   const [selectedPerspective, setSelectedPerspective] = useState<PerspectiveKey | null>(null);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
@@ -113,28 +115,37 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
-      {/* Top Fixed Header with Home, About, Projects, and Journey tabs */}
-      <Header
-        activeTab={activeTab}
-        onSelectTab={setActiveTab}
-        isDarkMode={isDarkMode}
-        setIsDarkMode={handleSetDarkMode}
-        onOpenTerminal={() => setIsTerminalOpen(true)}
-      />
+      {/* Intro Canvas Starting Screen */}
+      <AnimatePresence>
+        {!hasExplored && (
+          <IntroCanvasScreen onExplore={() => setHasExplored(true)} />
+        )}
+      </AnimatePresence>
 
-      {/* Main Content Area */}
-      <main className="flex-1 pt-16 flex flex-col w-full">
-        <AnimatePresence mode="wait">
-          {activeTab === 'home' ? (
-            <motion.div
-              key="home-section"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              style={{ willChange: 'opacity' }}
-              className="w-full flex flex-col items-center"
-            >
+      {/* Top Fixed Header with Home, About, Projects, and Journey tabs */}
+      {hasExplored && (
+        <>
+          <Header
+            activeTab={activeTab}
+            onSelectTab={setActiveTab}
+            isDarkMode={isDarkMode}
+            setIsDarkMode={handleSetDarkMode}
+            onOpenTerminal={() => setIsTerminalOpen(true)}
+          />
+
+          {/* Main Content Area */}
+          <main className="flex-1 flex flex-col w-full">
+            <AnimatePresence mode="wait">
+              {activeTab === 'home' ? (
+                <motion.div
+                  key="home-section"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ willChange: 'opacity' }}
+                  className="w-full flex flex-col items-center"
+                >
               {/* Section 1: Home Hero Section (Urban / Built for the Bold Editorial) */}
               <UrbanHeroSection
                 onOpenTerminal={() => setIsTerminalOpen(true)}
@@ -304,6 +315,8 @@ export default function Home() {
           )}
         </AnimatePresence>
       </main>
+    </>
+  )}
 
       {/* Interactive Terminal Modal */}
       <TerminalModal

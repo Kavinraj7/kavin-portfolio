@@ -19,115 +19,147 @@ export interface ZoomSliderItem {
 export const DEFAULT_ACHIEVEMENTS_DATA: ZoomSliderItem[] = [
   {
     number: "01",
-    src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&auto=format&fit=crop&q=80",
-    title: "GLOBAL HACKATHON WINNER",
-    desc: "1st Place Winner across 1,200+ global engineering teams",
-    category: "AWARDS & RECOGNITIONS",
-    longDesc: "Awarded 1st Place Grand Prize for architecting an autonomous, decentralized AI platform with multi-agent orchestration and zero-latency consensus.",
+    src: "/images/achievements/gdsc-aiml.jpg",
+    title: "AIML COMMUNITY LEAD",
+    desc: "Led AI and machine learning initiatives at GDSC",
+    category: "GOOGLE DEVELOPER STUDENT CLUB",
+    longDesc:
+      "Served as the AIML Lead at GDSC, helping bring artificial intelligence and machine learning closer to the student community through technical initiatives, collaborative learning, and community engagement.",
     highlights: [
-      "1,200+ Competitor Teams Worldwide",
-      "Grand Champion Trophy & Innovation Prize",
-      "Production-Ready Architecture"
+      "AIML Lead at GDSC",
+      "AI & Machine Learning Community",
+      "Student Engagement",
+      "Technical Initiative Leadership"
     ],
-    tags: ["Next.js", "TypeScript", "AI Agents", "Solidity"],
+    tags: ["AI/ML", "Leadership", "Community", "Collaboration"]
   },
   {
     number: "02",
-    src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&auto=format&fit=crop&q=80",
-    title: "ENTERPRISE AT SCALE",
-    desc: "Architected systems serving 10M+ daily active transactions",
-    category: "SYSTEMS ARCHITECTURE",
-    longDesc: "Engineered resilient distributed cloud services processing over 10 million transactions daily with 99.999% SLA uptime and automated failover.",
+    src: "/images/achievements/first-hackathon.jpg",
+    title: "MY FIRST 24-HOUR HACKATHON",
+    desc: "Core team member of Namakkal's first 24-hour hackathon",
+    category: "HACKATHON ORGANIZATION",
+    longDesc:
+      "Joined the core team behind Namakkal's first 24-hour hackathon, organized through the student developer community. Being part of this milestone introduced me to the coordination, teamwork, and planning required to bring a large-scale technical event together.",
     highlights: [
-      "10M+ Daily Query Throughput",
-      "99.999% SLA High Availability",
-      "Sub-45ms Average Latency"
+      "Namakkal's First 24-Hour Hackathon",
+      "Core Organizing Team",
+      "150+ Participants",
+      "Event Planning & Coordination"
     ],
-    tags: ["AWS", "Kubernetes", "Redis", "Go"],
+    tags: ["GDSC/GDG", "Hackathon", "Teamwork", "Organization"]
   },
   {
     number: "03",
-    src: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&auto=format&fit=crop&q=80",
-    title: "OPEN SOURCE IMPACT",
-    desc: "1,500+ GitHub stars on distributed cloud orchestration tools",
-    category: "COMMUNITY & CODE",
-    longDesc: "Created developer toolkits and CLI utilities adopted by thousands of developers, with over 250,000 package downloads across npm and crates.io.",
+    src: "/images/achievements/gdg-management.jpg",
+    title: "MANAGEMENT LEAD",
+    desc: "Led management initiatives for the GDG Students community",
+    category: "GOOGLE DEVELOPER GROUP",
+    longDesc:
+      "Served as Management Lead for GDG Students, contributing to event coordination, organizational workflows, and collaboration within the developer community to help bring technical initiatives to life.",
     highlights: [
-      "1,500+ GitHub Stars",
-      "250k+ Worldwide Package Downloads",
-      "50+ Active Contributors"
+      "Management Lead at GDG Students",
+      "Event Coordination",
+      "Team Collaboration",
+      "Community Operations"
     ],
-    tags: ["Open Source", "CLI Tooling", "Rust", "Node.js"],
+    tags: ["GDG", "Management", "Leadership", "Coordination"]
   },
   {
     number: "04",
-    src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80",
-    title: "AI AGENT ARCHITECTURE",
-    desc: "Pioneered production multi-agent workflows with sub-100ms latency",
-    category: "ARTIFICIAL INTELLIGENCE",
-    longDesc: "Implemented Model Context Protocol (MCP) integrations connecting custom LLM reasoning engines with live enterprise datastores and streaming pipelines.",
+    src: "/images/achievements/second-hackathon.jpg",
+    title: "24-HOUR HACKATHON ORGANIZER",
+    desc: "Helped organize a second 24-hour hackathon with 800+ registrations",
+    category: "HACKATHON MANAGEMENT",
+    longDesc:
+      "Took on organizing responsibilities for another 24-hour hackathon through the student developer community. The event attracted more than 800 online registrations, giving me further experience in event planning, coordination, and managing a large participant audience.",
     highlights: [
-      "Sub-100ms Streaming Inference",
-      "Multi-Agent Routing Logic",
-      "Adaptive Memory Graph"
+      "24-Hour Hackathon",
+      "200+ Online Registrations",
+      "Organizing Team",
+      "Event & Participant Coordination"
     ],
-    tags: ["LLM Orchestration", "MCP", "Python", "Vector DB"],
+    tags: ["GDG/GDSC", "Event Management", "Planning", "Leadership"]
   },
   {
     number: "05",
-    src: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1200&auto=format&fit=crop&q=80",
-    title: "PATENT FILED",
-    desc: "Novel high-throughput adaptive caching & telemetry protocol",
-    category: "INTELLECTUAL PROPERTY",
-    longDesc: "Invented an adaptive predictive caching mechanism that dynamically forecasts hot cache nodes, drastically reducing database read pressure during spikes.",
+    src: "/images/achievements/46-hour-hackathon.jpg",
+    title: "36-HOUR HACKATHON ORGANIZER",
+    desc: "Contributed to organizing an intensive 36-hour hackathon",
+    category: "EXTENDED HACKATHON EXPERIENCE",
+    longDesc:
+      "Participated as an organizer for a 36-hour hackathon conducted through the student developer community. The experience involved contributing to the coordination and execution of an extended technical event that brought participants together to build and develop ideas.",
     highlights: [
-      "Patent Pending Innovation",
-      "40% Database Load Reduction",
-      "Zero Downtime Invalidation"
+      "36-Hour Hackathon",
+      "Organizing Responsibilities",
+      "Event Coordination",
+      "Developer Community Engagement"
     ],
-    tags: ["Algorithms", "Distributed Systems", "Patents"],
+    tags: ["Hackathon", "GDG/GDSC", "Organization", "Teamwork"]
   },
   {
     number: "06",
-    src: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1200&auto=format&fit=crop&q=80",
-    title: "KEYNOTE SPEAKER",
-    desc: "Delivered technical keynote at international developer summits",
-    category: "PUBLIC SPEAKING",
-    longDesc: "Invited speaker at premier tech conferences sharing insights on the future of full-stack engineering, reactive UI design, and agentic workflows.",
+    src: "/images/achievements/paper-presentation.jpg",
+    title: "PAPER PRESENTATION WINNER",
+    desc: "Won paper presentations and participated in numerous technical events",
+    category: "ACADEMIC & TECHNICAL RECOGNITION",
+    longDesc:
+      "Earned recognition in technical paper presentations while participating in numerous presentation events. These experiences strengthened my ability to research topics, structure technical ideas, explain concepts clearly, and present confidently before an audience.",
     highlights: [
-      "3,000+ Conference Attendees",
-      "Top-Rated Technical Session (4.9/5)",
-      "Keynote Panelist & Moderator"
+      "3+ Paper Presentation Recognitions",
+      "Technical Research",
+      "Idea Presentation",
+      "Public Speaking"
     ],
-    tags: ["Tech Talks", "Mentorship", "Conference"],
+    tags: ["Research", "Innovation", "Presentation", "Communication"]
   },
   {
     number: "07",
-    src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&auto=format&fit=crop&q=80",
-    title: "ENGINEERING LEADERSHIP",
-    desc: "Led agile full-stack squads shipping mission-critical platforms",
-    category: "TEAM & CULTURE",
-    longDesc: "Mentored 15+ senior and junior engineers, established automated CI/CD pipelines, and reduced release cycle times from weeks to hours.",
+    src: "/images/achievements/web-app-club.jpg",
+    title: "CLUB PRESIDENT",
+    desc: "Led the college Web & App Development Club",
+    category: "WEB & APP DEVELOPMENT CLUB",
+    longDesc:
+      "Served as President of the college Web and App Development Club. Starting from an early stage in web development, I grew alongside the community, learned from seniors and peers, helped organize activities, and encouraged students to explore web and application development.",
     highlights: [
-      "15+ Engineers Mentored",
-      "4x Sprint Delivery Velocity",
-      "Zero Production Regressions"
+      "Club President",
+      "Web & App Development Community",
+      "Student Activities & Coordination",
+      "Growing as a Developer and Leader"
     ],
-    tags: ["Engineering Mgmt", "Agile", "DevOps"],
+    tags: ["Web Development", "Leadership", "Community", "Management"]
   },
   {
     number: "08",
-    src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=80",
-    title: "PERFORMANCE APEX",
-    desc: "Optimized distributed p99 latency by 65% across multi-region clusters",
-    category: "PERFORMANCE TUNING",
-    longDesc: "Conducted deep-dive network, database indexing, and runtime profile optimizations, reducing global p99 response times from 350ms to 48ms.",
+    src: "/images/achievements/lingua-club.jpg",
+    title: "LINGUA CLUB PRESIDENT",
+    desc: "Led a student community focused on language and communication",
+    category: "LINGUA CLUB",
+    longDesc:
+      "Served as President of the Lingua Club, taking responsibility for student coordination and club initiatives. This role complemented my technical leadership experience by giving me opportunities to engage with students through communication and collaborative activities.",
     highlights: [
-      "65% Latency Reduction",
-      "Sub-50ms p99 Edge Response",
-      "Multi-Region Global Routing"
+      "Lingua Club President",
+      "Student Engagement",
+      "Communication & Coordination",
+      "Club Leadership"
     ],
-    tags: ["Performance", "eBPF", "Database Tuning", "Edge CDN"],
+    tags: ["Communication", "Leadership", "Coordination", "Community"]
+  },
+  {
+    number: "09",
+    src: "/images/achievements/ncc.jpg",
+    title: "NCC COMMANDER",
+    desc: "Held a student leadership role during my school years",
+    category: "NATIONAL CADET CORPS",
+    longDesc:
+      "Served as an NCC Commander during my school years. This early leadership experience introduced me to discipline, responsibility, teamwork, and coordinating fellow cadets—qualities that continued to support my leadership journey later in college.",
+    highlights: [
+      "NCC Commander",
+      "School-Level Leadership",
+      "Discipline & Responsibility",
+      "Team Coordination"
+    ],
+    tags: ["NCC", "Discipline", "Leadership", "Teamwork"]
   },
 ];
 
@@ -162,7 +194,7 @@ interface ZoomSliderCompProps {
 export function ZoomSliderComp({
   sliderData = DEFAULT_ACHIEVEMENTS_DATA,
   title = "My Achievements",
-  subheading = "Scroll or drag to explore · Hover & click View Details to flip",
+  subheading = "The milestones, leadership roles, and experiences that shaped who I am today.",
   scaleOnHover = true,
   textOnHover = true,
   size = 1,
@@ -194,7 +226,7 @@ export function ZoomSliderComp({
 
   const resolvedSize = Math.max(0.5, Number(size) || 1);
   const resolvedEaseScrollPercentage = Math.max(20, Number(easeScrollPercentage) || 100);
-  
+
   // Calibrated for a completely uncropped single-viewport fit with minimal bottom space
   const cardWidthMin = (isMobile ? 70 : 180) * resolvedSize;
   const cardWidthMax = (isMobile ? 260 : isTablet ? 480 : 640) * resolvedSize;
@@ -523,14 +555,11 @@ export function ZoomSliderComp({
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {slideAnnouncement}
       </div>
-      
+
       {/* Top Section Header */}
       {title ? (
         <div className="pointer-events-none absolute left-1/2 top-6 sm:top-10 z-20 -translate-x-1/2 px-4 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/70 border border-purple-800/40 text-purple-300 text-xs font-bold font-mono uppercase tracking-wider mb-2 shadow-xs">
-            <Award className="w-3.5 h-3.5 text-purple-400" />
-            <span>Recognitions & Key Milestones</span>
-          </div>
+
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             {title}
           </h2>

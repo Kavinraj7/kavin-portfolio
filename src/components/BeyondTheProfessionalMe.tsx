@@ -7,64 +7,46 @@ import CardFanCarousel, { type CardItem } from './ui/card-fan-carousel';
 
 const BEYOND_CARDS: CardItem[] = [
   {
-    imgUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Analog Street Photography',
-    title: 'Analog 35mm Chronicles',
-    category: 'Visual & Street',
+    imgUrl: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Movies & Cinema Screen',
+    title: 'Movies & Cinema',
+    category: 'Entertainment',
   },
   {
-    imgUrl: 'https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Custom Mechanical Keyboards',
-    title: 'Custom Keyboard Crafting',
-    category: 'Hardware & Tactile',
+    imgUrl: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Anime & Manga Culture',
+    title: 'Anime',
+    category: 'Entertainment',
   },
   {
-    imgUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop',
-    alt: 'High Altitude Mountain Trekking',
-    title: 'Alpine Trails & Peaks',
-    category: 'Endurance & Nature',
+    imgUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Fitness & Gym Training',
+    title: 'Fitness & Gym',
+    category: 'Lifestyle',
   },
   {
-    imgUrl: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Deep Night Sky & Astrophotography',
-    title: 'Astrophotography & Cosmos',
-    category: 'Stargazing & Space',
+    imgUrl: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Travel & Scenic Exploration',
+    title: 'Travel & Exploration',
+    category: 'Adventure',
   },
   {
-    imgUrl: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Specialty Pour-over Coffee',
-    title: 'Specialty Coffee Rituals',
-    category: 'Brewing & Craft',
+    imgUrl: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Story Writing & Journaling',
+    title: 'Story Writing',
+    category: 'Creative',
+  },
+  {
+    imgUrl: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Art & Pencil Drawing',
+    title: 'Drawing',
+    category: 'Creative',
   },
   {
     imgUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Acoustic Guitar & Music',
-    title: 'Fingerstyle Acoustics',
-    category: 'Rhythm & Sound',
-  },
-  {
-    imgUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Minimalist Workspace Architecture',
-    title: 'Minimalist Spatial Design',
-    category: 'Interior & Space',
-  },
-  {
-    imgUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Architectural Urban Exploration',
-    title: 'Brutalist Urban Geometry',
-    category: 'Architecture & Cities',
-  },
-  {
-    imgUrl: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Sci-Fi and Tech Philosophy Books',
-    title: 'Hard Sci-Fi & Philosophy',
-    category: 'Literature & Mind',
-  },
-  {
-    imgUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Artisanal Sourdough & Fermentation',
-    title: 'Artisanal Fermentation',
-    category: 'Culinary & Science',
+    alt: 'Music, Headphones & Playlists',
+    title: 'Music & Playlists',
+    category: 'Entertainment',
   },
 ];
 
@@ -93,7 +75,7 @@ export const BeyondTheProfessionalMe: React.FC = () => {
           </h2>
 
           <p className="mt-4 text-sm sm:text-base text-zinc-600 max-w-2xl leading-relaxed">
-            Beyond code commits, database schemas, and terminal sessions — a visual look into my world of analog photography, mechanical hardware, high-altitude trails, and creative rituals.
+            Beyond projects and deadlines — the interests, curiosities, and little obsessions that make up the person behind the work.
           </p>
         </motion.div>
       </div>
@@ -103,13 +85,7 @@ export const BeyondTheProfessionalMe: React.FC = () => {
         <CardFanCarousel cards={BEYOND_CARDS} />
       </div>
 
-      {/* Bottom Subtle Navigation Hint */}
-      <div className="mt-6 text-center">
-        <p className="font-mono text-xs text-zinc-400 uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-          <span>Hover or drag cards to interact &bull; Use arrows to cycle</span>
-        </p>
-      </div>
+
     </section>
   );
 };

@@ -413,20 +413,20 @@ export const HeroPerspectiveView: React.FC<HeroPerspectiveViewProps> = ({
 
                   <div className="flex items-center gap-2.5 shrink-0 self-end sm:self-center">
                     <button
-                      id="preview-launch-link"
-                      type="button"
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#18132B] hover:bg-[#261B48] text-white dark:bg-[#8B5CF6] dark:hover:bg-[#7C3AED] dark:text-white text-xs uppercase tracking-wider font-bold transition-all shadow-md cursor-pointer whitespace-nowrap"
-                    >
-                      <span>Narrate</span>
-                    </button>
-
-                    <button
                       id="close-preview"
                       type="button"
                       onClick={handleDismissPreview}
                       className="px-3.5 py-2 rounded-full bg-[#EDE9FE] text-[#6D28D9] hover:bg-[#DDD6FE] dark:bg-[#251B4A] dark:text-purple-200 dark:hover:bg-[#322363] text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer border border-[#DDD6FE] dark:border-purple-800/40"
                     >
                       Dismiss
+                    </button>
+
+                    <button
+                      id="preview-launch-link"
+                      type="button"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#18132B] hover:bg-[#261B48] text-white dark:bg-[#8B5CF6] dark:hover:bg-[#7C3AED] dark:text-white text-xs uppercase tracking-wider font-bold transition-all shadow-md cursor-pointer whitespace-nowrap"
+                    >
+                      <span>Narrate</span>
                     </button>
                   </div>
                 </div>

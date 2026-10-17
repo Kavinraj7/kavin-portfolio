@@ -1,335 +1,357 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { 
-  CheckCircle2, 
-  Brain, 
-  Users, 
-  Code2, 
-  BarChart3, 
-  Cloud, 
-  Cpu, 
+import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import {
+  Brain,
+  Users,
+  Code2,
+  BarChart3,
+  Cloud,
+  Cpu,
   Compass,
   Sparkles,
-  ArrowDown
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft,
+  MapPin,
+  Flame,
+  Rocket,
+  ChartNoAxesCombined
 } from 'lucide-react';
+import { soundFx } from '@/utils/audio';
 
-export interface JourneyCardItem {
+export interface JourneyPhaseItem {
   id: string;
+  phaseNumber: number;
   step: string;
   category: string;
   headline: string;
   description: string;
   tags: string[];
   knowledgeAdded: string[];
-  annotation?: string;
+  annotation: string;
   accentColor: string;
+  isLive?: boolean;
   icon: React.ElementType;
 }
 
-export const JOURNEY_CARDS_DATA: JourneyCardItem[] = [
+export const JOURNEY_PHASES_DATA: JourneyPhaseItem[] = [
   {
-    id: 'step-1',
+    id: 'phase-1',
+    phaseNumber: 1,
     step: '01',
-    category: 'PROJECT MANAGEMENT',
-    headline: 'Understanding how things come together.',
-    description: 'My first step into the tech world was understanding how IT projects actually work — planning, coordination, Agile practices, and cross-functional execution.',
-    tags: ['Agile', 'SDLC', 'Jira', 'Team Coordination', 'Sprint Planning'],
+    category: 'CAREER REALIZATION',
+    headline: 'Discovering where my strengths naturally belonged.',
+    description: 'From school activities to college club leadership, I discovered my strengths in communication, coordination, and management — making project management a natural career direction.',
+    tags: ['Communication', 'Leadership', 'Planning', 'Coordination', 'Event Management'],
     knowledgeAdded: [
-      'Project Planning & Scoping',
-      'Agile & SDLC Workflows',
-      'Team Coordination',
-      'Execution Mindset'
+      'Communication & People Management',
+      'Team Coordination & Leadership',
+      'Planning & Organizing Activities',
+      'Recognizing My Career Direction'
     ],
-    annotation: 'This becomes the strategic blueprint for all technical execution.',
-    accentColor: '#8B5CF6',
-    icon: Brain
-  },
-  {
-    id: 'step-2',
-    step: '02',
-    category: 'HUMAN RESOURCES & TALENT',
-    headline: 'Empowering people and team dynamics.',
-    description: 'Mastering the human equation behind engineering. Cultivating high-performance engineering culture, conflict resolution, and leadership pipeline growth.',
-    tags: ['Talent Acquisition', 'Culture Building', 'Conflict Resolution', 'Performance Coaching'],
-    knowledgeAdded: [
-      'Organizational Psychology',
-      'High-Output Team Structuring',
-      'Talent Retainment Strategies',
-      'Empathetic Leadership'
-    ],
-    annotation: 'Great software starts with great team synergy.',
-    accentColor: '#EC4899',
-    icon: Users
-  },
-  {
-    id: 'step-3',
-    step: '03',
-    category: 'FULL STACK ENGINEERING',
-    headline: 'Architecting scalable, production-grade applications.',
-    description: 'Translating design and business logic into high-speed, modern web experiences. Deep proficiency across modern frontend and resilient backend systems.',
-    tags: ['React', 'Next.js', 'TypeScript', 'Node.js', 'REST & GraphQL'],
-    knowledgeAdded: [
-      'Modern Frontend Frameworks',
-      'Modular System Design',
-      'State & Performance Tuning',
-      'Full Stack Architecture'
-    ],
-    annotation: 'Engineering speed without compromising design fidelity.',
-    accentColor: '#3B82F6',
-    icon: Code2
-  },
-  {
-    id: 'step-4',
-    step: '04',
-    category: 'DATA ANALYTICS & INSIGHTS',
-    headline: 'Transforming raw telemetry into actionable decisions.',
-    description: 'Harnessing quantitative analytics, pipeline modeling, and business intelligence to drive data-informed product decisions and strategic forecasting.',
-    tags: ['Python', 'SQL', 'Data Modeling', 'PowerBI', 'Predictive Analysis'],
-    knowledgeAdded: [
-      'Data-Driven Decision Making',
-      'ETL & Telemetry Pipelines',
-      'Statistical Analysis',
-      'KPI & Growth Metrics'
-    ],
-    annotation: 'Eliminating guesswork through rigorous empirical data.',
+    annotation: 'The foundation of my management journey.',
     accentColor: '#10B981',
-    icon: BarChart3
+    icon: Brain,
   },
   {
-    id: 'step-5',
-    step: '05',
-    category: 'CLOUD & DISTRIBUTED SYSTEMS',
-    headline: 'Ensuring resilience, uptime, and automated deployment.',
-    description: 'Containerization, cloud infrastructure, and CI/CD pipelines engineered for zero downtime, elastic scalability, and world-class reliability.',
-    tags: ['AWS', 'Docker', 'Kubernetes', 'CI/CD Pipelines', 'Microservices'],
+    id: 'phase-2',
+    phaseNumber: 2,
+    step: '02',
+    category: 'TECHNICAL AWARENESS',
+    headline: 'Realizing that management needs technical depth.',
+    description: 'Through research and a project management internship, I explored how companies plan, track, and execute projects using structured workflows and Jira — realizing I needed technical knowledge to manage technology teams effectively.',
+    tags: ['Jira', 'Project Workflows', 'SDLC', 'Research', 'Planning'],
     knowledgeAdded: [
-      'Cloud Architecture Design',
-      'Automated Testing & Releases',
-      'Zero-Downtime Deployments',
-      'Infrastructure Resilience'
+      'Project Lifecycle & Execution',
+      'Jira & Workflow Tracking',
+      'Planning & Progress Monitoring',
+      'Technical Knowledge for Managers'
     ],
-    annotation: 'Built to gracefully scale from dozens to millions of requests.',
-    accentColor: '#06B6D4',
-    icon: Cloud
+    annotation: 'Understanding the process behind successful projects.',
+    accentColor: '#6366F1',
+    icon: Compass,
   },
   {
-    id: 'step-6',
-    step: '06',
-    category: 'AI & AGENTIC WORKFLOWS',
-    headline: 'Harnessing autonomous agents and intelligent systems.',
-    description: 'Integrating LLMs, neural orchestration, and autonomous agent systems to automate high-complexity processes and supercharge user capabilities.',
-    tags: ['Agentic Workflows', 'LLM Orchestration', 'Prompt Engineering', 'LangChain', 'Neural Models'],
+    id: 'phase-3',
+    phaseNumber: 3,
+    step: '03',
+    category: 'DATA & AI EXPLORATION',
+    headline: 'Taking my first steps into the technical world.',
+    description: 'With coding completely new to me, I started with data analytics and AI/ML, learning Python through data-driven projects while exploring Java fundamentals alongside — building my confidence in programming and logical thinking.',
+    tags: ['Python', 'SQL', 'Power BI', 'Machine Learning', 'Java Basics'],
     knowledgeAdded: [
-      'Autonomous Agent Design',
-      'Model Context Protocol (MCP)',
-      'Intelligent Automation',
-      'Next-Gen UX Paradigms'
+      'Python Programming Fundamentals',
+      'Data Analysis & Visualization',
+      'Machine Learning Fundamentals',
+      'Logical Thinking & Problem Solving'
     ],
-    annotation: 'Pioneering AI systems that proactively solve complex challenges.',
-    accentColor: '#F59E0B',
-    icon: Cpu
-  },
-  {
-    id: 'step-7',
-    step: '07',
-    category: 'EXECUTIVE STRATEGY & VISION',
-    headline: 'Bridging technical depth with business impact.',
-    description: 'The convergence of all dimensions: leading cross-functional teams, executing high-stakes roadmaps, and delivering transformative technology solutions.',
-    tags: ['Product Vision', 'Stakeholder Alignment', 'ROI Optimization', 'Executive Leadership'],
-    knowledgeAdded: [
-      'Macro Strategic Vision',
-      'Cross-Domain Synthesis',
-      'Resource & Budget Optimization',
-      'End-to-End Ownership'
-    ],
-    annotation: 'The full spectrum leader ready for multi-million dollar impact.',
+    annotation: 'My first step into programming and intelligent systems.',
     accentColor: '#8B5CF6',
-    icon: Compass
-  }
+    icon: ChartNoAxesCombined,
+  },
+  {
+    id: 'phase-4',
+    phaseNumber: 4,
+    step: '04',
+    category: 'FULL-STACK FOUNDATIONS',
+    headline: 'Learning how complete applications come together.',
+    description: 'Building on my programming fundamentals, I began learning Java full-stack development, exploring frontend interfaces, backend logic, databases, and how these components communicate to create complete applications.',
+    tags: ['Java', 'React', 'JavaScript', 'MySQL', 'Spring Boot'],
+    knowledgeAdded: [
+      'Frontend & Backend Fundamentals',
+      'Database Connectivity & SQL',
+      'Application Architecture',
+      'Full-Stack Integration'
+    ],
+    annotation: 'Connecting frontend, backend, and databases.',
+    accentColor: '#3B82F6',
+    icon: Code2,
+  },
+  {
+    id: 'phase-5',
+    phaseNumber: 5,
+    step: '05',
+    category: 'FULL-STACK & CLOUD',
+    headline: 'Discovering what lies beyond basic full-stack development.',
+    description: 'As application development became clearer, I pushed into advanced full-stack concepts, modern frameworks, APIs, and AWS — exploring how applications are deployed, connected, scaled, and supported by cloud infrastructure.',
+    tags: ['React', 'Next.js', 'Node.js', 'TypeScript', 'AWS'],
+    knowledgeAdded: [
+      'Advanced Full-Stack Concepts',
+      'API Design & Integration',
+      'Cloud Infrastructure & Deployment',
+      'Scalability & Distributed Systems'
+    ],
+    annotation: 'Building beyond applications into cloud infrastructure.',
+    accentColor: '#06B6D4',
+    icon: Cloud,
+  },
+  {
+    id: 'phase-6',
+    phaseNumber: 6,
+    step: '06',
+    category: 'REAL-WORLD ENGINEERING',
+    headline: 'Turning technical knowledge into working solutions.',
+    description: 'Joining Praskla Technology as an intern brought me into real projects built around business and client needs, exposing me to practical challenges involving scalability, concurrent users, performance, testing, and application reliability.',
+    tags: ['Client Projects', 'Scalability', 'Testing', 'Performance', 'Debugging'],
+    knowledgeAdded: [
+      'Real-World Application Development',
+      'Scalability & Concurrent Users',
+      'Testing & Application Reliability',
+      'Client Requirements & Delivery'
+    ],
+    annotation: 'Turning technical concepts into reliable solutions.',
+    accentColor: '#F59E0B',
+    icon: Rocket,
+  },
+  {
+    id: 'phase-7',
+    phaseNumber: 7,
+    step: '07',
+    category: 'PROJECTS & PEOPLE',
+    headline: 'Taking ownership of projects, people, and delivery.',
+    description: 'After being promoted to Project Manager at Praskla Technology, I successfully managed projects while handling client coordination and workflows; my startup experience also opened doors to HR, where I contributed to candidate screening and student communication.',
+    tags: ['Project Management', 'Client Management', 'Jira', 'Recruitment', 'HR Operations'],
+    knowledgeAdded: [
+      'Project Planning & Successful Delivery',
+      'Client & Team Management',
+      'Candidate Screening & Hiring',
+      'People Operations & Coordination'
+    ],
+    annotation: 'Bringing projects, clients, and people together.',
+    accentColor: '#EC4899',
+    icon: Users,
+  },
+  {
+    id: 'phase-8',
+    phaseNumber: 8,
+    step: '08',
+    category: 'CONTINUOUS EVOLUTION',
+    headline: 'Looking beyond what I know to discover what comes next.',
+    description: 'Having explored technology, data, AI, project management, and HR, I want to challenge myself in new environments, build meaningful connections, take on tougher responsibilities, and grow alongside an organization’s ambitions.',
+    tags: ['Continuous Learning', 'New Challenges', 'Networking', 'Adaptability', 'Growth'],
+    knowledgeAdded: [
+      'Exploring New Technical Challenges',
+      'Building Professional Connections',
+      'Cross-Functional Problem Solving',
+      'Growing Alongside an Organization'
+    ],
+    annotation: 'The next chapter begins beyond my comfort zone.',
+    accentColor: '#F97316',
+    icon: Sparkles,
+  },
 ];
 
-interface JourneyCardProps {
-  card: JourneyCardItem;
-  index: number;
-  total: number;
-}
-
-const JourneyCard: React.FC<JourneyCardProps> = ({ card, index, total }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  
-  // Track individual card scroll progress for smooth stacking and parallax
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ['start end', 'start start']
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.4], [0.4, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
+// ─── Peeking Character Image (peak.png) with Interactive Rolling Eyes ──────────
+const PeekingCharacter: React.FC<{
+  mouseX: any;
+  mouseY: any;
+}> = ({ mouseX, mouseY }) => {
+  const pupilX = useTransform(mouseX, [-450, 450], [-2.5, 2.5]);
+  const pupilY = useTransform(mouseY, [-350, 350], [-2.5, 2.5]);
+  const smoothPupilX = useSpring(pupilX, { stiffness: 500, damping: 30 });
+  const smoothPupilY = useSpring(pupilY, { stiffness: 500, damping: 30 });
 
   return (
-    <div 
-      ref={cardRef} 
-      className="sticky top-20 sm:top-24 md:top-28 mb-16 sm:mb-20 md:mb-28 last:mb-0 w-full flex justify-center"
-      style={{
-        zIndex: index + 10,
-      }}
+    <motion.div
+      whileHover={{ y: -6, scale: 1.06 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+      className="relative flex items-end justify-center w-full h-full pb-0 cursor-pointer select-none overflow-visible"
     >
-      <motion.div
-        style={{
-          scale,
-          opacity,
-          y,
-        }}
-        className="relative w-full max-w-[1380px] min-h-[440px] sm:min-h-[480px] lg:min-h-[540px] flex flex-col justify-center bg-[#F6F6FC] dark:bg-[#161324] rounded-[32px] sm:rounded-[44px] md:rounded-[52px] p-8 sm:p-10 md:p-14 lg:p-16 border border-purple-200/60 dark:border-purple-900/40 shadow-[0_25px_70px_-15px_rgba(124,58,237,0.08)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)] overflow-hidden transition-colors duration-300"
-      >
-        {/* Soft Ambient Radial Background Glow */}
-        <div 
-          className="absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full blur-3xl opacity-25 dark:opacity-35 pointer-events-none"
-          style={{ backgroundColor: card.accentColor }}
-        />
+      <div className="relative w-full flex items-end justify-center">
+        {/* Scaled Aspect-Ratio Wrapper containing image + pupil overlays */}
+        <div className="relative w-full aspect-[1024/525] flex items-end justify-center scale-125 sm:scale-135 md:scale-145 origin-bottom">
+          <Image
+            src="/peak.png"
+            alt="Peeking Character"
+            width={1024}
+            height={525}
+            className="w-full h-auto object-contain object-bottom select-none pointer-events-none drop-shadow-sm"
+            priority
+          />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center w-full">
-          
-          {/* LEFT SIDE: Step Number, Category, Headline, Description, Tags */}
-          <div className="lg:col-span-7 flex flex-col justify-center z-10 space-y-4 sm:space-y-6">
-            
-            {/* Step Badge & Category */}
-            <div className="flex items-center gap-3.5">
-              <span className="flex items-center justify-center px-3.5 py-1.5 rounded-lg bg-[#EDE9FE] dark:bg-purple-950/70 text-[#7C3AED] dark:text-[#A78BFA] font-black text-sm tracking-wider font-mono shadow-xs">
-                {card.step}
-              </span>
-              <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 tracking-widest uppercase">
-                {card.category}
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[40px] font-extrabold text-zinc-900 dark:text-white tracking-tight leading-[1.18]">
-              {card.headline}
-            </h3>
-
-            {/* Description */}
-            <p className="text-base sm:text-lg lg:text-[18px] text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-2xl font-normal">
-              {card.description}
-            </p>
-
-            {/* Tags Pills */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-2">
-              {card.tags.map((tag, tIdx) => (
-                <span
-                  key={tIdx}
-                  className="px-3.5 py-1.5 rounded-full bg-white/95 dark:bg-zinc-800/90 text-zinc-800 dark:text-zinc-200 text-xs sm:text-sm font-semibold border border-purple-100 dark:border-purple-900/30 shadow-xs hover:border-purple-300 dark:hover:border-purple-600 transition-colors"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-          </div>
-
-          {/* RIGHT SIDE: Concept Graphic + "Knowledge Added" Floating Card */}
-          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[320px] sm:min-h-[380px]">
-            
-            {/* Background Concept Line Illustration & Neural Glow */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-35 dark:opacity-30 pointer-events-none select-none">
-              {/* Detailed SVG Brain / Network Diagram */}
-              <svg className="w-72 h-72 sm:w-88 sm:h-88 lg:w-96 lg:h-96 text-purple-600 dark:text-purple-400" viewBox="0 0 200 200" fill="none" stroke="currentColor">
-                {/* Brain Outline and Lobes */}
-                <path d="M100 30 C70 30, 40 50, 40 85 C40 105, 50 115, 45 135 C40 155, 60 170, 85 170 C100 170, 110 160, 120 160 C135 160, 155 170, 165 150 C175 130, 160 110, 165 90 C170 65, 140 30, 100 30 Z" strokeWidth="1.2" strokeDasharray="3 2" />
-                <path d="M70 60 C85 70, 115 55, 130 75 C145 95, 125 125, 140 145" strokeWidth="1" />
-                <path d="M55 90 C75 100, 80 120, 75 140" strokeWidth="0.8" />
-                <path d="M95 80 C110 95, 105 130, 120 140" strokeWidth="0.8" />
-                {/* Highlighted Lobe Area */}
-                <path d="M115 85 C135 95, 145 120, 135 140 C120 145, 105 135, 110 110 Z" fill={card.accentColor} fillOpacity="0.25" stroke={card.accentColor} strokeWidth="1.5" />
-              </svg>
-            </div>
-
-            {/* Floating Glassmorphic "Knowledge Added" Box (Enlarged) */}
+          {/* Left Eye Socket & Interactive Pupil */}
+          <div
+            className="absolute rounded-full pointer-events-none overflow-hidden flex items-center justify-center"
+            style={{
+              left: '46.70%',
+              top: '79.33%',
+              width: '4.37%',
+              height: '8.00%',
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: '#FAF8F5',
+              border: '1.2px solid #27272A',
+            }}
+          >
             <motion.div
-              whileHover={{ y: -4, scale: 1.02 }}
-              transition={{ duration: 0.25 }}
-              className="relative z-10 w-full max-w-[360px] sm:max-w-[380px] bg-white/95 dark:bg-[#1C182A]/95 backdrop-blur-2xl rounded-[28px] sm:rounded-[32px] p-6 sm:p-7 shadow-[0_20px_50px_-10px_rgba(124,58,237,0.12)] dark:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)] border border-white dark:border-purple-800/40"
+              style={{
+                x: smoothPupilX,
+                y: smoothPupilY,
+              }}
+              className="relative w-[55%] h-[55%] rounded-full bg-[#18181B] flex items-start justify-start p-[12%]"
             >
-              {/* Box Title */}
-              <div className="flex items-center gap-3 mb-5">
-                <div 
-                  className="w-3 h-3 rounded-full animate-pulse shadow-sm"
-                  style={{ backgroundColor: card.accentColor }}
-                />
-                <h4 className="text-base font-extrabold text-zinc-900 dark:text-white tracking-tight">
-                  Knowledge Added
-                </h4>
-              </div>
-
-              {/* Bullet Points with Checkmarks */}
-              <ul className="space-y-3.5">
-                {card.knowledgeAdded.map((item, kIdx) => (
-                  <li key={kIdx} className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-zinc-800 dark:text-zinc-200">
-                    <div 
-                      className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 shadow-xs"
-                      style={{ 
-                        backgroundColor: `${card.accentColor}20`,
-                        color: card.accentColor 
-                      }}
-                    >
-                      <CheckCircle2 className="w-4 h-4 fill-current" />
-                    </div>
-                    <span className="leading-snug">{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Card Footer Progress Indicator */}
-              <div className="mt-5 pt-3.5 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-[11px] font-mono text-zinc-500 dark:text-zinc-400 font-bold">
-                <span>PHASE {card.step} OF 0{total}</span>
-                <span style={{ color: card.accentColor }}>COMPLETE</span>
-              </div>
+              <div className="w-[35%] h-[35%] rounded-full bg-white" />
             </motion.div>
-
-            {/* Subtle Annotation Arrow */}
-            {card.annotation && (
-              <div className="hidden sm:flex items-center gap-1 absolute -bottom-6 right-2 text-xs font-mono text-zinc-500 dark:text-zinc-400 italic max-w-[280px] text-right pointer-events-none select-none font-medium">
-                <span>↳</span>
-                <span className="truncate">{card.annotation}</span>
-              </div>
-            )}
-
           </div>
 
+          {/* Right Eye Socket & Interactive Pupil */}
+          <div
+            className="absolute rounded-full pointer-events-none overflow-hidden flex items-center justify-center"
+            style={{
+              left: '52.70%',
+              top: '79.33%',
+              width: '4.37%',
+              height: '8.00%',
+              transform: 'translate(-50%, -50%)',
+              backgroundColor: '#FAF8F5',
+              border: '1.2px solid #27272A',
+            }}
+          >
+            <motion.div
+              style={{
+                x: smoothPupilX,
+                y: smoothPupilY,
+              }}
+              className="relative w-[55%] h-[55%] rounded-full bg-[#18181B] flex items-start justify-start p-[12%]"
+            >
+              <div className="w-[35%] h-[35%] rounded-full bg-white" />
+            </motion.div>
+          </div>
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
 };
 
 export const JourneyCardsSection: React.FC = () => {
+  const [activePhaseIndex, setActivePhaseIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // 3D Parallax Tilt Physics on the Map Container (Instant, zero-lag responsive physics)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const rotateX = useTransform(mouseY, [-240, 240], [12, -12]);
+  const rotateY = useTransform(mouseX, [-380, 380], [-12, 12]);
+
+  const springRotateX = useSpring(rotateX, { stiffness: 450, damping: 32, mass: 0.1 });
+  const springRotateY = useSpring(rotateY, { stiffness: 450, damping: 32, mass: 0.1 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    mouseX.set(e.clientX - centerX);
+    mouseY.set(e.clientY - centerY);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  const handleSelectPhase = (index: number) => {
+    try {
+      soundFx.playSelect();
+    } catch { }
+    setActivePhaseIndex(index);
+  };
+
+  const handleNextPhase = () => {
+    if (activePhaseIndex === null) return;
+    const next = (activePhaseIndex + 1) % JOURNEY_PHASES_DATA.length;
+    try {
+      soundFx.playSelect();
+    } catch { }
+    setActivePhaseIndex(next);
+  };
+
+  const handlePrevPhase = () => {
+    if (activePhaseIndex === null) return;
+    const prev = (activePhaseIndex - 1 + JOURNEY_PHASES_DATA.length) % JOURNEY_PHASES_DATA.length;
+    try {
+      soundFx.playSelect();
+    } catch { }
+    setActivePhaseIndex(prev);
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (activePhaseIndex === null) return;
+      if (e.key === 'Escape') setActivePhaseIndex(null);
+      if (e.key === 'ArrowRight') handleNextPhase();
+      if (e.key === 'ArrowLeft') handlePrevPhase();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activePhaseIndex]);
+
   return (
-    <section className="relative w-full min-h-screen pt-16 sm:pt-24 pb-6 sm:pb-8 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#FAFAFC] dark:bg-[#09080F] transition-colors duration-300 overflow-clip">
-      
+    <section
+      onMouseMove={handleMouseMove}
+      className="relative w-full min-h-screen py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#F8FAFC] dark:bg-[#09080F] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 overflow-hidden"
+    >
+
+      {/* Background Soft Ambient Light Gradients */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-emerald-100/35 dark:bg-emerald-950/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+
       {/* SECTION HEADER */}
-      <div className="w-full max-w-[1180px] mx-auto text-center mb-14 sm:mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100/80 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/40 text-purple-700 dark:text-purple-300 text-xs font-bold font-mono uppercase tracking-wider mb-4 shadow-xs"
-        >
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Continuous Growth Journey · 7 Key Pillars</span>
-        </motion.div>
+      <div className="w-full max-w-[1180px] mx-auto text-center mb-10 sm:mb-14">
+
 
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-950 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto"
+          className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-950 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto font-display"
         >
-          How Multidisciplinary Thinking Came Together
+          EIGHT PHASES. ONE JOURNEY.
         </motion.h2>
 
         <motion.p
@@ -337,33 +359,410 @@ export const JourneyCardsSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 mt-4 max-w-2xl mx-auto font-normal leading-relaxed"
+          className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 mt-3 max-w-2xl mx-auto font-normal leading-relaxed"
         >
-          Scroll through the 7 core milestones that evolved my technical mastery, people leadership, and executive problem solving.
-        </motion.p>
-
-        {/* Down Indicator */}
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          className="flex justify-center mt-6 text-purple-500"
-        >
-          <ArrowDown className="w-5 h-5" />
-        </motion.div>
+          Discover how management, technology, data, and real-world challenges shaped the person behind the portfolio.        </motion.p>
       </div>
 
-      {/* 7 STACKING SCROLL CARDS */}
-      <div className="w-full max-w-[1420px] mx-auto relative pb-4 sm:pb-6">
-        {JOURNEY_CARDS_DATA.map((card, index) => (
-          <JourneyCard
-            key={card.id}
-            card={card}
-            index={index}
-            total={JOURNEY_CARDS_DATA.length}
-          />
-        ))}
+      {/* ─── MAIN DYNAMIC CONTAINER: MAP VIEW OR EXPANDED PHASE CARD ─── */}
+      <div className="w-full max-w-[1180px] mx-auto flex flex-col items-center justify-center min-h-[520px]">
+        <AnimatePresence mode="wait">
+
+          {/* ============================================================ */}
+          {/* VIEW A: 3x3 PHASES MAP CARD (Smooth 3D Spring Tilt Physics)  */}
+          {/* ============================================================ */}
+          {activePhaseIndex === null ? (
+            <motion.div
+              key="phases-map-view"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full max-w-[880px] flex flex-col items-center"
+            >
+              <div
+                ref={containerRef}
+                style={{ perspective: 1200 }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                className="relative w-full cursor-pointer select-none"
+              >
+                <motion.div
+                  style={{
+                    rotateX: springRotateX,
+                    rotateY: springRotateY,
+                    transformStyle: 'preserve-3d',
+                  }}
+                  className="relative w-full aspect-[4/3] sm:aspect-[16/11] max-h-[580px] bg-white dark:bg-zinc-900/90 rounded-[28px] sm:rounded-[36px] border border-zinc-200/90 dark:border-zinc-800 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.6)] overflow-hidden transition-colors duration-200"
+                >
+                  {/* Background Grid Lines Pattern */}
+                  <div className="absolute inset-0 pointer-events-none opacity-40">
+                    <svg width="100%" height="100%" className="absolute inset-0">
+                      <defs>
+                        <pattern id="journey-map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.75" className="text-zinc-200 dark:text-zinc-800" />
+                        </pattern>
+                      </defs>
+                      <rect width="100%" height="100%" fill="url(#journey-map-grid)" />
+                    </svg>
+                  </div>
+
+                  {/* Main Road Crossings (3x3 Grid Highways) */}
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+                    {/* Horizontal Main Road 1 */}
+                    <line x1="0%" y1="33.33%" x2="100%" y2="33.33%" stroke="#E4E4E7" strokeWidth="5" />
+                    {/* Horizontal Main Road 2 */}
+                    <line x1="0%" y1="66.66%" x2="100%" y2="66.66%" stroke="#E4E4E7" strokeWidth="5" />
+
+                    {/* Vertical Main Road 1 */}
+                    <line x1="33.33%" y1="0%" x2="33.33%" y2="100%" stroke="#E4E4E7" strokeWidth="5" />
+                    {/* Vertical Main Road 2 */}
+                    <line x1="66.66%" y1="0%" x2="66.66%" y2="100%" stroke="#E4E4E7" strokeWidth="5" />
+                  </svg>
+
+                  {/* Translucent Building Blocks */}
+                  {/* Phase 2 building block */}
+                  <div className="absolute top-[16%] left-[37%] w-[12%] h-[14%] rounded-xl bg-zinc-300/40 dark:bg-zinc-700/30 border border-zinc-300/60 dark:border-zinc-700/50 pointer-events-none" />
+                  {/* Phase 3 & 4 vertical building pill */}
+                  <div className="absolute top-[20%] right-[11%] w-[9%] h-[24%] rounded-2xl bg-zinc-300/40 dark:bg-zinc-700/30 border border-zinc-300/60 dark:border-zinc-700/50 pointer-events-none" />
+                  {/* Phase 8 overlapping building block */}
+                  <div className="absolute top-[38%] left-[12%] w-[13%] h-[18%] rounded-xl bg-zinc-300/40 dark:bg-zinc-700/30 border border-zinc-300/60 dark:border-zinc-700/50 pointer-events-none" />
+                  <div className="absolute top-[52%] left-[8%] w-[7%] h-[12%] rounded-lg bg-zinc-300/35 dark:bg-zinc-700/25 border border-zinc-300/50 pointer-events-none" />
+                  {/* Phase 5 building block */}
+                  <div className="absolute bottom-[16%] right-[10%] w-[15%] h-[16%] rounded-2xl bg-zinc-300/40 dark:bg-zinc-700/30 border border-zinc-300/60 dark:border-zinc-700/50 pointer-events-none" />
+
+                  {/* 3x3 Grid Layout of Phases & Center Character */}
+                  <div className="relative z-10 w-full h-full grid grid-cols-3 grid-rows-3 p-4 sm:p-6 md:p-8">
+
+                    {/* Phase 1 */}
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSelectPhase(0)}
+                      className="relative flex flex-col justify-start items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          Phase 1
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        {JOURNEY_PHASES_DATA[0].category}
+                      </span>
+                    </motion.div>
+
+                    {/* Phase 2 */}
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSelectPhase(1)}
+                      className="relative flex flex-col justify-start items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          Phase 2
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        {JOURNEY_PHASES_DATA[1].category}
+                      </span>
+                    </motion.div>
+
+                    {/* Phase 3 (with LIVE badge) */}
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSelectPhase(2)}
+                      className="relative flex flex-col justify-start items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
+                    >
+                      <div className="w-full flex items-center justify-between">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          Phase 3
+                        </span>
+                        {/* LIVE Status Badge */}
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-200/80 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-xs">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          <span className="text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase">LIVE</span>
+                        </div>
+                      </div>
+                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        {JOURNEY_PHASES_DATA[2].category}
+                      </span>
+                    </motion.div>
+
+                    {/* Phase 8 */}
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSelectPhase(7)}
+                      className="relative flex flex-col justify-center items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          Phase 8
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        {JOURNEY_PHASES_DATA[7].category}
+                      </span>
+                    </motion.div>
+
+                    {/* CENTER PEEKING CHARACTER WITH ROLLING EYES */}
+                    <div className="relative flex items-end justify-center overflow-visible w-full h-full">
+                      <PeekingCharacter mouseX={mouseX} mouseY={mouseY} />
+                    </div>
+
+                    {/* Phase 4 */}
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSelectPhase(3)}
+                      className="relative flex flex-col justify-center items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          Phase 4
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        {JOURNEY_PHASES_DATA[3].category}
+                      </span>
+                    </motion.div>
+
+                    {/* Phase 7 */}
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSelectPhase(6)}
+                      className="relative flex flex-col justify-end items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          Phase 7
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        {JOURNEY_PHASES_DATA[6].category}
+                      </span>
+                    </motion.div>
+
+                    {/* Phase 6 */}
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSelectPhase(5)}
+                      className="relative flex flex-col justify-end items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          Phase 6
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        {JOURNEY_PHASES_DATA[5].category}
+                      </span>
+                    </motion.div>
+
+                    {/* Phase 5 */}
+                    <motion.div
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSelectPhase(4)}
+                      className="relative flex flex-col justify-end items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                          Phase 5
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        {JOURNEY_PHASES_DATA[4].category}
+                      </span>
+                    </motion.div>
+
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Click to inspect hint */}
+              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-5 flex items-center gap-1.5 select-none">
+                <MapPin className="w-3.5 h-3.5 text-emerald-500" />
+                <span>Click any phase to explore that milestone</span>
+              </p>
+            </motion.div>
+          ) : (
+
+            /* ============================================================ */
+            /* VIEW B: FULL IN-PLACE MILESTONE CARD (Matches prompt theme)  */
+            /* ============================================================ */
+            <motion.div
+              key={`phase-card-${activePhaseIndex}`}
+              initial={{ opacity: 0, y: 24, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.97 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-[1140px] flex flex-col bg-white dark:bg-[#13111C] rounded-[32px] sm:rounded-[44px] p-6 sm:p-10 md:p-12 lg:p-14 border border-zinc-200/90 dark:border-zinc-800 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)] overflow-hidden"
+            >
+              {/* Soft Ambient Radial Glow */}
+              <div
+                className="absolute -top-32 -right-32 w-[440px] h-[440px] rounded-full blur-3xl opacity-20 pointer-events-none"
+                style={{ backgroundColor: JOURNEY_PHASES_DATA[activePhaseIndex].accentColor }}
+              />
+
+              {/* Top Action Bar: Back to Map Button & Stepper */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-zinc-100 dark:border-zinc-800">
+                <button
+                  onClick={() => {
+                    try { soundFx.playSelect(); } catch { }
+                    setActivePhaseIndex(null);
+                  }}
+                  className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 transition-all cursor-pointer shadow-xs hover:-translate-x-0.5"
+                >
+                  <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+                  <span>Back to Journey Map</span>
+                </button>
+
+                {/* Phase Stepper Pills (Click any phase to jump) */}
+                <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+                  {JOURNEY_PHASES_DATA.map((p, pIdx) => (
+                    <button
+                      key={p.id}
+                      onClick={() => handleSelectPhase(pIdx)}
+                      className={`px-2.5 py-1 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${pIdx === activePhaseIndex
+                        ? 'bg-emerald-500 text-white shadow-sm'
+                        : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200'
+                        }`}
+                    >
+                      P{p.phaseNumber}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Prev / Next Buttons */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handlePrevPhase}
+                    aria-label="Previous Phase"
+                    className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={handleNextPhase}
+                    aria-label="Next Phase"
+                    className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Main Content Grid: 2 Columns */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-8 w-full">
+
+                {/* LEFT SIDE: Category, Step, Big Headline, Description, Tags */}
+                <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-6">
+
+                  {/* Step Badge & Category */}
+                  <div className="flex items-center gap-3">
+                    <span className="px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-mono font-bold text-xs uppercase tracking-wider shadow-xs">
+                      PHASE {JOURNEY_PHASES_DATA[activePhaseIndex].step}
+                    </span>
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                      {JOURNEY_PHASES_DATA[activePhaseIndex].category}
+                    </span>
+                    {JOURNEY_PHASES_DATA[activePhaseIndex].isLive && (
+                      <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-[10px] font-bold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        LIVE
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Headline */}
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-zinc-950 dark:text-white tracking-tight leading-tight">
+                    {JOURNEY_PHASES_DATA[activePhaseIndex].headline}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm sm:text-base lg:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
+                    {JOURNEY_PHASES_DATA[activePhaseIndex].description}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {JOURNEY_PHASES_DATA[activePhaseIndex].tags.map((tag, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="px-3 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold border border-zinc-200/80 dark:border-zinc-700/60"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Strategic Annotation */}
+                  {JOURNEY_PHASES_DATA[activePhaseIndex].annotation && (
+                    <div className="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm font-mono flex items-start gap-2.5 mt-4">
+                      <span className="text-emerald-600 font-bold">↳</span>
+                      <span className="leading-relaxed font-medium">
+                        {JOURNEY_PHASES_DATA[activePhaseIndex].annotation}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* RIGHT SIDE: Floating Glassmorphic "Knowledge Added" Box */}
+                <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center">
+                  <motion.div
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.2 }}
+                    className="relative w-full max-w-[380px] bg-white dark:bg-zinc-900 rounded-[28px] p-6 sm:p-7 shadow-lg border border-zinc-200/90 dark:border-zinc-800"
+                  >
+                    {/* Box Title */}
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse shadow-sm" />
+                      <h4 className="text-base font-extrabold text-zinc-900 dark:text-white tracking-tight">
+                        Knowledge Added
+                      </h4>
+                    </div>
+
+                    {/* Bullet Points with Checkmarks */}
+                    <ul className="space-y-3.5">
+                      {JOURNEY_PHASES_DATA[activePhaseIndex].knowledgeAdded.map((item, kIdx) => (
+                        <li key={kIdx} className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+                          <div className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
+                            <CheckCircle2 className="w-4 h-4 fill-current" />
+                          </div>
+                          <span className="leading-snug">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Progress Indicator */}
+                    <div className="mt-5 pt-3.5 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-[11px] font-mono text-zinc-500 dark:text-zinc-400 font-bold">
+                      <span>PHASE {JOURNEY_PHASES_DATA[activePhaseIndex].step} OF 08</span>
+                      <span className="text-emerald-600 dark:text-emerald-400">COMPLETE</span>
+                    </div>
+                  </motion.div>
+                </div>
+
+              </div>
+            </motion.div>
+          )}
+
+        </AnimatePresence>
       </div>
 
     </section>
   );
 };
+
+export default JourneyCardsSection;

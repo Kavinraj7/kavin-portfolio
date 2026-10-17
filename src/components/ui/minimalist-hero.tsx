@@ -17,8 +17,8 @@ export interface MinimalistHeroProps {
   imageSrc: string;
   imageAlt: string;
   overlayText: {
-    part1: string;
-    part2: string;
+    part1: React.ReactNode;
+    part2: React.ReactNode;
   };
   socialLinks: { icon: IconComponent; href: string; label?: string }[];
   locationText: string;
@@ -59,13 +59,13 @@ export const MinimalistHero = ({
   return (
     <div
       className={cn(
-        'relative flex h-[calc(100vh-4rem)] min-h-[600px] w-full flex-col justify-between overflow-hidden bg-background px-6 sm:px-10 md:px-14 lg:px-20 font-sans transition-colors duration-300 select-none',
+        'relative flex h-screen min-h-[680px] w-full flex-col justify-between overflow-hidden bg-background px-6 sm:px-10 md:px-14 lg:px-20 pt-16 sm:pt-20 pb-4 sm:pb-6 font-sans transition-colors duration-300 select-none',
         className
       )}
     >
       {/* Main 3-Column Content Layout */}
       <div className="relative grid w-full max-w-7xl mx-auto h-full grid-cols-1 md:grid-cols-12 items-center">
-        
+
         {/* Left Column: Description & Read More */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -86,7 +86,7 @@ export const MinimalistHero = ({
             }}
             className="mt-4 sm:mt-5 inline-block text-sm font-bold text-foreground underline underline-offset-4 decoration-2 hover:text-purple-600 dark:hover:text-yellow-400 transition-colors cursor-pointer"
           >
-            Read More
+            My Journey
           </a>
         </motion.div>
 
@@ -104,7 +104,7 @@ export const MinimalistHero = ({
           <motion.img
             src={imageSrc}
             alt={imageAlt}
-            className="relative z-10 h-[75vh] sm:h-[82vh] md:h-[86vh] lg:h-[88vh] max-h-[880px] w-auto max-w-none object-contain object-bottom drop-shadow-2xl pointer-events-none mb-0 pb-0"
+            className="relative z-10 h-[78vh] sm:h-[84vh] md:h-[88vh] lg:h-[90vh] max-h-[920px] w-auto max-w-none object-contain object-bottom drop-shadow-2xl pointer-events-none mb-0 pb-0 scale-105 sm:scale-110 lg:scale-115 translate-y-3 sm:translate-y-5 md:translate-y-7 origin-bottom"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
@@ -116,17 +116,16 @@ export const MinimalistHero = ({
           />
         </div>
 
-        {/* Right Column: Massive "less is more." Typography */}
+        {/* Right Column: Massive "Keep Evolving" Typography */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="z-20 order-3 md:order-3 md:col-span-4 flex items-center justify-center md:justify-start text-center md:text-left self-center my-auto py-4 pl-0 md:pl-2"
+          className="z-20 order-3 md:order-3 md:col-span-4 flex items-center justify-center md:justify-start text-center md:text-left self-center my-auto py-4 pl-0 md:pl-2 overflow-visible"
         >
-          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.75rem] font-black text-foreground tracking-tighter leading-[0.86] select-none">
-            {overlayText.part1}
-            <br />
-            {overlayText.part2}
+          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.75rem] font-black text-foreground tracking-tighter leading-[0.86] select-none whitespace-nowrap">
+            <span className="block whitespace-nowrap">{overlayText.part1}</span>
+            <span className="block whitespace-nowrap">{overlayText.part2}</span>
           </h1>
         </motion.div>
       </div>

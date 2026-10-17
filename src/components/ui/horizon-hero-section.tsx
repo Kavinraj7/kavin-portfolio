@@ -15,18 +15,18 @@ if (typeof window !== 'undefined') {
 const SLIDES = [
   {
     title: 'HORIZON',
-    line1: 'WHERE VISION MEETS REALITY,',
-    line2: 'WE SHAPE THE FUTURE OF TOMORROW'
+    line1: 'A NEW WORLD, A NEW BEGINNING.',
+    line2: 'I entered engineering with questions, curiosity, and no fixed idea of where the journey would lead'
   },
   {
-    title: 'COSMOS',
-    line1: 'BEYOND THE BOUNDARIES OF IMAGINATION,',
-    line2: 'LIES THE UNIVERSE OF POSSIBILITIES'
+    title: 'DISCOVERY',
+    line1: 'FINDING WHAT I COULD BECOME.',
+    line2: 'Through development, leadership, and experimentation, I began discovering my strengths and the many directions I could pursue.'
   },
   {
-    title: 'INFINITY',
-    line1: 'IN THE SPACE BETWEEN THOUGHT AND CREATION,',
-    line2: 'WE FIND THE ESSENCE OF TRUE INNOVATION'
+    title: 'BECOMING',
+    line1: 'STILL GROWING. STILL EXPLORING.',
+    line2: 'Today, I bring together technology, data, AI, and management—with a story that continues to evolve.'
   }
 ];
 
@@ -203,8 +203,8 @@ export const Component = () => {
       for (let i = 0; i <= segments; i++) {
         const x = (i / segments - 0.5) * 1000;
         const y = Math.sin(i * 0.1) * layer.height +
-                 Math.sin(i * 0.05) * layer.height * 0.5 +
-                 Math.random() * layer.height * 0.2 - 100;
+          Math.sin(i * 0.05) * layer.height * 0.5 +
+          Math.random() * layer.height * 0.2 - 100;
         points.push(new THREE.Vector2(x, y));
       }
 
@@ -508,20 +508,9 @@ export const Component = () => {
           className="side-menu absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-6 pointer-events-auto"
           style={{ visibility: 'hidden' }}
         >
-          <button
-            type="button"
-            aria-label="Toggle Space Menu"
-            className="menu-icon flex items-center justify-center w-11 h-11 rounded-full bg-white/80 hover:bg-black/5 border border-black/10 backdrop-blur-md transition-all shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:border-black/30"
-          >
-            <div className="flex gap-1">
-              <span className="w-0.5 h-4 bg-black/80 rounded-full"></span>
-              <span className="w-0.5 h-4 bg-black/80 rounded-full"></span>
-              <span className="w-0.5 h-4 bg-black/80 rounded-full"></span>
-            </div>
-          </button>
           <div className="vertical-text [writing-mode:vertical-rl] tracking-[0.45em] text-[11px] font-bold text-black/60 uppercase flex items-center gap-2">
             <span className="w-3 h-px bg-black/30 mb-1"></span>
-            SPACE
+            MY JOURNEY
           </div>
         </div>
 

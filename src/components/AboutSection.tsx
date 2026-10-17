@@ -4,7 +4,7 @@ import React from 'react';
 import { MinimalistHero } from './ui/minimalist-hero';
 import { MySkillsSection } from './MySkillsSection';
 import { HowIWorkSection } from './HowIWorkSection';
-import { SchoolDaysSection } from './SchoolDaysSection';
+import { MyEducationSection } from './MyEducationSection';
 import { BeyondTheProfessionalMe } from './BeyondTheProfessionalMe';
 import { ContactSection } from './ContactSection';
 import { soundFx } from '@/utils/audio';
@@ -82,14 +82,22 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       <MinimalistHero
         logoText="KAVIN."
         navLinks={navLinks}
-        mainText="Multidisciplinary technologist bridging Software Engineering, Data Analytics, HR Systems, and Operations Management. Building impactful digital systems with aesthetic excellence."
+        mainText="I’m Kavin — a multidisciplinary builder exploring the intersection of technology, data, people, and execution. My journey has been less about choosing one path and more about learning how different perspectives can work together."
         readMoreLink="#about-details"
         onReadMore={handleReadMore}
         imageSrc="/Darkoutimage.png"
         imageAlt="Kavinraj Darkout Profile Silhouette"
         overlayText={{
-          part1: 'less is',
-          part2: 'more.',
+          part1: (
+            <span className="inline-block whitespace-nowrap">
+              Kee<span className="inline-block -translate-y-[0.22em]">p</span>
+            </span>
+          ),
+          part2: (
+            <span className="inline-block whitespace-nowrap">
+              Evolvin<span className="inline-block -translate-y-[0.22em]">g</span>
+            </span>
+          ),
         }}
         socialLinks={socialLinks}
         locationText="Tamil Nadu, India"
@@ -101,8 +109,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       {/* 3. Paper Curl Interactive "How I Work" Process */}
       <HowIWorkSection />
 
-      {/* 4. Mini Glance & Expandable "My School Achievements" Collage */}
-      <SchoolDaysSection />
+      {/* 4. "My Education" Academic Pillars & Continuous Learning (Gradient Cards) */}
+      <MyEducationSection />
 
       {/* 5. "Beyond the Professional Me" Card Fan Carousel */}
       <BeyondTheProfessionalMe />

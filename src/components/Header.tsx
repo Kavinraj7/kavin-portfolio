@@ -106,25 +106,25 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      {/* Floating Top Nav (No background rectangle or border) */}
-      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-300">
+      {/* Floating Top Nav (Completely Transparent) */}
+      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none bg-transparent border-none shadow-none transition-all duration-300">
         <div className="h-16 sm:h-20 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between">
           {/* Left: Only User's Name */}
           <div className="flex items-center gap-2 pointer-events-auto">
             <button
               onClick={() => handleTabClick('home')}
-              className="group flex items-center gap-1.5 font-display text-xl tracking-tighter uppercase font-black text-black dark:text-white cursor-pointer select-none drop-shadow-sm hover:opacity-80 transition-opacity"
+              className="group flex items-center gap-1.5 font-display text-xl tracking-tighter uppercase font-black text-black dark:text-white cursor-pointer select-none hover:opacity-75 transition-opacity"
             >
               <span>KAVIN</span>
             </button>
           </div>
 
-          {/* Right: Open Navigation Button */}
+          {/* Right: Open Navigation Button (Completely Transparent) */}
           <div className="flex items-center pointer-events-auto">
             <Button
               onClick={toggleNav}
-              variant="outline"
-              className="rounded-full px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide flex items-center gap-2 border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md text-zinc-900 dark:text-zinc-100"
+              variant="ghost"
+              className="rounded-full px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-wide flex items-center gap-2 border border-zinc-900/20 dark:border-white/20 bg-transparent hover:bg-black/5 dark:hover:bg-white/10 hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-none text-zinc-900 dark:text-zinc-100"
             >
               <Menu className="w-4 h-4" />
               <span>Open Navigation</span>

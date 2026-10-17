@@ -188,6 +188,7 @@ export default function CardFanCarousel({ cards, className = "" }: SocialCardsPr
         let targetY = base.y * hM;
         let targetRot = base.rot;
         let targetScale = base.scale;
+        let targetZIndex = base.zIndex;
         let delay = 0;
 
         if (hoveredSlot !== null) {
@@ -195,22 +196,23 @@ export default function CardFanCarousel({ cards, className = "" }: SocialCardsPr
           delay = distance * 0.02;
 
           if (slot === hoveredSlot) {
-            targetY -= 2.5 * hM;
-            targetScale *= 1.08;
+            targetY -= 3.5 * hM;
+            targetScale *= 1.12;
+            targetZIndex = 50; // Bring active hovered card above all others
           } else {
             const normalized = centerSlot > 0 ? (slot - centerSlot) / centerSlot : 0;
-            const pushStrength = 8 * (1 - Math.abs(normalized)) * (1 + 0.2 * Math.max(0, 3 - distance));
+            const pushStrength = 10 * (1 - Math.abs(normalized)) * (1 + 0.25 * Math.max(0, 3 - distance));
 
             if (slot < hoveredSlot) {
               targetX -= pushStrength * mult;
-              targetRot -= 3 / (distance + 1);
+              targetRot -= 4 / (distance + 1);
             } else {
               targetX += pushStrength * mult;
-              targetRot += 3 / (distance + 1);
+              targetRot += 4 / (distance + 1);
             }
 
-            if (slot === visibleEntries.length - 1 && hoveredSlot < centerSlot) targetY -= 1 * hM;
-            if (slot === 0 && hoveredSlot > centerSlot) targetY -= 1 * hM;
+            if (slot === visibleEntries.length - 1 && hoveredSlot < centerSlot) targetY -= 1.2 * hM;
+            if (slot === 0 && hoveredSlot > centerSlot) targetY -= 1.2 * hM;
           }
         } else {
           delay = Math.abs(slot - centerSlot) * 0.02;
@@ -220,7 +222,7 @@ export default function CardFanCarousel({ cards, className = "" }: SocialCardsPr
           x: `${targetX}rem`, y: `${targetY}rem`, rotation: targetRot, scale: targetScale,
           duration: 0.5, delay, ease: "elastic.out(1,.75)", overwrite: "auto",
         });
-        gsap.set(el, { zIndex: base.zIndex });
+        gsap.set(el, { zIndex: targetZIndex });
       });
     };
 
@@ -260,24 +262,50 @@ export default function CardFanCarousel({ cards, className = "" }: SocialCardsPr
     </svg>
   );
 
+  const visibleMap = getVisibleMap(centerIndex);
+  const totalSlots = needsPagination ? MAX_VISIBLE : totalCards;
+  const centerSlot = totalSlots >> 1;
+
   return (
     <section className={`flex flex-col items-center w-full py-4 lg:py-8 px-4 md:px-8 relative z-20 ${className}`}>
       <div className="flex items-center justify-center w-full max-w-[90rem]">
         <div ref={containerRef} className="fan-layout flex relative justify-center items-center w-full max-w-[80rem] h-[22rem] sm:h-[26rem] md:h-[28rem] lg:h-[34rem] xl:h-[38rem]">
           {cards.map((card, index) => {
+            const slot = visibleMap.get(index);
+            const isCenter = slot !== undefined ? slot === centerSlot : index === centerIndex;
+            const isRight = slot !== undefined ? slot > centerSlot : index > centerIndex;
+
+            const alignmentClass = isCenter
+              ? "text-center items-center"
+              : isRight
+              ? "text-right items-end"
+              : "text-left items-start";
+
+            const badgeAlignClass = isCenter
+              ? "self-center"
+              : isRight
+              ? "self-end"
+              : "self-start";
+
+            const titleAlignClass = isCenter
+              ? "text-center"
+              : isRight
+              ? "text-right"
+              : "text-left";
+
             const image = (
-              <div className="relative w-full h-full overflow-hidden rounded-2xl md:rounded-3xl border border-black/10 dark:border-white/10 bg-zinc-900 shadow-2xl group">
+              <div className="relative w-full h-full overflow-hidden rounded-2xl md:rounded-3xl border border-white/15 bg-zinc-900 shadow-2xl group cursor-pointer transition-shadow duration-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
                 <img src={card.imgUrl} loading="lazy" alt={card.alt || `Card ${index}`} className="absolute inset-0 w-full h-full object-cover z-10 transition-transform duration-500 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-20 opacity-80 group-hover:opacity-90 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent z-20 opacity-90 group-hover:opacity-95 transition-opacity" />
                 {(card.title || card.category) && (
-                  <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5 z-30 flex flex-col justify-end text-left">
+                  <div className={`absolute bottom-0 inset-x-0 p-4 sm:p-5 md:p-6 z-30 flex flex-col justify-end pointer-events-none transition-all duration-300 ${alignmentClass}`}>
                     {card.category && (
-                      <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-emerald-400 uppercase mb-1">
+                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-400/50 text-[10px] sm:text-xs font-mono font-bold tracking-widest text-emerald-300 uppercase mb-1.5 backdrop-blur-md shadow-xs ${badgeAlignClass}`}>
                         {card.category}
                       </span>
                     )}
                     {card.title && (
-                      <h4 className="text-sm sm:text-base font-extrabold text-white tracking-tight drop-shadow-md">
+                      <h4 className={`text-base sm:text-lg md:text-xl lg:text-2xl font-black text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-tight ${titleAlignClass}`}>
                         {card.title}
                       </h4>
                     )}
@@ -291,6 +319,9 @@ export default function CardFanCarousel({ cards, className = "" }: SocialCardsPr
                 href={card.linkUrl}
                 target={card.linkUrl.startsWith("http") ? "_blank" : "_self"}
                 rel="noopener noreferrer"
+                onClick={() => {
+                  if (centerIndex !== index) setCenterIndex(index);
+                }}
                 className="fan-card absolute block cursor-pointer w-[12rem] h-[16rem] sm:w-[14rem] sm:h-[19rem] md:w-[16rem] md:h-[22rem] lg:w-[19rem] lg:h-[26rem] xl:w-[21rem] xl:h-[29rem] will-change-transform"
               >
                 {image}
@@ -298,7 +329,10 @@ export default function CardFanCarousel({ cards, className = "" }: SocialCardsPr
             ) : (
               <div
                 key={index}
-                className="fan-card absolute w-[12rem] h-[16rem] sm:w-[14rem] sm:h-[19rem] md:w-[16rem] md:h-[22rem] lg:w-[19rem] lg:h-[26rem] xl:w-[21rem] xl:h-[29rem] will-change-transform"
+                onClick={() => {
+                  if (centerIndex !== index) setCenterIndex(index);
+                }}
+                className="fan-card absolute cursor-pointer w-[12rem] h-[16rem] sm:w-[14rem] sm:h-[19rem] md:w-[16rem] md:h-[22rem] lg:w-[19rem] lg:h-[26rem] xl:w-[21rem] xl:h-[29rem] will-change-transform"
               >
                 {image}
               </div>
