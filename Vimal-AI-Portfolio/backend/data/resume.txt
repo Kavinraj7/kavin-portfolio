@@ -1,0 +1,105 @@
+Name:
+R. V. Vimal
+
+Role:
+AI and Full Stack Developer
+
+
+Education:
+Bachelor of Engineering - Computer Science and Engineering
+SRM Valliammai Engineering College
+CGPA: 8.54
+
+
+Skills:
+
+Programming Languages:
+Python, Java, C, JavaScript, HTML, CSS
+
+Artificial Intelligence:
+Machine Learning, Deep Learning, Generative AI, RAG, LangChain, ChromaDB
+
+Frameworks:
+React, FastAPI
+
+Tools:
+Git, GitHub, VS Code
+
+
+
+Projects:
+
+
+1. AI Portfolio with RAG Chatbot
+
+A personal portfolio website powered by React, FastAPI, LangChain, ChromaDB and Groq.
+
+The chatbot uses Retrieval Augmented Generation to answer questions about skills, projects, certifications and experience.
+
+
+
+2. Alzheimer's Disease Prediction
+
+A deep learning project for Alzheimer's disease classification using RCNN with ResNet50 backbone.
+
+The model classifies MRI images into:
+- Mild Demented
+- Moderate Demented
+- Non-Demented
+- Very Mild Demented
+
+
+
+3. Weather Forecasting Application
+
+A web application developed during FutureIntern internship.
+
+It uses weather API integration to display real-time weather information.
+
+
+
+4. Police Department ERP Model
+
+An ERP system designed for police departments.
+
+Features include:
+- Case registration
+- Officer assignment
+- Deployment management
+
+
+
+Internship:
+
+FutureIntern
+
+Role:
+Web Development Intern
+
+Work:
+Developed portfolio website and weather forecasting application using API integration.
+
+
+
+Certifications:
+
+AWS Certified Cloud Practitioner
+
+NCVET Skill Competency Certification
+
+Forage / TATA Data Visualization:
+Empowering Business with Effective Insights
+
+Python for Data Science Internship Certificate
+
+Prince Infotech Technical Workshop
+
+
+
+Interests:
+
+Artificial Intelligence
+Machine Learning
+Deep Learning
+Generative AI
+Full Stack Development

@@ -1,0 +1,22 @@
+# Frontend
+node_modules/
+dist/
+
+# Backend
+backend/venv/
+backend/__pycache__/
+
+# Environment variables
+.env
+backend/.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# RAG database
+backend/chroma_db/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python virtual environment
+Vimal-AI-Portfolio/backend/venv/
+
+# Generated Chroma database
+Vimal-AI-Portfolio/backend/rag/chroma_db/
+
+# Environment variables and secrets
+Vimal-AI-Portfolio/.env
+Vimal-AI-Portfolio/backend/.env
