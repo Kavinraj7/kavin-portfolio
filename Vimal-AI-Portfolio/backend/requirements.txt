@@ -1,9 +1,0 @@
-fastapi
-uvicorn
-langchain
-langchain-groq
-langchain-community
-langchain-google-genai
-chromadb
-python-dotenv
-pypdf
