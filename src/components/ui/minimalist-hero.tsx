@@ -92,12 +92,12 @@ export const MinimalistHero = ({
 
         {/* Center Column: Full-Height Portrait starting from bottom + Centered Yellow Circle */}
         <div className="relative order-1 md:order-2 md:col-span-5 h-full w-full flex items-end justify-center overflow-visible">
-          {/* Vibrant Yellow Circle Backdrop */}
+          {/* Vibrant #FACC15 Yellow Circle Backdrop - Proportionally scaled to portrait across all zooms and ratios */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="absolute z-0 top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[460px] md:h-[460px] lg:w-[540px] lg:h-[540px] rounded-full bg-[#FACC15] dark:bg-[#FACC15] shadow-2xl pointer-events-none"
+            className="absolute z-0 top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vh] h-[50vh] sm:w-[55vh] sm:h-[55vh] md:w-[60vh] md:h-[60vh] lg:w-[63vh] lg:h-[63vh] xl:w-[65vh] xl:h-[65vh] min-w-[350px] min-h-[350px] max-w-[690px] max-h-[690px] rounded-full bg-[#FACC15] dark:bg-[#FACC15] shadow-2xl pointer-events-none aspect-square shrink-0"
           />
 
           {/* Profile Silhouette Image rising tall from bottom */}

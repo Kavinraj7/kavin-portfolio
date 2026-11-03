@@ -71,60 +71,57 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
 
-  // Track scroll progress as this single viewport section scrolls through view
+  // Enhanced smooth scroll-driven horizontal parallax as section scrolls naturally through view
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
 
-  // Smooth spring physics for fluid horizontal movement
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 90,
     damping: 25,
     restDelta: 0.001,
   });
 
-  // Horizontal parallax motion on scroll:
-  // Top row glides right-to-left
-  // Bottom row glides left-to-right
-  // Center is perfectly balanced at 0.5 (when centered in viewport)
-  const topRowX = useTransform(smoothProgress, [0, 0.5, 1], [100, 0, -100]);
-  const bottomRowX = useTransform(smoothProgress, [0, 0.5, 1], [-100, 0, 100]);
+  // Increased gliding motion for a more dynamic and engaging scroll feel
+  const topRowX = useTransform(smoothProgress, [0, 0.5, 1], [80, 0, -80]);
+  const bottomRowX = useTransform(smoothProgress, [0, 0.5, 1], [-80, 0, 80]);
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen min-h-[640px] max-h-screen bg-white text-black select-none border-t border-b border-zinc-200 flex flex-col justify-between items-center py-5 sm:py-6 md:py-7 px-4 sm:px-6 md:px-8 overflow-hidden"
+      id="more-than-one-perspective"
+      className="relative w-full min-h-screen py-12 sm:py-16 px-4 sm:px-6 md:px-8 bg-white text-black select-none border-t border-b border-zinc-200 flex flex-col items-center justify-center gap-6 sm:gap-7 md:gap-8 overflow-hidden"
     >
       {/* Ambient Subtle Warm Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-yellow-300/10 blur-[130px] rounded-full pointer-events-none -z-10" />
 
       {/* ── Top Header ── */}
-      <div className="relative z-20 flex flex-col items-center text-center shrink-0 max-w-2xl mx-auto pt-4 sm:pt-6 md:pt-8">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-black font-display leading-tight">
+      <div className="relative z-20 flex flex-col items-center text-center shrink-0 max-w-2xl xl:max-w-3xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-black uppercase tracking-tight text-black font-display leading-tight">
           MORE THAN ONE PERSPECTIVE
         </h2>
 
-        <p className="text-xs sm:text-[13px] text-black font-semibold mt-1 max-w-lg leading-relaxed">
+        <p className="text-xs sm:text-[13px] xl:text-base text-zinc-600 font-semibold mt-1 max-w-lg xl:max-w-xl leading-relaxed">
           Different disciplines. One journey — shaped by building, leading, analyzing, and learning.
         </p>
       </div>
 
-      {/* ── Interactive 4-Card Stage with Center Circle Hub (Replicating Reference Design) ── */}
-      <div className="relative w-full max-w-5xl mx-auto flex-1 flex flex-col items-center justify-center my-auto min-h-0 scale-[0.80] sm:scale-[0.88] md:scale-[0.95] lg:scale-100 transition-transform origin-center">
+      {/* ── Interactive 4-Card Stage with Center Circle Hub ── */}
+      <div className="relative w-full max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto flex flex-col items-center justify-center">
 
-        {/* Central Circular Hub (Placed at center intersection without lines or dots) */}
+        {/* Central Circular Hub (Placed at center intersection with equal overlap) */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
           <motion.div
             whileHover={{ scale: 1.08 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-white text-black flex items-center justify-center shadow-[0_6px_25px_rgba(0,0,0,0.12)] border-4 border-black cursor-pointer group"
+            className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 xl:w-36 xl:h-36 2xl:w-40 2xl:h-40 rounded-full bg-white text-black flex items-center justify-center shadow-[0_6px_25px_rgba(0,0,0,0.12)] border-3 sm:border-4 border-black cursor-pointer group"
           >
-            {/* Rotating SVG Perimeter Text - close to the margin of the circle */}
+            {/* Rotating SVG Perimeter Text */}
             <svg className="absolute inset-0 w-full h-full animate-[spin_24s_linear_infinite]" viewBox="0 0 140 140">
               <path
                 id="perspectivePath"
-                d="M 70, 70 m -58, 0 a 58,58 0 1,1 116,0 a 58,58 0 1,1 -116,0"
+                d="M 70, 70 m -54, 0 a 54,54 0 1,1 108,0 a 54,54 0 1,1 -108,0"
                 fill="none"
               />
               <text className="text-[6.8px] font-mono font-bold tracking-[0.16em] uppercase fill-black">
@@ -134,22 +131,22 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
               </text>
             </svg>
 
-            {/* Center Core Badge - inside the rotating words */}
+            {/* Center Core Badge */}
             <div className="text-center z-10 flex flex-col items-center justify-center select-none px-2">
-              <span className="font-mono font-black text-[11px] sm:text-xs tracking-wider uppercase text-black group-hover:text-yellow-600 transition-colors">
+              <span className="font-mono font-black text-[10px] sm:text-xs xl:text-sm tracking-wider uppercase text-black group-hover:text-yellow-600 transition-colors">
                 PERSPECTIVES
               </span>
             </div>
           </motion.div>
         </div>
 
-        {/* 2-Row Horizontal Stage with Scroll-Driven Horizontal Parallax */}
-        <div className="w-full flex flex-col gap-8 sm:gap-10 lg:gap-12 items-center justify-center">
+        {/* 2-Row Horizontal Stage with Uniform Horizontal & Vertical Spacing */}
+        <div className="w-full flex flex-col gap-4 sm:gap-6 md:gap-8 xl:gap-10 2xl:gap-12 items-center justify-center">
 
           {/* ── TOP ROW: (Software Engineering & Data Analytics) ── */}
           <motion.div
             style={{ x: topRowX }}
-            className="flex flex-row items-center justify-center gap-8 sm:gap-14 lg:gap-20 w-full"
+            className="flex flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8 xl:gap-10 2xl:gap-12 w-full"
           >
             {PERSPECTIVES.filter((p) => p.row === 'top').map((card) => {
               const Icon = card.icon;
@@ -160,30 +157,28 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
                   key={card.id}
                   onMouseEnter={() => setHoveredCardId(card.id)}
                   onMouseLeave={() => setHoveredCardId(null)}
-                  className={`relative w-[280px] sm:w-[320px] lg:w-[360px] h-[180px] sm:h-[195px] lg:h-[205px] p-4 sm:p-5 lg:p-6 rounded-2xl sm:rounded-3xl bg-white border-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer ${isHovered
-                    ? 'border-yellow-400 shadow-[0_16px_36px_rgba(234,179,8,0.22)] scale-[1.03]'
-                    : 'border-black shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:border-yellow-400'
+                  className={`relative w-[155px] sm:w-[285px] md:w-[330px] lg:w-[375px] xl:w-[425px] 2xl:w-[465px] min-h-[142px] sm:min-h-[154px] md:min-h-[165px] lg:min-h-[175px] xl:min-h-[182px] 2xl:min-h-[192px] p-3.5 sm:p-4 lg:p-4.5 xl:p-5 2xl:p-5.5 rounded-2xl sm:rounded-3xl bg-white border-2 transition-all duration-300 flex flex-col justify-start group cursor-pointer ${isHovered
+                    ? 'border-yellow-400 shadow-[0_12px_28px_rgba(0,0,0,0.08)] scale-[1.02] z-30'
+                    : 'border-black shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:border-yellow-400 z-10'
                     }`}
                 >
-                  <div>
-                    {/* Title Header with Icon */}
-                    <div className="flex items-start justify-between gap-3 mb-1.5">
-                      <h3 className="text-sm sm:text-base lg:text-lg font-black uppercase tracking-tight text-black font-display group-hover:text-yellow-600 transition-colors leading-tight">
-                        {card.title}
-                      </h3>
-                      <div className="w-7 h-7 rounded-lg bg-yellow-400 border border-black flex items-center justify-center text-black shrink-0 group-hover:rotate-12 transition-all shadow-xs">
-                        <Icon className="w-3.5 h-3.5 stroke-[2.5]" />
-                      </div>
+                  {/* Title Header with Icon */}
+                  <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1">
+                    <h3 className="text-[11px] sm:text-sm lg:text-base xl:text-lg font-black uppercase tracking-tight text-black font-display group-hover:text-yellow-600 transition-colors leading-tight">
+                      {card.title}
+                    </h3>
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8 rounded-md sm:rounded-lg bg-yellow-400 border border-black flex items-center justify-center text-black shrink-0 group-hover:rotate-12 transition-all shadow-xs">
+                      <Icon className="w-3 sm:w-3.5 xl:w-4 h-3 sm:h-3.5 xl:h-4 stroke-[2.5]" />
                     </div>
-
-                    {/* Subline / Category */}
-                    <p className="text-[10px] sm:text-[11px] font-mono font-black uppercase tracking-wider text-yellow-600 mb-1.5">
-                      {card.subtitle}
-                    </p>
                   </div>
 
+                  {/* Subline / Category */}
+                  <p className="text-[8px] sm:text-[9px] lg:text-[10px] xl:text-xs font-mono font-bold uppercase tracking-wider text-yellow-600 mb-1.5 sm:mb-2">
+                    {card.subtitle}
+                  </p>
+
                   {/* Description Text */}
-                  <p className="text-[11px] sm:text-xs text-black font-bold leading-relaxed uppercase tracking-wide">
+                  <p className="text-[9.5px] sm:text-[10.5px] md:text-[11px] lg:text-[12px] xl:text-[12.5px] 2xl:text-[13.5px] text-zinc-800 font-semibold leading-normal sm:leading-relaxed uppercase tracking-wide">
                     {card.description}
                   </p>
                 </div>
@@ -194,7 +189,7 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
           {/* ── BOTTOM ROW: (Project Management & People Operations) ── */}
           <motion.div
             style={{ x: bottomRowX }}
-            className="flex flex-row items-center justify-center gap-8 sm:gap-14 lg:gap-20 w-full"
+            className="flex flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8 xl:gap-10 2xl:gap-12 w-full"
           >
             {PERSPECTIVES.filter((p) => p.row === 'bottom').map((card) => {
               const Icon = card.icon;
@@ -205,30 +200,28 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
                   key={card.id}
                   onMouseEnter={() => setHoveredCardId(card.id)}
                   onMouseLeave={() => setHoveredCardId(null)}
-                  className={`relative w-[280px] sm:w-[320px] lg:w-[360px] h-[180px] sm:h-[195px] lg:h-[205px] p-4 sm:p-5 lg:p-6 rounded-2xl sm:rounded-3xl bg-white border-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer ${isHovered
-                    ? 'border-yellow-400 shadow-[0_16px_36px_rgba(234,179,8,0.22)] scale-[1.03]'
-                    : 'border-black shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:border-yellow-400'
+                  className={`relative w-[155px] sm:w-[285px] md:w-[330px] lg:w-[375px] xl:w-[425px] 2xl:w-[465px] min-h-[142px] sm:min-h-[154px] md:min-h-[165px] lg:min-h-[175px] xl:min-h-[182px] 2xl:min-h-[192px] p-3.5 sm:p-4 lg:p-4.5 xl:p-5 2xl:p-5.5 rounded-2xl sm:rounded-3xl bg-white border-2 transition-all duration-300 flex flex-col justify-start group cursor-pointer ${isHovered
+                    ? 'border-yellow-400 shadow-[0_12px_28px_rgba(0,0,0,0.08)] scale-[1.02] z-30'
+                    : 'border-black shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:border-yellow-400 z-10'
                     }`}
                 >
-                  <div>
-                    {/* Title Header with Icon */}
-                    <div className="flex items-start justify-between gap-3 mb-1.5">
-                      <h3 className="text-sm sm:text-base lg:text-lg font-black uppercase tracking-tight text-black font-display group-hover:text-yellow-600 transition-colors leading-tight">
-                        {card.title}
-                      </h3>
-                      <div className="w-7 h-7 rounded-lg bg-yellow-400 border border-black flex items-center justify-center text-black shrink-0 group-hover:rotate-12 transition-all shadow-xs">
-                        <Icon className="w-3.5 h-3.5 stroke-[2.5]" />
-                      </div>
+                  {/* Title Header with Icon */}
+                  <div className="flex items-start justify-between gap-1.5 sm:gap-2 mb-1">
+                    <h3 className="text-[11px] sm:text-sm lg:text-base xl:text-lg font-black uppercase tracking-tight text-black font-display group-hover:text-yellow-600 transition-colors leading-tight">
+                      {card.title}
+                    </h3>
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8 rounded-md sm:rounded-lg bg-yellow-400 border border-black flex items-center justify-center text-black shrink-0 group-hover:rotate-12 transition-all shadow-xs">
+                      <Icon className="w-3 sm:w-3.5 xl:w-4 h-3 sm:h-3.5 xl:h-4 stroke-[2.5]" />
                     </div>
-
-                    {/* Subline / Category */}
-                    <p className="text-[10px] sm:text-[11px] font-mono font-black uppercase tracking-wider text-yellow-600 mb-1.5">
-                      {card.subtitle}
-                    </p>
                   </div>
 
+                  {/* Subline / Category */}
+                  <p className="text-[8px] sm:text-[9px] lg:text-[10px] xl:text-xs font-mono font-bold uppercase tracking-wider text-yellow-600 mb-1.5 sm:mb-2">
+                    {card.subtitle}
+                  </p>
+
                   {/* Description Text */}
-                  <p className="text-[11px] sm:text-xs text-black font-bold leading-relaxed uppercase tracking-wide">
+                  <p className="text-[9.5px] sm:text-[10.5px] md:text-[11px] lg:text-[12px] xl:text-[12.5px] 2xl:text-[13.5px] text-zinc-800 font-semibold leading-normal sm:leading-relaxed uppercase tracking-wide">
                     {card.description}
                   </p>
                 </div>
@@ -244,10 +237,10 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
         {onExploreJourney && (
           <button
             onClick={onExploreJourney}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black text-yellow-400 hover:bg-yellow-400 hover:text-black border-2 border-black text-xs sm:text-sm font-black tracking-wide transition-all shadow-sm hover:shadow-lg cursor-pointer active:scale-95 group"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black text-yellow-400 hover:bg-yellow-400 hover:text-black border-2 border-black text-xs sm:text-sm font-black tracking-wide transition-all shadow-sm hover:shadow-lg cursor-pointer active:scale-95 group"
           >
             <Layers className="w-3.5 h-3.5 text-yellow-400 group-hover:text-black transition-colors" />
-            <span>Explore My Full Journey</span>
+            <span>Know About Me</span>
             <ArrowRight className="w-3.5 h-3.5 text-yellow-400 group-hover:text-black group-hover:translate-x-1 transition-all" />
           </button>
         )}

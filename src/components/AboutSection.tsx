@@ -35,11 +35,14 @@ const MailIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   </svg>
 );
 
+import { NavTab } from './Header';
+
 interface AboutSectionProps {
   onNavigateHome?: () => void;
   onNavigateJourney?: () => void;
   onNavigateProjects?: () => void;
   onOpenTerminal?: () => void;
+  onNavigate?: (tab: NavTab, sectionId?: string) => void;
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({
@@ -47,6 +50,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   onNavigateJourney,
   onNavigateProjects,
   onOpenTerminal,
+  onNavigate,
 }) => {
   const navLinks = [
     { label: 'HOME', href: '#', onClick: onNavigateHome },
@@ -106,17 +110,26 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       {/* 2. Interactive "My Skills" Section with Morphing Bento Matrix */}
       <MySkillsSection />
 
-      {/* 3. Paper Curl Interactive "How I Work" Process */}
-      <HowIWorkSection />
-
-      {/* 4. "My Education" Academic Pillars & Continuous Learning (Gradient Cards) */}
+      {/* 3. "My Education" Academic Pillars & Continuous Learning (Gradient Cards) */}
       <MyEducationSection />
+
+      {/* 4. Paper Curl Interactive "How I Work" Process */}
+      <HowIWorkSection />
 
       {/* 5. "Beyond the Professional Me" Card Fan Carousel */}
       <BeyondTheProfessionalMe />
 
       {/* 6. Universal Dark Theme Contact Footer */}
-      <ContactSection onOpenTerminal={onOpenTerminal} />
+      <ContactSection
+        onOpenTerminal={onOpenTerminal}
+        onNavigate={onNavigate || ((tab, sectionId) => {
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(
+              new CustomEvent('app-navigate', { detail: { tab, sectionId } })
+            );
+          }
+        })}
+      />
     </div>
   );
 };

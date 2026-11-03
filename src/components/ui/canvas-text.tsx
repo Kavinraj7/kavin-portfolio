@@ -61,6 +61,18 @@ export interface CanvasTextProps {
   fontWeight?: number | string;
   /** Font family. Default: system UI sans. */
   fontFamily?: string;
+  /** Enable automatic hover wave sweeping across characters from left to right. */
+  autoWave?: boolean;
+  /** Duration of auto wave in seconds. Default: 1.8. */
+  autoWaveDuration?: number;
+  /** Delay in seconds after text morph before auto wave starts. Default: 0.35. */
+  autoWaveDelay?: number;
+  /** Radius of influence for the auto wave in CSS pixels. Default: 56. */
+  autoWaveRadius?: number;
+  /** If true, ignore physical mouse movements so they don't intervene with animation. */
+  disableMouse?: boolean;
+  /** Callback when auto wave completes. */
+  onWaveComplete?: () => void;
 }
 
 type Particle = {
@@ -106,6 +118,15 @@ type Engine = {
   reducedMotion: boolean;
   /** True once intro finished and lattice is static (no drift / pointer). */
   idleLocked: boolean;
+  autoWave: boolean;
+  autoWaveDurationMs: number;
+  autoWaveDelayMs: number;
+  autoWaveDone: boolean;
+  autoWaveRadius: number;
+  minX: number;
+  maxX: number;
+  midY: number;
+  onWaveComplete?: () => void;
   ctx: CanvasRenderingContext2D;
 };
 
@@ -114,7 +135,7 @@ const DEFAULT_FONT_FAMILY =
 
 const SPIN_RATE = 0.0024;
 /** Soft cap — denser samples are stride-skipped so mobile stays smooth. */
-const MAX_PARTICLES = 8000;
+const MAX_PARTICLES = 40000;
 const RESIZE_DEBOUNCE_MS = 80;
 const TWO_PI = Math.PI * 2;
 
@@ -139,6 +160,12 @@ export function CanvasText({
   fontSize = 64,
   fontWeight = 600,
   fontFamily = DEFAULT_FONT_FAMILY,
+  autoWave = false,
+  autoWaveDuration = 1.8,
+  autoWaveDelay = 0.35,
+  autoWaveRadius = 26,
+  disableMouse = false,
+  onWaveComplete,
 }: CanvasTextProps) {
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
@@ -153,11 +180,13 @@ export function CanvasText({
   const pageVisibleRef = React.useRef(true);
   const pausedPropRef = React.useRef(paused);
   const colorPropRef = React.useRef(color);
+  const onWaveCompleteRef = React.useRef(onWaveComplete);
   const kickLoopRef = React.useRef<((force?: boolean) => void) | null>(null);
   pausedPropRef.current = paused;
   colorPropRef.current = color;
+  onWaveCompleteRef.current = onWaveComplete;
 
-  const safeDensity = Math.max(1, Math.round(density));
+  const safeDensity = Math.max(1, density);
   const safeParticleSize = Math.max(0.6, particleSize);
   const safeDrift = Math.max(0, drift);
   const safeScatter = Math.max(12, scatter);
@@ -320,6 +349,21 @@ export function CanvasText({
       p.seed = seed * 1000;
     }
 
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+    for (let i = 0; i < particles.length; i++) {
+      const hx = particles[i]!.homeX;
+      const hy = particles[i]!.homeY;
+      if (hx < minX) minX = hx;
+      if (hx > maxX) maxX = hx;
+      if (hy < minY) minY = hy;
+      if (hy > maxY) maxY = hy;
+    }
+    if (!isFinite(minX)) { minX = cx - 100; maxX = cx + 100; }
+    const midY = isFinite(minY) && isFinite(maxY) ? (minY + maxY) / 2 : cy;
+
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -363,6 +407,15 @@ export function CanvasText({
       pointer: prevPointer,
       reducedMotion,
       idleLocked: reducedMotion,
+      autoWave,
+      autoWaveDurationMs: autoWaveDuration * 1000,
+      autoWaveDelayMs: autoWaveDelay * 1000,
+      autoWaveDone: false,
+      autoWaveRadius: Math.max(20, autoWaveRadius),
+      minX,
+      maxX,
+      midY,
+      onWaveComplete: () => onWaveCompleteRef.current?.(),
       ctx,
     };
 
@@ -399,9 +452,10 @@ export function CanvasText({
     engine.drift = safeDrift;
     engine.magnetic = safeMagnetic;
     engine.magneticRadius = safeMagneticRadius;
-    if (safeMagnetic <= 0) {
+    if (safeMagnetic <= 0 || disableMouse) {
       engine.pointer.active = false;
     }
+    engine.onWaveComplete = () => onWaveCompleteRef.current?.();
     // Drift coming online must wake a stopped idle loop.
     if (engine.idleLocked && safeDrift > 0) {
       kickLoopRef.current?.(true);
@@ -536,7 +590,7 @@ export function CanvasText({
 
   React.useEffect(() => {
     const wrap = wrapRef.current;
-    if (!wrap || safeMagnetic <= 0) return;
+    if (!wrap || safeMagnetic <= 0 || disableMouse) return;
 
     const onMove = (event: PointerEvent) => {
       const engine = engineRef.current;
@@ -706,7 +760,91 @@ function stepParticles(engine: Engine, now: number): boolean {
     return true;
   }
 
-  // Phase 3 — settled lattice.
+  // Phase 3 — Auto hover wave sweeping from 'K' to 'M'
+  if (engine.autoWave && !engine.autoWaveDone) {
+    const waveStartMs = loadMs + morphMs + engine.autoWaveDelayMs;
+    const waveElapsed = elapsed - waveStartMs;
+
+    if (waveElapsed < 0) {
+      // Waiting during autoWaveDelay — particles rest crisply at home, keep rAF loop running
+      for (let i = 0; i < len; i++) {
+        const p = particles[i]!;
+        p.x = p.homeX;
+        p.y = p.homeY;
+        p.vx = 0;
+        p.vy = 0;
+      }
+      return true;
+    }
+
+    if (waveElapsed >= 0 && waveElapsed < engine.autoWaveDurationMs) {
+      const progress = waveElapsed / engine.autoWaveDurationMs;
+      // Start slightly left of 'K' and glide smoothly past 'M'
+      const startX = engine.minX - 25;
+      const endX = engine.maxX + 25;
+      const waveX = startX + progress * (endX - startX);
+      const waveY = engine.midY;
+      const waveRadius = engine.autoWaveRadius;
+      const waveRadiusSq = waveRadius * waveRadius;
+
+      for (let i = 0; i < len; i++) {
+        const p = particles[i]!;
+        let targetX = p.homeX;
+        let targetY = p.homeY;
+
+        const dx = p.homeX - waveX;
+        const dy = p.homeY - waveY;
+        const distSq = dx * dx + dy * dy;
+
+        if (distSq < waveRadiusSq && distSq > 0) {
+          const dist = Math.sqrt(distSq);
+          const falloff = 1 - dist / waveRadius;
+          // Gentle, subtle micro-hover at the exact middle of the text
+          const push = falloff * falloff * 5.0;
+          targetX += (dx / dist) * push;
+          targetY += (dy / dist) * push;
+        }
+
+        p.vx = (p.vx + (targetX - p.x) * 0.22) * 0.76;
+        p.vy = (p.vy + (targetY - p.y) * 0.22) * 0.76;
+        p.x += p.vx;
+        p.y += p.vy;
+      }
+      return true;
+    } else if (waveElapsed >= engine.autoWaveDurationMs) {
+      // Settle spring back to crisp lattice
+      let isSettling = false;
+      for (let i = 0; i < len; i++) {
+        const p = particles[i]!;
+        p.vx = (p.vx + (p.homeX - p.x) * 0.22) * 0.76;
+        p.vy = (p.vy + (p.homeY - p.y) * 0.22) * 0.76;
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (
+          Math.abs(p.vx) > 0.04 ||
+          Math.abs(p.vy) > 0.04 ||
+          Math.abs(p.x - p.homeX) > 0.1 ||
+          Math.abs(p.y - p.homeY) > 0.1
+        ) {
+          isSettling = true;
+        } else {
+          p.x = p.homeX;
+          p.y = p.homeY;
+          p.vx = 0;
+          p.vy = 0;
+        }
+      }
+
+      if (!isSettling) {
+        engine.autoWaveDone = true;
+        engine.onWaveComplete?.();
+      }
+      return isSettling;
+    }
+  }
+
+  // Phase 4 — settled lattice.
   if (!pointerLive && drift <= 0) {
     for (let i = 0; i < len; i++) {
       const p = particles[i]!;
@@ -762,14 +900,14 @@ function paintFrame(engine: Engine) {
   ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = color;
 
-  const size = particleSize;
-  const half = size * 0.5;
+  const radius = particleSize * 0.5;
   const len = particles.length;
-  // Single path + one fill beats N beginPath/fill pairs.
+  // Single path + one fill of genuine round dots
   ctx.beginPath();
   for (let i = 0; i < len; i++) {
     const p = particles[i]!;
-    ctx.rect(p.x - half, p.y - half, size, size);
+    ctx.moveTo(p.x + radius, p.y);
+    ctx.arc(p.x, p.y, radius, 0, TWO_PI);
   }
   ctx.fill();
 }

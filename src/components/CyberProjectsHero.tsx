@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Briefcase, Code2, Users, BarChart3, LucideIcon } from "lucide-react";
+import { ArrowUpRight, Briefcase, Code2, Cpu, BarChart3, LucideIcon } from "lucide-react";
 import Image from "next/image";
 
 export interface DomainItem {
@@ -16,29 +16,29 @@ export interface DomainItem {
 const DOMAINS: DomainItem[] = [
   {
     id: "pm",
-    titleLine1: "Project",
-    titleLine2: "Manager",
+    titleLine1: "Project Manager",
+    titleLine2: "",
     description: "The Essence of Modern Delivery & Strategy",
     icon: Briefcase,
   },
   {
     id: "dev",
-    titleLine1: "Software",
-    titleLine2: "Developer",
+    titleLine1: "Software Developer",
+    titleLine2: "",
     description: "Where clean architecture meets scalable engineering.",
     icon: Code2,
   },
   {
-    id: "hr",
-    titleLine1: "HR",
-    titleLine2: "Manager",
-    description: "People operations, talent culture & growth.",
-    icon: Users,
+    id: "ai",
+    titleLine1: "AI / ML Engineer",
+    titleLine2: "",
+    description: "Intelligent systems, deep learning & agentic models.",
+    icon: Cpu,
   },
   {
     id: "data",
-    titleLine1: "Data",
-    titleLine2: "Analyst",
+    titleLine1: "Data Analyst",
+    titleLine2: "",
     description: "Minimal design, maximum insights & AI modeling.",
     icon: BarChart3,
   },
@@ -198,7 +198,7 @@ export const CyberProjectsHero: React.FC<CyberProjectsHeroProps> = ({
                 transition={{ duration: 0.7, delay: 0.8 }}
                 className="max-w-[260px] sm:max-w-xs text-xs sm:text-[13px] font-medium text-black/70 dark:text-white/70 leading-relaxed"
               >
-                Want to know more? Chat with my AI and explore my work, ideas, and journey.
+                Curious about the person behind the work? Explore my experiences, interests, and the journey that shaped me.
               </motion.p>
 
               <motion.div
@@ -212,7 +212,7 @@ export const CyberProjectsHero: React.FC<CyberProjectsHeroProps> = ({
                 }}
               >
                 <div className="bg-black dark:bg-white text-white dark:text-black px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm tracking-tight shadow-lg group-hover:bg-black/90 transition-all">
-                  ASK KAVIN AI
+                  ABOUT ME
                 </div>
                 <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shadow-lg group-hover:scale-105 active:scale-95 transition-all">
                   <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

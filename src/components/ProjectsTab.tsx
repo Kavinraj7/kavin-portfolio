@@ -4,17 +4,21 @@ import React, { useState } from "react";
 import { CyberProjectsHero } from "./CyberProjectsHero";
 import { WorksShowcaseSection, DomainKey } from "./WorksShowcaseSection";
 import { ContactSection } from "./ContactSection";
+import { NavTab } from "./Header";
+import { scrollToTarget } from "@/utils/scroll";
 
 interface ProjectsTabProps {
   onOpenTerminal?: () => void;
   onNavigateJourney?: () => void;
   onNavigateHome?: () => void;
+  onNavigate?: (tab: NavTab, sectionId?: string) => void;
 }
 
 export const ProjectsTab: React.FC<ProjectsTabProps> = ({
   onOpenTerminal,
   onNavigateJourney,
   onNavigateHome,
+  onNavigate,
 }) => {
   const [activeShowcaseDomain, setActiveShowcaseDomain] = useState<DomainKey>("all");
 
@@ -24,14 +28,10 @@ export const ProjectsTab: React.FC<ProjectsTabProps> = ({
     else if (domainId === "pm" || domainId === "management") mappedDomain = "management";
     else if (domainId === "ai") mappedDomain = "ai";
     else if (domainId === "data") mappedDomain = "data";
-    else if (domainId === "hr") mappedDomain = "hr";
 
     setActiveShowcaseDomain(mappedDomain);
 
-    const showcaseElement = document.getElementById("works-showcase");
-    if (showcaseElement) {
-      showcaseElement.scrollIntoView({ behavior: "smooth" });
-    }
+    scrollToTarget("works-showcase");
   };
 
   return (
@@ -54,7 +54,16 @@ export const ProjectsTab: React.FC<ProjectsTabProps> = ({
 
       {/* 3. Contact Footer */}
       <div className="w-full">
-        <ContactSection onOpenTerminal={onOpenTerminal} />
+        <ContactSection
+          onOpenTerminal={onOpenTerminal}
+          onNavigate={onNavigate || ((tab, sectionId) => {
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(
+                new CustomEvent('app-navigate', { detail: { tab, sectionId } })
+              );
+            }
+          })}
+        />
       </div>
     </div>
   );

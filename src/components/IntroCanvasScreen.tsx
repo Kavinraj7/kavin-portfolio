@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { CanvasText } from '@/components/ui/canvas-text';
 import { soundFx } from '@/utils/audio';
 
@@ -10,23 +10,25 @@ interface IntroCanvasScreenProps {
 }
 
 export function IntroCanvasScreen({ onExplore }: IntroCanvasScreenProps) {
-  const [showButton, setShowButton] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
   const [fontSize, setFontSize] = useState(150);
+  const hasProceededRef = useRef(false);
 
+  // Responsive font size calculation for the particle dot pattern headline
   useEffect(() => {
     const updateFontSize = () => {
       if (typeof window !== 'undefined') {
         const w = window.innerWidth;
         if (w < 440) {
-          setFontSize(58);
+          setFontSize(56);
         } else if (w < 640) {
-          setFontSize(80);
+          setFontSize(78);
         } else if (w < 1024) {
-          setFontSize(115);
+          setFontSize(112);
         } else if (w < 1440) {
-          setFontSize(155);
+          setFontSize(152);
         } else {
-          setFontSize(195);
+          setFontSize(188);
         }
       }
     };
@@ -36,94 +38,82 @@ export function IntroCanvasScreen({ onExplore }: IntroCanvasScreenProps) {
     return () => window.removeEventListener('resize', updateFontSize);
   }, []);
 
-  // Show the EXPLORE button once the animation of the name is completely finished (loadDuration 1.0s + morphDuration 1.4s = 2.4s)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowButton(true);
-    }, 2400);
-    return () => clearTimeout(timer);
-  }, []);
+  const handleProceed = useCallback(() => {
+    if (hasProceededRef.current) return;
+    hasProceededRef.current = true;
+    setIsExiting(true);
 
-  const handleExplore = () => {
     try {
       soundFx.playSelect();
     } catch {
-      // Audio engine fallback safe
+      // Audio safe fallback
     }
-    onExplore();
-  };
+
+    setTimeout(() => {
+      onExplore();
+    }, 450);
+  }, [onExplore]);
+
+  // When the automated hover wave ripples across each character and settles
+  const handleWaveComplete = useCallback(() => {
+    // Graceful pause (650ms) to admire the complete, crisp dot pattern at rest before proceeding
+    setTimeout(() => {
+      handleProceed();
+    }, 650);
+  }, [handleProceed]);
+
+  // Safety fallback timer to ensure the intro advances smoothly under all system conditions
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      handleProceed();
+    }, 8500);
+
+    return () => clearTimeout(fallbackTimer);
+  }, [handleProceed]);
 
   return (
     <motion.div
       key="intro-canvas-screen"
       initial={{ opacity: 1 }}
+      animate={{ opacity: isExiting ? 0 : 1 }}
       exit={{
         opacity: 0,
-        scale: 1.01,
+        scale: 1.02,
         transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
       }}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white text-black select-none overflow-hidden px-4"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white text-zinc-950 select-none overflow-hidden px-4 pointer-events-none"
       style={{ backgroundColor: '#ffffff' }}
     >
       {/* Clean White Light-Theme Background */}
       <div className="absolute inset-0 bg-white pointer-events-none" />
 
+      {/* Subtle Warm Amber Glow Behind Headline */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#FFEE00]/10 rounded-full blur-[150px] pointer-events-none" />
+
       {/* Main Center Container spanning screen width */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-[98vw] mx-auto text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-[98vw] mx-auto text-center pointer-events-none">
         {/* Massive Screen-Filling Particle Canvas Headline for Kavinraj M */}
-        <div className="w-full flex items-center justify-center min-h-[140px] sm:min-h-[180px] md:min-h-[240px] lg:min-h-[280px]">
+        <div className="w-full flex items-center justify-center min-h-[140px] sm:min-h-[180px] md:min-h-[240px] lg:min-h-[280px] pointer-events-none">
           <CanvasText
             text="Kavinraj M"
-            color="#000000"
+            color="#121214"
             fontSize={fontSize}
-            fontWeight={900}
-            particleSize={2.4}
-            density={2}
+            fontWeight={750}
+            particleSize={2.1}
+            density={3.0}
             scatter={76}
-            loadDuration={1.0}
-            morphDuration={1.4}
-            magnetic={0.5}
-            magneticRadius={180}
-            drift={0.6}
-            className="w-full max-w-[98vw] h-[140px] sm:h-[180px] md:h-[240px] lg:h-[280px] flex items-center justify-center"
+            loadDuration={1.2}
+            morphDuration={1.6}
+            autoWave={true}
+            autoWaveDelay={0.8}
+            autoWaveDuration={2.6}
+            autoWaveRadius={26}
+            disableMouse={true}
+            magnetic={0}
+            drift={0}
+            onWaveComplete={handleWaveComplete}
+            className="w-full max-w-[98vw] h-[140px] sm:h-[180px] md:h-[240px] lg:h-[280px] flex items-center justify-center pointer-events-none"
           />
-        </div>
-
-        {/* Compact EXPLORE Button placed close below the name - Appears once name animation finishes */}
-        <div className="min-h-[44px] mt-1 sm:mt-2 md:mt-3 flex items-center justify-center">
-          <AnimatePresence>
-            {showButton && (
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <button
-                  id="explore-portfolio-btn"
-                  onClick={handleExplore}
-                  aria-label="Explore Portfolio"
-                  className="group relative inline-flex items-center justify-center gap-2 px-5 py-2 sm:px-6 sm:py-2.5 rounded-full bg-[#FFEE00] hover:bg-[#E5C800] active:bg-[#D4B800] text-black font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-black/10"
-                >
-                  <span>EXPLORE</span>
-                  <svg
-                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 group-hover:translate-x-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                    />
-                  </svg>
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
     </motion.div>

@@ -7,8 +7,8 @@ import { Briefcase, Sparkles } from 'lucide-react';
 
 export const ExperienceTimelineSection: React.FC = () => {
   return (
-    <section id="experience-section" className="relative z-30 w-full min-h-screen lg:h-screen flex flex-col justify-center py-4 sm:py-6 lg:py-8 px-4 sm:px-8 md:px-12 lg:px-16 bg-background text-foreground transition-colors duration-300 overflow-hidden border-t border-zinc-200/50 dark:border-zinc-800/50">
-      <div className="max-w-7xl mx-auto w-full flex flex-col justify-center">
+    <section id="experience-section" className="relative z-30 w-full min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-8 md:px-12 lg:px-16 bg-background text-foreground transition-colors duration-300 border-t border-zinc-200/50 dark:border-zinc-800/50 flex flex-col justify-center items-center">
+      <div className="max-w-7xl mx-auto w-full flex flex-col justify-center my-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-2 sm:mb-3">
           <motion.h2

@@ -18,7 +18,7 @@ export const BeyondTheScreenSection: React.FC<BeyondTheScreenSectionProps> = ({
     <section className="relative w-full py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#F3F2F6] dark:bg-[#0E0C16] text-black dark:text-zinc-100 transition-colors duration-300 overflow-hidden border-t border-zinc-200/80 dark:border-zinc-800/80">
 
       {/* Background Ambient Radial Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-purple-500/12 via-indigo-600/8 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-[#FFEE00]/15 via-amber-300/10 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
 
       <div className="w-full max-w-[1400px] mx-auto flex flex-col items-center">
 

@@ -334,431 +334,381 @@ export const JourneyCardsSection: React.FC = () => {
   return (
     <section
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-screen py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#F8FAFC] dark:bg-[#09080F] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 overflow-hidden"
+      className="relative w-full min-h-screen py-8 sm:py-12 md:py-14 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#F8FAFC] dark:bg-[#09080F] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 overflow-hidden flex flex-col justify-center items-center"
     >
 
       {/* Background Soft Ambient Light Gradients */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-emerald-100/35 dark:bg-emerald-950/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-[#FFEE00]/15 dark:bg-[#FFEE00]/5 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-      {/* SECTION HEADER */}
-      <div className="w-full max-w-[1180px] mx-auto text-center mb-10 sm:mb-14">
+      <div className="w-full my-auto flex flex-col items-center">
+        {/* SECTION HEADER */}
+        <div className="w-full max-w-[1180px] mx-auto text-center mb-5 sm:mb-6">
 
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-950 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto font-display"
-        >
-          EIGHT PHASES. ONE JOURNEY.
-        </motion.h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-950 dark:text-white tracking-tight leading-tight max-w-3xl mx-auto font-display"
+          >
+            EIGHT PHASES. ONE JOURNEY.
+          </motion.h2>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 mt-3 max-w-2xl mx-auto font-normal leading-relaxed"
-        >
-          Discover how management, technology, data, and real-world challenges shaped the person behind the portfolio.        </motion.p>
-      </div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 mt-3 max-w-2xl mx-auto font-normal leading-relaxed"
+          >
+            Discover how management, technology, data, and real-world challenges shaped the person behind the portfolio.        </motion.p>
+        </div>
 
-      {/* ─── MAIN DYNAMIC CONTAINER: MAP VIEW OR EXPANDED PHASE CARD ─── */}
-      <div className="w-full max-w-[1180px] mx-auto flex flex-col items-center justify-center min-h-[520px]">
-        <AnimatePresence mode="wait">
+        {/* ─── MAIN DYNAMIC CONTAINER: MAP VIEW OR EXPANDED PHASE CARD ─── */}
+        <div className="w-full max-w-[1180px] mx-auto flex flex-col items-center justify-center min-h-[520px]">
+          <AnimatePresence mode="wait">
 
-          {/* ============================================================ */}
-          {/* VIEW A: 3x3 PHASES MAP CARD (Smooth 3D Spring Tilt Physics)  */}
-          {/* ============================================================ */}
-          {activePhaseIndex === null ? (
-            <motion.div
-              key="phases-map-view"
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-[880px] flex flex-col items-center"
-            >
-              <div
-                ref={containerRef}
-                style={{ perspective: 1200 }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                className="relative w-full cursor-pointer select-none"
+            {/* ============================================================ */}
+            {/* VIEW A: 3x3 PHASES MAP CARD (Smooth 3D Spring Tilt Physics)  */}
+            {/* ============================================================ */}
+            {activePhaseIndex === null ? (
+              <motion.div
+                key="phases-map-view"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full max-w-[880px] flex flex-col items-center"
               >
-                <motion.div
-                  style={{
-                    rotateX: springRotateX,
-                    rotateY: springRotateY,
-                    transformStyle: 'preserve-3d',
-                  }}
-                  className="relative w-full aspect-[4/3] sm:aspect-[16/11] max-h-[580px] bg-white dark:bg-zinc-900/90 rounded-[28px] sm:rounded-[36px] border border-zinc-200/90 dark:border-zinc-800 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.6)] overflow-hidden transition-colors duration-200"
+                <div
+                  ref={containerRef}
+                  style={{ perspective: 1200 }}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
+                  className="relative w-full cursor-pointer select-none"
                 >
-                  {/* Background Grid Lines Pattern */}
-                  <div className="absolute inset-0 pointer-events-none opacity-40">
-                    <svg width="100%" height="100%" className="absolute inset-0">
-                      <defs>
-                        <pattern id="journey-map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.75" className="text-zinc-200 dark:text-zinc-800" />
-                        </pattern>
-                      </defs>
-                      <rect width="100%" height="100%" fill="url(#journey-map-grid)" />
-                    </svg>
-                  </div>
-
-                  {/* Main Road Crossings (3x3 Grid Highways) */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
-                    {/* Horizontal Main Road 1 */}
-                    <line x1="0%" y1="33.33%" x2="100%" y2="33.33%" stroke="#E4E4E7" strokeWidth="5" />
-                    {/* Horizontal Main Road 2 */}
-                    <line x1="0%" y1="66.66%" x2="100%" y2="66.66%" stroke="#E4E4E7" strokeWidth="5" />
-
-                    {/* Vertical Main Road 1 */}
-                    <line x1="33.33%" y1="0%" x2="33.33%" y2="100%" stroke="#E4E4E7" strokeWidth="5" />
-                    {/* Vertical Main Road 2 */}
-                    <line x1="66.66%" y1="0%" x2="66.66%" y2="100%" stroke="#E4E4E7" strokeWidth="5" />
-                  </svg>
-
-                  {/* Translucent Building Blocks */}
-                  {/* Phase 2 building block */}
-                  <div className="absolute top-[16%] left-[37%] w-[12%] h-[14%] rounded-xl bg-zinc-300/40 dark:bg-zinc-700/30 border border-zinc-300/60 dark:border-zinc-700/50 pointer-events-none" />
-                  {/* Phase 3 & 4 vertical building pill */}
-                  <div className="absolute top-[20%] right-[11%] w-[9%] h-[24%] rounded-2xl bg-zinc-300/40 dark:bg-zinc-700/30 border border-zinc-300/60 dark:border-zinc-700/50 pointer-events-none" />
-                  {/* Phase 8 overlapping building block */}
-                  <div className="absolute top-[38%] left-[12%] w-[13%] h-[18%] rounded-xl bg-zinc-300/40 dark:bg-zinc-700/30 border border-zinc-300/60 dark:border-zinc-700/50 pointer-events-none" />
-                  <div className="absolute top-[52%] left-[8%] w-[7%] h-[12%] rounded-lg bg-zinc-300/35 dark:bg-zinc-700/25 border border-zinc-300/50 pointer-events-none" />
-                  {/* Phase 5 building block */}
-                  <div className="absolute bottom-[16%] right-[10%] w-[15%] h-[16%] rounded-2xl bg-zinc-300/40 dark:bg-zinc-700/30 border border-zinc-300/60 dark:border-zinc-700/50 pointer-events-none" />
-
-                  {/* 3x3 Grid Layout of Phases & Center Character */}
-                  <div className="relative z-10 w-full h-full grid grid-cols-3 grid-rows-3 p-4 sm:p-6 md:p-8">
-
-                    {/* Phase 1 */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleSelectPhase(0)}
-                      className="relative flex flex-col justify-start items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                          Phase 1
-                        </span>
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </div>
-                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
-                        {JOURNEY_PHASES_DATA[0].category}
-                      </span>
-                    </motion.div>
-
-                    {/* Phase 2 */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleSelectPhase(1)}
-                      className="relative flex flex-col justify-start items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                          Phase 2
-                        </span>
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </div>
-                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
-                        {JOURNEY_PHASES_DATA[1].category}
-                      </span>
-                    </motion.div>
-
-                    {/* Phase 3 (with LIVE badge) */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleSelectPhase(2)}
-                      className="relative flex flex-col justify-start items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
-                    >
-                      <div className="w-full flex items-center justify-between">
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                          Phase 3
-                        </span>
-                        {/* LIVE Status Badge */}
-                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-200/80 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-xs">
-                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                          <span className="text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase">LIVE</span>
-                        </div>
-                      </div>
-                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
-                        {JOURNEY_PHASES_DATA[2].category}
-                      </span>
-                    </motion.div>
-
-                    {/* Phase 8 */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleSelectPhase(7)}
-                      className="relative flex flex-col justify-center items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                          Phase 8
-                        </span>
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </div>
-                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
-                        {JOURNEY_PHASES_DATA[7].category}
-                      </span>
-                    </motion.div>
-
-                    {/* CENTER PEEKING CHARACTER WITH ROLLING EYES */}
-                    <div className="relative flex items-end justify-center overflow-visible w-full h-full">
-                      <PeekingCharacter mouseX={mouseX} mouseY={mouseY} />
+                  <motion.div
+                    style={{
+                      rotateX: springRotateX,
+                      rotateY: springRotateY,
+                      transformStyle: 'preserve-3d',
+                    }}
+                    className="relative w-full aspect-[4/3] sm:aspect-[16/11] max-h-[580px] bg-white dark:bg-zinc-900/90 rounded-[28px] sm:rounded-[36px] border border-zinc-200/90 dark:border-zinc-800 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.6)] overflow-hidden transition-colors duration-200"
+                  >
+                    {/* Background Grid Lines Pattern */}
+                    <div className="absolute inset-0 pointer-events-none opacity-40">
+                      <svg width="100%" height="100%" className="absolute inset-0">
+                        <defs>
+                          <pattern id="journey-map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.75" className="text-zinc-200 dark:text-zinc-800" />
+                          </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#journey-map-grid)" />
+                      </svg>
                     </div>
 
-                    {/* Phase 4 */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleSelectPhase(3)}
-                      className="relative flex flex-col justify-center items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                    {/* Main Road Crossings (3x3 Grid Highways) */}
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+                      {/* Horizontal Main Road 1 */}
+                      <line x1="0%" y1="33.33%" x2="100%" y2="33.33%" stroke="#E4E4E7" strokeWidth="5" />
+                      {/* Horizontal Main Road 2 */}
+                      <line x1="0%" y1="66.66%" x2="100%" y2="66.66%" stroke="#E4E4E7" strokeWidth="5" />
+
+                      {/* Vertical Main Road 1 */}
+                      <line x1="33.33%" y1="0%" x2="33.33%" y2="100%" stroke="#E4E4E7" strokeWidth="5" />
+                      {/* Vertical Main Road 2 */}
+                      <line x1="66.66%" y1="0%" x2="66.66%" y2="100%" stroke="#E4E4E7" strokeWidth="5" />
+                    </svg>
+
+                    {/* 3x3 Grid Layout of Phases & Center Character */}
+                    <div className="relative z-10 w-full h-full grid grid-cols-3 grid-rows-3">
+
+                      {/* Phase 1 */}
+                      <div
+                        onClick={() => handleSelectPhase(0)}
+                        className="relative w-full h-full flex flex-col justify-start items-start p-4 sm:p-6 md:p-7 rounded-tl-[27px] sm:rounded-tl-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                      >
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                          Phase 1
+                        </span>
+                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                          {JOURNEY_PHASES_DATA[0].category}
+                        </span>
+                      </div>
+
+                      {/* Phase 2 */}
+                      <div
+                        onClick={() => handleSelectPhase(1)}
+                        className="relative w-full h-full flex flex-col justify-start items-start p-4 sm:p-6 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                      >
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                          Phase 2
+                        </span>
+                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                          {JOURNEY_PHASES_DATA[1].category}
+                        </span>
+                      </div>
+
+                      {/* Phase 3 */}
+                      <div
+                        onClick={() => handleSelectPhase(2)}
+                        className="relative w-full h-full flex flex-col justify-start items-start p-4 sm:p-6 md:p-7 rounded-tr-[27px] sm:rounded-tr-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                      >
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                          Phase 3
+                        </span>
+                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                          {JOURNEY_PHASES_DATA[2].category}
+                        </span>
+                      </div>
+
+                      {/* Phase 8 */}
+                      <div
+                        onClick={() => handleSelectPhase(7)}
+                        className="relative w-full h-full flex flex-col justify-center items-start p-4 sm:p-6 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                      >
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                          Phase 8
+                        </span>
+                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                          {JOURNEY_PHASES_DATA[7].category}
+                        </span>
+                      </div>
+
+                      {/* CENTER PEEKING CHARACTER WITH ROLLING EYES */}
+                      <div className="relative flex items-end justify-center overflow-visible w-full h-full">
+                        <PeekingCharacter mouseX={mouseX} mouseY={mouseY} />
+                      </div>
+
+                      {/* Phase 4 */}
+                      <div
+                        onClick={() => handleSelectPhase(3)}
+                        className="relative w-full h-full flex flex-col justify-center items-start p-4 sm:p-6 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                      >
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 4
                         </span>
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                          {JOURNEY_PHASES_DATA[3].category}
+                        </span>
                       </div>
-                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
-                        {JOURNEY_PHASES_DATA[3].category}
-                      </span>
-                    </motion.div>
 
-                    {/* Phase 7 */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleSelectPhase(6)}
-                      className="relative flex flex-col justify-end items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                      {/* Phase 7 */}
+                      <div
+                        onClick={() => handleSelectPhase(6)}
+                        className="relative w-full h-full flex flex-col justify-end items-start p-4 sm:p-6 md:p-7 rounded-bl-[27px] sm:rounded-bl-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                      >
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 7
                         </span>
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                          {JOURNEY_PHASES_DATA[6].category}
+                        </span>
                       </div>
-                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
-                        {JOURNEY_PHASES_DATA[6].category}
-                      </span>
-                    </motion.div>
 
-                    {/* Phase 6 */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleSelectPhase(5)}
-                      className="relative flex flex-col justify-end items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                      {/* Phase 6 */}
+                      <div
+                        onClick={() => handleSelectPhase(5)}
+                        className="relative w-full h-full flex flex-col justify-end items-start p-4 sm:p-6 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                      >
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 6
                         </span>
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                          {JOURNEY_PHASES_DATA[5].category}
+                        </span>
                       </div>
-                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
-                        {JOURNEY_PHASES_DATA[5].category}
-                      </span>
-                    </motion.div>
 
-                    {/* Phase 5 */}
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleSelectPhase(4)}
-                      className="relative flex flex-col justify-end items-start p-3 sm:p-4 rounded-2xl group cursor-pointer hover:bg-emerald-500/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                      {/* Phase 5 */}
+                      <div
+                        onClick={() => handleSelectPhase(4)}
+                        className="relative w-full h-full flex flex-col justify-end items-start p-4 sm:p-6 md:p-7 rounded-br-[27px] sm:rounded-br-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                      >
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 5
                         </span>
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                          {JOURNEY_PHASES_DATA[4].category}
+                        </span>
                       </div>
-                      <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
-                        {JOURNEY_PHASES_DATA[4].category}
-                      </span>
-                    </motion.div>
 
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Click to inspect hint */}
+                <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-5 flex items-center gap-1.5 select-none">
+
+                  <span>Click any phase to explore that milestone</span>
+                </p>
+              </motion.div>
+            ) : (
+
+              /* ============================================================ */
+              /* VIEW B: FULL IN-PLACE MILESTONE CARD (Matches prompt theme)  */
+              /* ============================================================ */
+              <motion.div
+                key={`phase-card-${activePhaseIndex}`}
+                initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -16, scale: 0.97 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="relative w-full max-w-[1140px] flex flex-col bg-white dark:bg-[#13111C] rounded-[26px] sm:rounded-[34px] p-4 sm:p-6 md:p-7 lg:p-8 border border-zinc-200/90 dark:border-zinc-800 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)] overflow-hidden"
+              >
+                {/* Soft Ambient Radial Glow */}
+                <div
+                  className="absolute -top-32 -right-32 w-[440px] h-[440px] rounded-full blur-3xl opacity-15 pointer-events-none bg-[#FFEE00]"
+                />
+
+                {/* Top Action Bar: Back to Map Button & Stepper */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-3 sm:pb-3.5 border-b border-zinc-100 dark:border-zinc-800">
+                  <button
+                    onClick={() => {
+                      try { soundFx.playSelect(); } catch { }
+                      setActivePhaseIndex(null);
+                    }}
+                    className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 transition-all cursor-pointer shadow-xs hover:-translate-x-0.5"
+                  >
+                    <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+                    <span>Back to Journey Map</span>
+                  </button>
+
+                  {/* Phase Stepper Pills (Click any phase to jump) */}
+                  <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+                    {JOURNEY_PHASES_DATA.map((p, pIdx) => (
+                      <button
+                        key={p.id}
+                        onClick={() => handleSelectPhase(pIdx)}
+                        className={`px-2.5 py-1 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${pIdx === activePhaseIndex
+                          ? 'bg-[#FFEE00] text-black font-black shadow-sm'
+                          : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200'
+                          }`}
+                      >
+                        P{p.phaseNumber}
+                      </button>
+                    ))}
                   </div>
-                </motion.div>
-              </div>
 
-              {/* Click to inspect hint */}
-              <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mt-5 flex items-center gap-1.5 select-none">
-                <MapPin className="w-3.5 h-3.5 text-emerald-500" />
-                <span>Click any phase to explore that milestone</span>
-              </p>
-            </motion.div>
-          ) : (
-
-            /* ============================================================ */
-            /* VIEW B: FULL IN-PLACE MILESTONE CARD (Matches prompt theme)  */
-            /* ============================================================ */
-            <motion.div
-              key={`phase-card-${activePhaseIndex}`}
-              initial={{ opacity: 0, y: 24, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -16, scale: 0.97 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-[1140px] flex flex-col bg-white dark:bg-[#13111C] rounded-[32px] sm:rounded-[44px] p-6 sm:p-10 md:p-12 lg:p-14 border border-zinc-200/90 dark:border-zinc-800 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)] overflow-hidden"
-            >
-              {/* Soft Ambient Radial Glow */}
-              <div
-                className="absolute -top-32 -right-32 w-[440px] h-[440px] rounded-full blur-3xl opacity-20 pointer-events-none"
-                style={{ backgroundColor: JOURNEY_PHASES_DATA[activePhaseIndex].accentColor }}
-              />
-
-              {/* Top Action Bar: Back to Map Button & Stepper */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-zinc-100 dark:border-zinc-800">
-                <button
-                  onClick={() => {
-                    try { soundFx.playSelect(); } catch { }
-                    setActivePhaseIndex(null);
-                  }}
-                  className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 transition-all cursor-pointer shadow-xs hover:-translate-x-0.5"
-                >
-                  <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                  <span>Back to Journey Map</span>
-                </button>
-
-                {/* Phase Stepper Pills (Click any phase to jump) */}
-                <div className="flex items-center gap-1.5 overflow-x-auto py-1">
-                  {JOURNEY_PHASES_DATA.map((p, pIdx) => (
+                  {/* Prev / Next Buttons */}
+                  <div className="flex items-center gap-2">
                     <button
-                      key={p.id}
-                      onClick={() => handleSelectPhase(pIdx)}
-                      className={`px-2.5 py-1 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${pIdx === activePhaseIndex
-                        ? 'bg-emerald-500 text-white shadow-sm'
-                        : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200'
-                        }`}
+                      onClick={handlePrevPhase}
+                      aria-label="Previous Phase"
+                      className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
                     >
-                      P{p.phaseNumber}
+                      <ChevronLeft className="w-4 h-4" />
                     </button>
-                  ))}
+                    <button
+                      onClick={handleNextPhase}
+                      aria-label="Next Phase"
+                      className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
-                {/* Prev / Next Buttons */}
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handlePrevPhase}
-                    aria-label="Previous Phase"
-                    className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={handleNextPhase}
-                    aria-label="Next Phase"
-                    className="p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 transition-colors cursor-pointer"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+                {/* Main Content Grid: 2 Columns */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start mt-3.5 sm:mt-4.5 w-full">
 
-              {/* Main Content Grid: 2 Columns */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-8 w-full">
+                  {/* LEFT SIDE: Category, Step, Big Headline, Description, Tags */}
+                  <div className="lg:col-span-7 flex flex-col justify-center space-y-2 sm:space-y-3">
 
-                {/* LEFT SIDE: Category, Step, Big Headline, Description, Tags */}
-                <div className="lg:col-span-7 flex flex-col justify-center space-y-4 sm:space-y-6">
-
-                  {/* Step Badge & Category */}
-                  <div className="flex items-center gap-3">
-                    <span className="px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-mono font-bold text-xs uppercase tracking-wider shadow-xs">
-                      PHASE {JOURNEY_PHASES_DATA[activePhaseIndex].step}
-                    </span>
-                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                      {JOURNEY_PHASES_DATA[activePhaseIndex].category}
-                    </span>
-                    {JOURNEY_PHASES_DATA[activePhaseIndex].isLive && (
-                      <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-[10px] font-bold">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        LIVE
+                    {/* Step Badge & Category */}
+                    <div className="flex items-center gap-3">
+                      <span className="px-3.5 py-1 rounded-full bg-[#FFEE00] text-black font-mono font-black text-xs uppercase tracking-wider shadow-xs">
+                        PHASE {JOURNEY_PHASES_DATA[activePhaseIndex].step}
                       </span>
-                    )}
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-yellow-600 dark:text-[#FFEE00]">
+                        {JOURNEY_PHASES_DATA[activePhaseIndex].category}
+                      </span>
+                      {JOURNEY_PHASES_DATA[activePhaseIndex].isLive && (
+                        <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-[10px] font-bold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#FFEE00] animate-pulse" />
+                          LIVE
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Headline */}
+                    <h3 className="text-xl sm:text-2xl lg:text-[28px] font-black text-zinc-950 dark:text-white tracking-tight leading-snug">
+                      {JOURNEY_PHASES_DATA[activePhaseIndex].headline}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-sm sm:text-base lg:text-[17px] text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
+                      {JOURNEY_PHASES_DATA[activePhaseIndex].description}
+                    </p>
+
+
+
+
                   </div>
 
-                  {/* Headline */}
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-zinc-950 dark:text-white tracking-tight leading-tight">
-                    {JOURNEY_PHASES_DATA[activePhaseIndex].headline}
-                  </h3>
+                  {/* RIGHT SIDE: Floating Glassmorphic "Knowledge Added" Box */}
+                  <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center">
+                    <motion.div
+                      whileHover={{ y: -3 }}
+                      transition={{ duration: 0.2 }}
+                      className="relative w-full max-w-[380px] bg-white dark:bg-zinc-900 rounded-[20px] p-3.5 sm:p-4.5 shadow-md border border-zinc-200/90 dark:border-zinc-800"
+                    >
+                      {/* Box Title */}
+                      <div className="flex items-center gap-2.5 mb-2.5">
+                        <div className="w-3 h-3 rounded-full bg-[#FFEE00] animate-pulse shadow-[0_0_8px_rgba(255,238,0,0.6)]" />
+                        <h4 className="text-base font-extrabold text-zinc-900 dark:text-white tracking-tight">
+                          Knowledge Added
+                        </h4>
+                      </div>
 
-                  {/* Description */}
-                  <p className="text-sm sm:text-base lg:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-                    {JOURNEY_PHASES_DATA[activePhaseIndex].description}
-                  </p>
+                      {/* Bullet Points with Checkmarks */}
+                      <ul className="space-y-2 sm:space-y-2.5">
+                        {JOURNEY_PHASES_DATA[activePhaseIndex].knowledgeAdded.map((item, kIdx) => (
+                          <li key={kIdx} className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+                            <div className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 bg-[#FFEE00]/25 text-yellow-600 dark:text-[#FFEE00]">
+                              <CheckCircle2 className="w-4 h-4 fill-current" />
+                            </div>
+                            <span className="leading-snug">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 pt-2">
+                      {/* Progress Indicator */}
+                      <div className="mt-3 pt-2.5 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-[10.5px] font-mono text-zinc-500 dark:text-zinc-400 font-bold">
+                        <span>PHASE {JOURNEY_PHASES_DATA[activePhaseIndex].step} OF 08</span>
+                        <span className="text-yellow-600 dark:text-[#FFEE00] font-bold">COMPLETE</span>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                </div>
+
+                {/* Bottom Full-Width Skills & Competencies Across Full Card */}
+                <div className="w-full mt-3.5 sm:mt-4.5 pt-3 sm:pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                      Skills & Competencies Applied
+                    </span>
+                    <span className="text-[11px] font-mono font-bold text-yellow-600 dark:text-[#FFEE00]">
+                      {JOURNEY_PHASES_DATA[activePhaseIndex].tags.length} Key Skills
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 w-full">
                     {JOURNEY_PHASES_DATA[activePhaseIndex].tags.map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="px-3 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold border border-zinc-200/80 dark:border-zinc-700/60"
+                        className="py-2 px-3 rounded-lg bg-zinc-50 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 text-xs font-semibold border border-zinc-200/80 dark:border-zinc-700/60 shadow-2xs hover:border-[#FFEE00] hover:bg-[#FFEE00]/10 dark:hover:bg-[#FFEE00]/10 transition-all text-center flex items-center justify-center truncate"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
-
-                  {/* Strategic Annotation */}
-                  {JOURNEY_PHASES_DATA[activePhaseIndex].annotation && (
-                    <div className="p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm font-mono flex items-start gap-2.5 mt-4">
-                      <span className="text-emerald-600 font-bold">↳</span>
-                      <span className="leading-relaxed font-medium">
-                        {JOURNEY_PHASES_DATA[activePhaseIndex].annotation}
-                      </span>
-                    </div>
-                  )}
                 </div>
+              </motion.div>
+            )}
 
-                {/* RIGHT SIDE: Floating Glassmorphic "Knowledge Added" Box */}
-                <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center">
-                  <motion.div
-                    whileHover={{ y: -3 }}
-                    transition={{ duration: 0.2 }}
-                    className="relative w-full max-w-[380px] bg-white dark:bg-zinc-900 rounded-[28px] p-6 sm:p-7 shadow-lg border border-zinc-200/90 dark:border-zinc-800"
-                  >
-                    {/* Box Title */}
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse shadow-sm" />
-                      <h4 className="text-base font-extrabold text-zinc-900 dark:text-white tracking-tight">
-                        Knowledge Added
-                      </h4>
-                    </div>
-
-                    {/* Bullet Points with Checkmarks */}
-                    <ul className="space-y-3.5">
-                      {JOURNEY_PHASES_DATA[activePhaseIndex].knowledgeAdded.map((item, kIdx) => (
-                        <li key={kIdx} className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-zinc-800 dark:text-zinc-200">
-                          <div className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
-                            <CheckCircle2 className="w-4 h-4 fill-current" />
-                          </div>
-                          <span className="leading-snug">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Progress Indicator */}
-                    <div className="mt-5 pt-3.5 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-[11px] font-mono text-zinc-500 dark:text-zinc-400 font-bold">
-                      <span>PHASE {JOURNEY_PHASES_DATA[activePhaseIndex].step} OF 08</span>
-                      <span className="text-emerald-600 dark:text-emerald-400">COMPLETE</span>
-                    </div>
-                  </motion.div>
-                </div>
-
-              </div>
-            </motion.div>
-          )}
-
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
       </div>
 
     </section>

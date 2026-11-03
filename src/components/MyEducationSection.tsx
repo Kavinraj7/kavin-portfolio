@@ -10,24 +10,15 @@ export const MyEducationSection: React.FC = () => {
   return (
     <section
       id="my-education"
-      className="relative w-full min-h-[90vh] lg:h-screen max-h-[950px] flex flex-col justify-center bg-[#FFFFFF] text-zinc-900 border-t border-zinc-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 overflow-hidden"
+      className="relative w-full min-h-screen flex flex-col justify-center items-center bg-[#FFFFFF] text-zinc-900 border-t border-zinc-200 px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-16 overflow-hidden"
     >
       {/* Background Subtle Dot Matrix */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(#E2E8F0_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
 
-      <div className="relative max-w-6xl mx-auto w-full flex flex-col justify-center h-full">
+      <div className="relative max-w-6xl mx-auto w-full flex flex-col justify-center my-auto">
         {/* Compact Section Header */}
         <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-[11px] sm:text-xs font-mono font-bold tracking-[0.2em] text-zinc-600 uppercase mb-2 shadow-2xs"
-          >
-            <GraduationCap className="w-3.5 h-3.5 text-zinc-800" />
-            <span>Academic Background</span>
-          </motion.div>
+
 
           <motion.h2
             initial={{ opacity: 0, y: 10 }}

@@ -83,7 +83,7 @@ export const DEFAULT_ACHIEVEMENTS_DATA: ZoomSliderItem[] = [
   },
   {
     number: "05",
-    src: "/images/achievements/46-hour-hackathon.jpg",
+    src: "/36 hrs hackathion.jpeg",
     title: "36-HOUR HACKATHON ORGANIZER",
     desc: "Contributed to organizing an intensive 36-hour hackathon",
     category: "EXTENDED HACKATHON EXPERIENCE",
@@ -99,7 +99,7 @@ export const DEFAULT_ACHIEVEMENTS_DATA: ZoomSliderItem[] = [
   },
   {
     number: "06",
-    src: "/images/achievements/paper-presentation.jpg",
+    src: "/Paper Presentatiin.jpeg",
     title: "PAPER PRESENTATION WINNER",
     desc: "Won paper presentations and participated in numerous technical events",
     category: "ACADEMIC & TECHNICAL RECOGNITION",
@@ -147,7 +147,7 @@ export const DEFAULT_ACHIEVEMENTS_DATA: ZoomSliderItem[] = [
   },
   {
     number: "09",
-    src: "/images/achievements/ncc.jpg",
+    src: "/Commander.jpeg",
     title: "NCC COMMANDER",
     desc: "Held a student leadership role during my school years",
     category: "NATIONAL CADET CORPS",
@@ -196,7 +196,7 @@ export function ZoomSliderComp({
   title = "My Achievements",
   subheading = "The milestones, leadership roles, and experiences that shaped who I am today.",
   scaleOnHover = true,
-  textOnHover = true,
+  textOnHover = false,
   size = 1,
   easeScrollPercentage = 100,
 }: ZoomSliderCompProps) {
@@ -457,88 +457,18 @@ export function ZoomSliderComp({
   useEffect(() => {
     if (!images.length) return;
 
-    const cleanups: (() => void)[] = [];
-
     cardRefs.current.forEach((card, index) => {
-      const textElement = textRefs.current[index];
       const imageWrap = imageWrapRefs.current[index];
 
-      if (!card || !textElement || !imageWrap) return;
-
-      const pElements = textElement.querySelectorAll('p');
-
-      gsap.set(pElements, { yPercent: 100, opacity: 0 });
-      gsap.set(textElement, { autoAlpha: 0 });
+      if (!card || !imageWrap) return;
 
       const imageElement = imageWrap.querySelector('img');
 
       if (imageElement) {
         gsap.set(imageElement, { opacity: 1 });
       }
-
-      const onEnter = () => {
-        if (textOnHover) {
-          if (reduceMotion) {
-            gsap.killTweensOf([textElement, pElements]);
-            gsap.set(pElements, { yPercent: 0, opacity: 1 });
-            gsap.to(textElement, {
-              autoAlpha: 1,
-              duration: REDUCED_MOTION_FADE_DURATION,
-              ease: 'power2.out',
-            });
-          } else {
-            gsap
-              .timeline()
-              .set(textElement, { autoAlpha: 1 })
-              .to(pElements, {
-                yPercent: 0,
-                opacity: 1,
-                duration: 0.4,
-                stagger: 0.05,
-                ease: 'power3.out',
-              });
-          }
-        }
-      };
-
-      const onLeave = () => {
-        if (textOnHover) {
-          if (reduceMotion) {
-            gsap.killTweensOf([textElement, pElements]);
-            gsap.to(textElement, {
-              autoAlpha: 0,
-              duration: REDUCED_MOTION_FADE_DURATION,
-              ease: 'power2.out',
-              onComplete: () => gsap.set(pElements, { yPercent: 100, opacity: 0 }),
-            });
-          } else {
-            gsap.to(pElements, {
-              yPercent: 100,
-              opacity: 0,
-              duration: 0.25,
-              stagger: 0.03,
-              ease: 'power2.in',
-              onComplete: () => gsap.set(textElement, { autoAlpha: 0 }),
-            });
-          }
-        } else {
-          gsap.killTweensOf([textElement, pElements]);
-          gsap.set(textElement, { autoAlpha: 0 });
-          gsap.set(pElements, { yPercent: 100, opacity: 0 });
-        }
-      };
-
-      imageWrap.addEventListener('mouseenter', onEnter);
-      imageWrap.addEventListener('mouseleave', onLeave);
-
-      cleanups.push(() => {
-        imageWrap.removeEventListener('mouseenter', onEnter);
-        imageWrap.removeEventListener('mouseleave', onLeave);
-      });
     });
-
-    return () => cleanups.forEach((cleanup) => cleanup());
-  }, [images, reduceMotion, scaleOnHover, textOnHover]);
+  }, [images]);
 
   const activeItem = images[activeIndex];
   const slideAnnouncement = images.length
@@ -549,9 +479,12 @@ export function ZoomSliderComp({
 
   return (
     <div
-      className="relative w-full overflow-hidden bg-black select-none"
+      className="relative w-full overflow-hidden bg-white text-zinc-900 select-none"
       style={{ height: '100svh', touchAction: 'none' }}
     >
+      {/* Background Subtle Dot Matrix */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(#E2E8F0_1px,transparent_1px)] [background-size:24px_24px] opacity-60" />
+
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {slideAnnouncement}
       </div>
@@ -560,11 +493,11 @@ export function ZoomSliderComp({
       {title ? (
         <div className="pointer-events-none absolute left-1/2 top-6 sm:top-10 z-20 -translate-x-1/2 px-4 text-center">
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-zinc-950 tracking-tight leading-tight">
             {title}
           </h2>
           {subheading ? (
-            <p className="mt-1 text-xs sm:text-sm tracking-[0.05em] text-white/65 max-w-md mx-auto">
+            <p className="mt-1.5 text-xs sm:text-sm tracking-[0.05em] text-zinc-600 max-w-md mx-auto font-medium">
               {subheading}
             </p>
           ) : null}
@@ -585,40 +518,7 @@ export function ZoomSliderComp({
               className="absolute left-0 top-0"
               style={{ willChange: 'transform' }}
             >
-              {/* Floating Top Labels Above Active Card */}
-              <div
-                ref={(element) => {
-                  textRefs.current[index] = element;
-                }}
-                className="absolute z-10 flex w-full flex-col gap-1"
-                style={{
-                  bottom: 'calc(100% + 8px)',
-                  left: 0,
-                  padding: '0 0 2px',
-                  visibility: 'hidden',
-                }}
-              >
-                <p
-                  data-number
-                  className="overflow-hidden select-none text-[11px] font-bold uppercase leading-none tracking-[0.18em] text-purple-400 font-mono"
-                >
-                  {item.number}
-                </p>
 
-                <p
-                  data-title
-                  className="overflow-hidden select-none text-[13px] sm:text-[15px] font-extrabold uppercase leading-[1.15] tracking-[0.08em] text-white truncate max-w-xs"
-                >
-                  {item.title}
-                </p>
-
-                <p
-                  data-desc
-                  className="overflow-hidden text-[11px] sm:text-xs select-none font-medium leading-normal tracking-[0.04em] text-zinc-300 max-w-sm truncate"
-                >
-                  {item.desc}
-                </p>
-              </div>
 
               {/* 3D Flippable Card Container */}
               <div
@@ -642,7 +542,7 @@ export function ZoomSliderComp({
                 >
                   {/* FRONT FACE: Image + Center "View Details" Button on Hover */}
                   <div
-                    className="group absolute inset-0 w-full h-full rounded-2xl overflow-hidden border border-zinc-800/90 shadow-2xl bg-zinc-900"
+                    className="group absolute inset-0 w-full h-full rounded-2xl overflow-hidden border border-zinc-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.12)] bg-gradient-to-br from-zinc-800 to-zinc-950"
                     style={{
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden',
@@ -652,9 +552,12 @@ export function ZoomSliderComp({
                       src={item.src}
                       alt={item.title}
                       draggable={false}
-                      className="pointer-events-none absolute inset-0 select-none object-cover opacity-0 w-full h-full transition-transform duration-500 group-hover:scale-105"
+                      className="pointer-events-none absolute inset-0 select-none object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                       style={{
                         objectPosition: 'center center',
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
                       }}
                     />
 
@@ -666,10 +569,10 @@ export function ZoomSliderComp({
                       <button
                         type="button"
                         onClick={(e) => toggleFlip(index, e)}
-                        className="pointer-events-auto opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-zinc-950 font-extrabold text-xs sm:text-sm tracking-wider uppercase shadow-[0_10px_25px_rgba(0,0,0,0.6)] flex items-center gap-2 hover:bg-zinc-200 active:scale-95 cursor-pointer"
+                        className="pointer-events-auto opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-zinc-950 text-white font-extrabold text-xs sm:text-sm tracking-wider uppercase shadow-[0_10px_25px_rgba(0,0,0,0.35)] flex items-center gap-2 hover:bg-zinc-800 active:scale-95 cursor-pointer"
                       >
                         <span>View Details</span>
-                        <ArrowUpRight className="w-4 h-4 text-zinc-950" />
+                        <ArrowUpRight className="w-4 h-4 text-white" />
                       </button>
                     </div>
 
@@ -686,7 +589,7 @@ export function ZoomSliderComp({
 
                   {/* BACK FACE: Pristine White Card with Rich Text Details & Black Cursor */}
                   <div
-                    className="absolute inset-0 w-full h-full rounded-2xl p-4 sm:p-5 md:p-6 bg-white text-zinc-900 shadow-2xl border border-zinc-200 flex flex-col justify-between overflow-y-auto no-scrollbar"
+                    className="absolute inset-0 w-full h-full rounded-2xl p-5 sm:p-6 md:p-7 bg-white text-zinc-900 shadow-2xl border border-zinc-200 flex flex-col justify-between overflow-hidden"
                     style={{
                       backfaceVisibility: 'hidden',
                       WebkitBackfaceVisibility: 'hidden',
@@ -695,9 +598,9 @@ export function ZoomSliderComp({
                     }}
                   >
                     {/* Top Header: Number Badge + Category + Flip-back Button */}
-                    <div className="flex items-center justify-between gap-2 border-b border-zinc-100 pb-2 sm:pb-3 shrink-0">
+                    <div className="flex items-center justify-between gap-2 border-b border-zinc-100 pb-3 shrink-0">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-purple-100 text-purple-800 font-mono font-bold text-[11px] sm:text-xs">
+                        <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[#FFEE00] text-zinc-950 font-mono font-bold text-[11px] sm:text-xs">
                           {item.number}
                         </span>
                         <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-500 font-mono">
@@ -708,20 +611,17 @@ export function ZoomSliderComp({
                       <button
                         type="button"
                         onClick={(e) => toggleFlip(index, e)}
-                        className="p-1 sm:p-1.5 rounded-full hover:bg-zinc-100 text-zinc-600 hover:text-zinc-950 transition-colors flex items-center gap-1 text-xs font-semibold"
-                        style={{
-                          cursor: `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 2C10 1.44772 10.4477 1 11 1C11.5523 1 12 1.44772 12 2V10.05C12.3168 9.71211 12.7661 9.5 13.25 9.5C14.0784 9.5 14.75 10.1716 14.75 11V11.5C15.0668 11.1621 15.5161 10.95 16 10.95C16.8284 10.95 17.5 11.6216 17.5 12.45V13C17.7761 13 18 13.2239 18 13.5V17C18 20.3137 15.3137 23 12 23C8.68629 23 6 20.3137 6 17V8C6 7.44772 6.44772 7 7 7C7.55228 7 8 7.44772 8 8V10.05C8.31682 9.71211 8.76606 9.5 9.25 9.5C9.66421 9.5 10 9.83579 10 10.25V2Z' fill='black' stroke='white' stroke-width='1.2'/%3E%3C/svg%3E") 6 1, pointer`,
-                        }}
+                        className="px-2.5 py-1 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-700 hover:text-zinc-950 transition-colors flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
                         title="Flip back"
                       >
                         <RotateCcw className="w-3.5 h-3.5 text-zinc-800" />
-                        <span className="text-[11px] text-zinc-800">Back</span>
+                        <span className="text-[11px] text-zinc-800 font-medium">Back</span>
                       </button>
                     </div>
 
                     {/* Middle Content: Title, Long Description & Highlight Bullets */}
-                    <div className="my-auto py-2 sm:py-3 space-y-2 sm:space-y-2.5">
-                      <h3 className="text-sm sm:text-base lg:text-lg font-extrabold text-zinc-950 tracking-tight leading-snug">
+                    <div className="my-auto py-3 space-y-3 sm:space-y-4">
+                      <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-zinc-950 tracking-tight leading-snug">
                         {item.title}
                       </h3>
 
@@ -731,40 +631,15 @@ export function ZoomSliderComp({
 
                       {/* Bullet Highlights */}
                       {item.highlights && item.highlights.length > 0 && (
-                        <div className="space-y-1 sm:space-y-1.5 pt-0.5">
+                        <div className="space-y-1.5 sm:space-y-2 pt-1">
                           {item.highlights.map((highlight, hIdx) => (
-                            <div key={hIdx} className="flex items-center gap-2 text-xs font-semibold text-zinc-800">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                            <div key={hIdx} className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-zinc-800">
+                              <CheckCircle2 className="w-4 h-4 text-zinc-950 fill-[#FFEE00] shrink-0" />
                               <span>{highlight}</span>
                             </div>
                           ))}
                         </div>
                       )}
-                    </div>
-
-                    {/* Bottom Footer: Tech Stack Tags + Close Button */}
-                    <div className="pt-2 sm:pt-3 border-t border-zinc-100 flex flex-wrap items-center justify-between gap-2 shrink-0">
-                      <div className="flex flex-wrap gap-1 sm:gap-1.5 max-w-[72%]">
-                        {item.tags?.map((tag, tIdx) => (
-                          <span
-                            key={tIdx}
-                            className="px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded bg-zinc-100 text-zinc-800 text-[9px] sm:text-[10px] font-mono font-bold uppercase"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={(e) => toggleFlip(index, e)}
-                        className="px-2.5 py-1 sm:px-3 sm:py-1 rounded-full bg-zinc-900 text-white font-bold text-xs hover:bg-zinc-800 transition-colors ml-auto shrink-0"
-                        style={{
-                          cursor: `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 2C10 1.44772 10.4477 1 11 1C11.5523 1 12 1.44772 12 2V10.05C12.3168 9.71211 12.7661 9.5 13.25 9.5C14.0784 9.5 14.75 10.1716 14.75 11V11.5C15.0668 11.1621 15.5161 10.95 16 10.95C16.8284 10.95 17.5 11.6216 17.5 12.45V13C17.7761 13 18 13.2239 18 13.5V17C18 20.3137 15.3137 23 12 23C8.68629 23 6 20.3137 6 17V8C6 7.44772 6.44772 7 7 7C7.55228 7 8 7.44772 8 8V10.05C8.31682 9.71211 8.76606 9.5 9.25 9.5C9.66421 9.5 10 9.83579 10 10.25V2Z' fill='black' stroke='white' stroke-width='1.2'/%3E%3C/svg%3E") 6 1, pointer`,
-                        }}
-                      >
-                        Close
-                      </button>
                     </div>
                   </div>
 
@@ -781,7 +656,7 @@ export function ZoomSliderComp({
 
 export const ZoomSlider = ({
   scaleOnHover = true,
-  textOnHover = true,
+  textOnHover = false,
   size = 1,
   easeScrollPercentage = 100,
 }: {
@@ -795,7 +670,7 @@ export const ZoomSlider = ({
     subheading="Scroll or drag to explore · Hover & click View Details to flip"
     sliderData={DEFAULT_ACHIEVEMENTS_DATA}
     scaleOnHover={scaleOnHover}
-    textOnHover={textOnHover}
+    textOnHover={false}
     size={size}
     easeScrollPercentage={easeScrollPercentage}
   />

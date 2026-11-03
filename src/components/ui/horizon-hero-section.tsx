@@ -39,10 +39,10 @@ interface ThreeRefsState {
   mountains: THREE.Mesh[];
   nebula: THREE.Mesh | null;
   animationId: number | null;
-  locations?: number[];
   targetCameraX: number;
   targetCameraY: number;
   targetCameraZ: number;
+  currentProgress: number;
 }
 
 export const Component = () => {
@@ -57,7 +57,7 @@ export const Component = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [isReady, setIsReady] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [, setMousePos] = useState({ x: 0, y: 0 });
 
   const threeRefs = useRef<ThreeRefsState>({
     scene: null,
@@ -70,10 +70,11 @@ export const Component = () => {
     animationId: null,
     targetCameraX: 0,
     targetCameraY: 30,
-    targetCameraZ: 300
+    targetCameraZ: 300,
+    currentProgress: 0
   });
 
-  // Initialize Three.js Scene with White Background and Black Dust Particles
+  // Initialize Three.js Scene with White Sky, Shaded Golden-Yellow Hills & Atmospheric Dust
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -82,14 +83,14 @@ export const Component = () => {
     // Scene
     refs.scene = new THREE.Scene();
     refs.scene.background = new THREE.Color(0xffffff);
-    refs.scene.fog = new THREE.FogExp2(0xffffff, 0.00035);
+    refs.scene.fog = new THREE.FogExp2(0xffffff, 0.00032);
 
     // Camera
     refs.camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      2000
+      2200
     );
     refs.camera.position.set(0, 30, 300);
 
@@ -108,13 +109,14 @@ export const Component = () => {
     refs.composer.addPass(renderPass);
 
     // 1. Black Dust Particles Field (3 layers of depth)
-    const dustCount = 2000;
+    const dustCount = 1800;
     const darkPalette = [
       new THREE.Color('#000000'),
-      new THREE.Color('#111827'),
       new THREE.Color('#1F2937'),
       new THREE.Color('#374151'),
-      new THREE.Color('#4B5563')
+      new THREE.Color('#4B5563'),
+      new THREE.Color('#6B7280'),
+      new THREE.Color('#CA8A04') // subtle gold speck highlight
     ];
 
     for (let layer = 0; layer < 3; layer++) {
@@ -124,12 +126,12 @@ export const Component = () => {
       const sizes = new Float32Array(dustCount);
 
       for (let j = 0; j < dustCount; j++) {
-        const radius = 150 + Math.random() * 850;
+        const radius = 140 + Math.random() * 880;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(Math.random() * 2 - 1);
 
         positions[j * 3] = radius * Math.sin(phi) * Math.cos(theta);
-        positions[j * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) + 20;
+        positions[j * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) + 25;
         positions[j * 3 + 2] = radius * Math.cos(phi);
 
         const col = darkPalette[Math.floor(Math.random() * darkPalette.length)];
@@ -137,7 +139,7 @@ export const Component = () => {
         colors[j * 3 + 1] = col.g;
         colors[j * 3 + 2] = col.b;
 
-        sizes[j] = Math.random() * 3.5 + 1.2;
+        sizes[j] = Math.random() * 3.4 + 1.2;
       }
 
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -188,56 +190,150 @@ export const Component = () => {
       refs.dustParticles.push(dust);
     }
 
-    // 2. Parallax Mountain Layers (Sculpted Minimalist Silhouette on White)
+    // 2. Parallax Mountain Layers (Sculpted Volumetric Gradients + Highlight Contour Ridges)
+    // Luminous, radiant #FFEE00 to sunny golden tones with peaks framing below subtitle
     const mountainLayers = [
-      { distance: -50, height: 60, color: 0xd1d5db, opacity: 0.95 },
-      { distance: -100, height: 80, color: 0x9ca3af, opacity: 0.85 },
-      { distance: -150, height: 100, color: 0x6b7280, opacity: 0.7 },
-      { distance: -200, height: 120, color: 0x374151, opacity: 0.5 }
+      {
+        distance: -40,
+        baseY: -140,
+        height: 40,
+        topColor: '#FFEE00',
+        bottomColor: '#FDE047',
+        ridgeColor: '#EAB308',
+        opacity: 0.98,
+      },
+      {
+        distance: -115,
+        baseY: -125,
+        height: 50,
+        topColor: '#FFF133',
+        bottomColor: '#FACC15',
+        ridgeColor: '#CA8A04',
+        opacity: 0.94,
+      },
+      {
+        distance: -195,
+        baseY: -112,
+        height: 60,
+        topColor: '#FACC15',
+        bottomColor: '#EAB308',
+        ridgeColor: '#CA8A04',
+        opacity: 0.88,
+      },
+      {
+        distance: -285,
+        baseY: -100,
+        height: 70,
+        topColor: '#FBBF24',
+        bottomColor: '#D97706',
+        ridgeColor: '#B45309',
+        opacity: 0.84,
+      },
     ];
 
     mountainLayers.forEach((layer, index) => {
       const points: THREE.Vector2[] = [];
-      const segments = 50;
+      const ridgePoints: THREE.Vector3[] = [];
+      const segments = 100;
 
       for (let i = 0; i <= segments; i++) {
-        const x = (i / segments - 0.5) * 1000;
-        const y = Math.sin(i * 0.1) * layer.height +
-          Math.sin(i * 0.05) * layer.height * 0.5 +
-          Math.random() * layer.height * 0.2 - 100;
+        const norm = (i / segments - 0.5) * 2;
+        const x = norm * 1400;
+
+        // Smooth harmonious mountain curves (no spiky artifacts)
+        const freq1 = 0.0032 + index * 0.0008;
+        const freq2 = 0.0078 + index * 0.0012;
+        const freq3 = 0.016;
+
+        const wave1 = Math.sin(x * freq1 + index * 1.8) * layer.height;
+        const wave2 = Math.cos(x * freq2 + index * 1.2) * (layer.height * 0.42);
+        const wave3 = Math.sin(x * freq3 + index * 0.8) * (layer.height * 0.16);
+
+        // Natural falloff towards the edges
+        const falloff = Math.cos(norm * (Math.PI * 0.44));
+        const y = (wave1 + wave2 + wave3) * Math.max(0, falloff);
+
         points.push(new THREE.Vector2(x, y));
+        ridgePoints.push(new THREE.Vector3(x, y + 0.35, 0.4));
       }
 
-      points.push(new THREE.Vector2(5000, -300));
-      points.push(new THREE.Vector2(-5000, -300));
+      // Base polygon to floor
+      points.push(new THREE.Vector2(6000, -400));
+      points.push(new THREE.Vector2(-6000, -400));
 
       const shape = new THREE.Shape(points);
       const geometry = new THREE.ShapeGeometry(shape);
-      const material = new THREE.MeshBasicMaterial({
-        color: layer.color,
+
+      // Custom volumetric vertical gradient shader material
+      const material = new THREE.ShaderMaterial({
+        uniforms: {
+          topColor: { value: new THREE.Color(layer.topColor) },
+          bottomColor: { value: new THREE.Color(layer.bottomColor) },
+          opacity: { value: layer.opacity },
+          minY: { value: -220.0 },
+          maxY: { value: layer.height * 0.9 },
+        },
+        vertexShader: `
+          varying vec3 vPos;
+          void main() {
+            vPos = position;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 topColor;
+          uniform vec3 bottomColor;
+          uniform float opacity;
+          uniform float minY;
+          uniform float maxY;
+          varying vec3 vPos;
+          void main() {
+            float factor = clamp((vPos.y - minY) / (maxY - minY), 0.0, 1.0);
+            float t = pow(factor, 0.95);
+            vec3 col = mix(bottomColor, topColor, t);
+            gl_FragColor = vec4(col, opacity);
+          }
+        `,
         transparent: true,
-        opacity: layer.opacity,
-        side: THREE.DoubleSide
+        side: THREE.DoubleSide,
       });
 
       const mountain = new THREE.Mesh(geometry, material);
       mountain.position.z = layer.distance;
-      mountain.position.y = layer.distance;
-      mountain.userData = { baseZ: layer.distance, index };
+      mountain.position.y = layer.baseY;
+      mountain.position.x = 0;
+      mountain.userData = {
+        baseZ: layer.distance,
+        baseY: layer.baseY,
+        baseOpacity: layer.opacity,
+        index
+      };
+
+      // Architectural highlighted contour ridge line on mountain crest
+      const lineGeo = new THREE.BufferGeometry().setFromPoints(ridgePoints);
+      const lineMat = new THREE.LineBasicMaterial({
+        color: new THREE.Color(layer.ridgeColor),
+        linewidth: 2,
+        transparent: true,
+        opacity: 0.95,
+      });
+      const ridge = new THREE.Line(lineGeo, lineMat);
+      mountain.add(ridge);
+
       if (refs.scene) {
         refs.scene.add(mountain);
       }
       refs.mountains.push(mountain);
     });
 
-    // 3. Subtle Atmospheric Mist Wave Shader
-    const nebulaGeom = new THREE.PlaneGeometry(8000, 4000, 80, 80);
+    // 3. Subtle Warm Atmospheric Horizon Mist
+    const nebulaGeom = new THREE.PlaneGeometry(8000, 4000, 60, 60);
     const nebulaMat = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: 0 },
-        color1: { value: new THREE.Color('#E5E7EB') },
-        color2: { value: new THREE.Color('#D1D5DB') },
-        opacity: { value: 0.35 }
+        color1: { value: new THREE.Color('#FFFBEB') },
+        color2: { value: new THREE.Color('#FEF08A') },
+        opacity: { value: 0.16 }
       },
       vertexShader: `
         varying vec2 vUv;
@@ -246,7 +342,7 @@ export const Component = () => {
         void main() {
           vUv = uv;
           vec3 pos = position;
-          float elevation = sin(pos.x * 0.01 + time) * cos(pos.y * 0.01 + time) * 20.0;
+          float elevation = sin(pos.x * 0.01 + time) * cos(pos.y * 0.01 + time) * 18.0;
           pos.z += elevation;
           vElevation = elevation;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
@@ -260,10 +356,10 @@ export const Component = () => {
         varying vec2 vUv;
         varying float vElevation;
         void main() {
-          float mixFactor = sin(vUv.x * 8.0 + time * 0.5) * cos(vUv.y * 8.0 + time * 0.5);
+          float mixFactor = sin(vUv.x * 6.0 + time * 0.4) * cos(vUv.y * 6.0 + time * 0.4);
           vec3 color = mix(color1, color2, mixFactor * 0.5 + 0.5);
           float alpha = opacity * (1.0 - length(vUv - 0.5) * 1.8);
-          alpha *= 1.0 + vElevation * 0.012;
+          alpha *= 1.0 + vElevation * 0.01;
           gl_FragColor = vec4(color, max(alpha, 0.0));
         }
       `,
@@ -279,13 +375,7 @@ export const Component = () => {
       refs.scene.add(refs.nebula);
     }
 
-    const locations: number[] = [];
-    refs.mountains.forEach((m, i) => {
-      locations[i] = m.position.z;
-    });
-    refs.locations = locations;
-
-    // Animation Loop with Easing & Float Sway
+    // Animation Loop: Physics-driven Parallax, Sway & Scroll Camera Flight
     const animate = () => {
       refs.animationId = requestAnimationFrame(animate);
       const time = Date.now() * 0.001;
@@ -302,27 +392,53 @@ export const Component = () => {
         (refs.nebula.material as THREE.ShaderMaterial).uniforms.time.value = time * 0.5;
       }
 
-      // Smooth Camera Movement with Floating Motion
-      const smoothingFactor = 0.055;
+      // Smooth Camera Movement with Organic Floating Motion
+      const smoothingFactor = 0.06;
       smoothCameraPos.current.x += (refs.targetCameraX - smoothCameraPos.current.x) * smoothingFactor;
       smoothCameraPos.current.y += (refs.targetCameraY - smoothCameraPos.current.y) * smoothingFactor;
       smoothCameraPos.current.z += (refs.targetCameraZ - smoothCameraPos.current.z) * smoothingFactor;
 
-      const floatX = Math.sin(time * 0.1) * 2;
-      const floatY = Math.cos(time * 0.15) * 1;
+      const floatX = Math.sin(time * 0.15) * 1.8;
+      const floatY = Math.cos(time * 0.2) * 1.2;
 
       if (refs.camera) {
         refs.camera.position.x = smoothCameraPos.current.x + floatX;
         refs.camera.position.y = smoothCameraPos.current.y + floatY;
         refs.camera.position.z = smoothCameraPos.current.z;
-        refs.camera.lookAt(0, 10, -600);
+        refs.camera.lookAt(0, 15, -600);
       }
 
-      // Parallax Mountains
+      // Smooth Mountain Parallax Motion driven by scroll progress
+      const p = refs.currentProgress;
       refs.mountains.forEach((mountain, i) => {
-        const parallaxFactor = 1 + i * 0.5;
-        mountain.position.x = Math.sin(time * 0.1) * 2 * parallaxFactor;
-        mountain.position.y = 50 + Math.cos(time * 0.15) * 1 * parallaxFactor;
+        const speed = 1.0 + i * 0.45;
+        const scrollZ = p * 420 * speed;
+        const targetZ = mountain.userData.baseZ + scrollZ;
+
+        // Smooth glide toward target Z
+        mountain.position.z += (targetZ - mountain.position.z) * 0.12;
+
+        // Natural sway + mouse parallax
+        const swayX = Math.sin(time * 0.14 + i * 1.2) * (1.6 + i * 0.8);
+        const swayY = Math.cos(time * 0.18 + i * 0.9) * (1.2 + i * 0.5);
+        const parallaxX = -refs.targetCameraX * 0.28 * (1 + i * 0.15);
+        const parallaxY = -refs.targetCameraY * 0.18 * (1 + i * 0.15);
+
+        mountain.position.x = swayX + parallaxX;
+        mountain.position.y = mountain.userData.baseY + swayY + parallaxY - p * 32 * (i * 0.2 + 0.4);
+
+        // Smooth proximity fade as camera flies toward/past mountain
+        if (refs.camera) {
+          const distToCam = mountain.position.z - refs.camera.position.z;
+          if (distToCam > -45) {
+            const fade = Math.max(0, Math.min(1, -distToCam / 70));
+            const baseOp = mountain.userData.baseOpacity || 0.9;
+            const mat = mountain.material as THREE.ShaderMaterial;
+            if (mat.uniforms?.opacity) {
+              mat.uniforms.opacity.value = baseOp * fade;
+            }
+          }
+        }
       });
 
       if (refs.composer) {
@@ -374,13 +490,23 @@ export const Component = () => {
 
     const tl = gsap.timeline();
 
+    if (titleRef.current) {
+      tl.from(titleRef.current, {
+        y: 35,
+        opacity: 0,
+        scale: 0.96,
+        duration: 1.1,
+        ease: 'power3.out'
+      });
+    }
+
     if (menuRef.current) {
       tl.from(menuRef.current, {
         x: -80,
         opacity: 0,
         duration: 1.1,
         ease: 'power3.out'
-      });
+      }, '-=0.85');
     }
 
     if (scrollProgressRef.current) {
@@ -389,7 +515,7 @@ export const Component = () => {
         opacity: 0,
         duration: 1.1,
         ease: 'power3.out'
-      }, '-=0.8');
+      }, '-=0.85');
     }
 
     return () => {
@@ -422,17 +548,20 @@ export const Component = () => {
       const progress = Math.min(Math.max(scrolled / totalScrollDistance, 0), 1);
       setScrollProgress(progress);
 
+      const { current: refs } = threeRefs;
+      refs.currentProgress = progress;
+
       const slideIdx = Math.min(Math.floor(progress * SLIDES.length), SLIDES.length - 1);
       setActiveSlideIndex(slideIdx);
 
       // Camera positions for each slide checkpoint:
       // Slide 0 (HORIZON): z = 300, y = 30
-      // Slide 1 (COSMOS): z = -50, y = 40
-      // Slide 2 (INFINITY): z = -700, y = 50
+      // Slide 1 (DISCOVERY): z = -50, y = 35
+      // Slide 2 (BECOMING): z = -450, y = 40
       const cameraPositions = [
         { x: 0, y: 30, z: 300 },
-        { x: 0, y: 40, z: -50 },
-        { x: 0, y: 50, z: -700 }
+        { x: 0, y: 35, z: -50 },
+        { x: 0, y: 40, z: -450 }
       ];
 
       const slideProgress = progress * (cameraPositions.length - 1);
@@ -442,31 +571,9 @@ export const Component = () => {
       const p1 = cameraPositions[curIdx];
       const p2 = cameraPositions[curIdx + 1];
 
-      const { current: refs } = threeRefs;
       refs.targetCameraX = p1.x + (p2.x - p1.x) * frac;
       refs.targetCameraY = p1.y + (p2.y - p1.y) * frac;
       refs.targetCameraZ = p1.z + (p2.z - p1.z) * frac;
-
-      // Parallax Mountains on Scroll
-      refs.mountains.forEach((mountain, i) => {
-        const speed = 1 + i * 0.9;
-        const targetZ = mountain.userData.baseZ + progress * 500 * speed;
-        if (refs.nebula) {
-          refs.nebula.position.z = (targetZ + progress * speed * 0.01) - 100;
-        }
-
-        mountain.userData.targetZ = targetZ;
-        if (refs.locations) {
-          if (progress > 0.75) {
-            mountain.position.z = 600000;
-          } else {
-            mountain.position.z = refs.locations[i];
-          }
-        }
-      });
-      if (refs.nebula && refs.mountains[3]) {
-        refs.nebula.position.z = refs.mountains[3].position.z;
-      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -475,11 +582,22 @@ export const Component = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Cascading 3D letter wave animation
   const splitTitle = (text: string) => {
     return text.split('').map((char, i) => (
-      <span key={i} className="title-char inline-block transition-transform duration-300 hover:scale-105">
+      <motion.span
+        key={`${text}-${i}`}
+        initial={{ opacity: 0, y: 35, rotateX: 55 }}
+        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+        transition={{
+          duration: 0.55,
+          delay: i * 0.035,
+          ease: [0.215, 0.61, 0.355, 1],
+        }}
+        className="title-char inline-block transition-transform duration-300 hover:scale-110 select-none"
+      >
         {char === ' ' ? '\u00A0' : char}
-      </span>
+      </motion.span>
     ));
   };
 
@@ -500,7 +618,7 @@ export const Component = () => {
         />
 
         {/* Layer 2: Subtle Ambient Radial Light Gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.015)_0%,rgba(0,0,0,0.04)_100%)] pointer-events-none z-[2]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.015)_0%,rgba(0,0,0,0.03)_100%)] pointer-events-none z-[2]" />
 
         {/* Layer 3: Left Side Navigation Menu */}
         <div
@@ -514,43 +632,43 @@ export const Component = () => {
           </div>
         </div>
 
-        {/* Layer 4: Hero Central Typography (Vibrant Red Titles with Non-wrapping Typography) */}
+        {/* Layer 4: Hero Central Typography (Pure Black Titles with Cascading Characters & Non-wrapping Typography) */}
         <div className="hero-content cosmos-content relative z-10 w-full max-w-7xl px-4 sm:px-8 flex flex-col items-center justify-center text-center pointer-events-none">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSlide.title}
-              initial={{ opacity: 0, y: 35, filter: 'blur(10px)', scale: 0.97 }}
+              initial={{ opacity: 0, y: 35, filter: 'blur(8px)', scale: 0.98 }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
-              exit={{ opacity: 0, y: -35, filter: 'blur(10px)', scale: 1.03 }}
-              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, y: -35, filter: 'blur(8px)', scale: 1.02 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col items-center justify-center text-center w-full"
             >
-              {/* Giant Vibrant Red Title (Strictly Single-Line with whitespace-nowrap) */}
+              {/* Giant Black Title */}
               <h1
                 ref={titleRef}
-                className="hero-title whitespace-nowrap text-5xl sm:text-7xl md:text-8xl lg:text-[7.2vw] xl:text-[8vw] font-black tracking-[0.12em] sm:tracking-[0.15em] md:tracking-[0.18em] uppercase leading-none select-none text-[#E50914] drop-shadow-[0_4px_30px_rgba(229,9,20,0.28)]"
+                className="hero-title whitespace-nowrap text-5xl sm:text-7xl md:text-8xl lg:text-[7.2vw] xl:text-[8vw] font-black tracking-[0.12em] sm:tracking-[0.15em] md:tracking-[0.18em] uppercase leading-none select-none text-black drop-shadow-[0_4px_24px_rgba(0,0,0,0.06)]"
               >
                 {splitTitle(activeSlide.title)}
               </h1>
 
-              {/* Subtitles in Dark Neutral */}
+              {/* Subtitles in Dark Neutral Above Mountains with Crystal-Clear Readability */}
               <div
                 ref={subtitleRef}
-                className="hero-subtitle cosmos-subtitle mt-6 sm:mt-9 max-w-2xl text-center space-y-1.5 sm:space-y-2"
+                className="hero-subtitle cosmos-subtitle mt-5 sm:mt-7 max-w-2xl text-center space-y-1.5 sm:space-y-2"
               >
                 <motion.p
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
-                  className="subtitle-line text-xs sm:text-sm md:text-base text-gray-700 font-medium tracking-[0.28em] uppercase"
+                  className="subtitle-line text-xs sm:text-sm md:text-base text-zinc-800 font-semibold tracking-[0.25em] uppercase"
                 >
                   {activeSlide.line1}
                 </motion.p>
                 <motion.p
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.25, ease: 'easeOut' }}
-                  className="subtitle-line text-xs sm:text-sm md:text-base text-gray-500 font-medium tracking-[0.28em] uppercase"
+                  className="subtitle-line text-xs sm:text-sm md:text-base text-zinc-600 font-medium tracking-[0.18em] uppercase leading-relaxed"
                 >
                   {activeSlide.line2}
                 </motion.p>
@@ -583,7 +701,7 @@ export const Component = () => {
         <motion.div
           animate={{ opacity: scrollProgress > 0.92 ? 0 : 0.75 }}
           transition={{ duration: 0.3 }}
-          className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-20"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-20"
         >
           <span className="text-[10px] tracking-[0.35em] uppercase text-black/60 font-semibold font-mono">
             SCROLL TO EXPLORE

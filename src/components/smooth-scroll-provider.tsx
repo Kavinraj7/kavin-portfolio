@@ -40,6 +40,7 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
         reqId = requestAnimationFrame(raf);
       }
 
+      (window as any).__lenis = lenisInstance;
       reqId = requestAnimationFrame(raf);
     }).catch(() => {
       // Graceful fallback — native scroll remains
@@ -49,6 +50,7 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
       if (reqId) cancelAnimationFrame(reqId);
       if (lenisInstance) {
         lenisInstance.destroy();
+        delete (window as any).__lenis;
       }
     };
   }, []);

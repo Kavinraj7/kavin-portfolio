@@ -413,7 +413,7 @@ export const Timeline = ({
         </div>
 
         {/* RIGHT COLUMN: Matching Card Structure as per reference */}
-        <div className="flex-1 w-full overflow-hidden lg:col-span-10 col-span-12">
+        <div className="flex-1 w-full overflow-visible py-4 -my-4 px-1 -mx-1 lg:col-span-10 col-span-12">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeItem.year}
@@ -421,7 +421,7 @@ export const Timeline = ({
               animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, x: -25, filter: "blur(4px)" }}
               transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="w-full bg-[#18181B] dark:bg-[#151419] text-white border border-zinc-800/90 rounded-[28px] sm:rounded-[36px] p-5 sm:p-7 lg:p-8 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col justify-between min-h-[380px] sm:min-h-[420px] lg:min-h-[440px] overflow-hidden"
+              className="w-full bg-[#18181B] dark:bg-[#151419] text-white border border-zinc-800/90 rounded-[28px] sm:rounded-[36px] p-5 sm:p-7 lg:p-8 shadow-2xl shadow-black/30 dark:shadow-black/70 flex flex-col justify-between min-h-[380px] sm:min-h-[420px] lg:min-h-[440px] overflow-hidden"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start w-full">
 
@@ -440,11 +440,14 @@ export const Timeline = ({
                   </div>
 
                   {/* Role Stepper / Timeline Nodes */}
-                  <div className="relative pl-6 space-y-4 sm:space-y-5 before:absolute before:left-2 before:top-2 before:bottom-3 before:w-0.5 before:bg-zinc-700">
+                  <div className="relative space-y-4 sm:space-y-5">
+                    {/* Continuous Vertical Connecting Line */}
+                    <div className="absolute left-[7px] top-2 bottom-3 w-0.5 -translate-x-1/2 bg-zinc-700 pointer-events-none" />
+
                     {activeItem.roles.map((roleItem, rIdx) => (
-                      <div key={rIdx} className="relative group">
-                        {/* Stepper Circle Indicator */}
-                        <div className="absolute -left-[29px] top-1 w-3.5 h-3.5 rounded-full border-2 border-zinc-400 bg-[#18181B] dark:bg-[#151419] shadow-xs group-hover:border-white transition-colors" />
+                      <div key={rIdx} className="relative pl-7 group">
+                        {/* Stepper Circle Indicator (exact horizontal center lock with line) */}
+                        <div className="absolute left-[7px] top-1 -translate-x-1/2 w-3.5 h-3.5 rounded-full border-2 border-zinc-400 bg-[#18181B] dark:bg-[#151419] shadow-xs group-hover:border-white transition-colors z-10" />
 
                         {/* Role Title */}
                         <h4 className="text-base sm:text-lg font-bold text-white tracking-tight leading-snug">

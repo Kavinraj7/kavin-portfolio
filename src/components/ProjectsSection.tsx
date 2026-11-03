@@ -13,43 +13,48 @@ interface ProjectsSectionProps {
 const PROJECTS_LIST: ElasticItemProps[] = [
   {
     id: '01',
-    title: 'Neon Cyber Telemetry',
-    category: 'Distributed Systems',
-    src: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop',
-    alt: 'High Frequency Telemetry Engine',
-    description: 'High-frequency streaming engine processing 45k events/sec with sub-15ms latency using Rust, TypeScript, and Redis Streams.',
+    title: 'Event Management System',
+    category: 'Software Development',
+    src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Event Management System Platform',
+    description:
+      'A full-stack event management platform where clients share requirements and budgets, managers assign teams, and members track tasks through completion.',
   },
   {
     id: '02',
-    title: 'Neural Agent Matrix',
-    category: 'AI & Autonomous Agents',
-    src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Neural Autonomous Agent Fabric',
-    description: 'Self-orchestrating agentic workflows connecting internal knowledge bases with LLMs, vector grounding, and automated tool-calling.',
+    title: 'ERP System',
+    category: 'Software Development',
+    src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Startup ERP Platform',
+    description:
+      'A startup-focused ERP platform for team onboarding, task assignment, daily progress tracking, leave management, notifications, and project status monitoring.',
   },
   {
     id: '03',
-    title: 'Enterprise Core OS',
-    category: 'Cloud Architecture',
-    src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Enterprise Platform Architecture',
-    description: 'Complete enterprise modernization from legacy monolith to cloud-native microservices, scaling revenue 3.2x with 99.99% uptime.',
+    title: 'Sibling Shoes',
+    category: 'Software Development',
+    src: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Sibling Shoes E-Commerce Platform',
+    description:
+      'An online shoe shopping platform where customers can explore footwear, manage their cart, and move through a streamlined e-commerce shopping experience.',
   },
   {
     id: '04',
-    title: 'Predictive Intelligence',
-    category: 'Data Analytics',
-    src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Data Analytics & Predictive Modeling',
-    description: 'Automated churn prediction engine with Bayesian experimentation guardrails, linking product analytics with executive telemetry.',
+    title: 'Hospital Nurse Shift Management',
+    category: 'Project Management',
+    src: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Hospital Nurse Shift Management Platform',
+    description:
+      'A German-market SaaS platform for hospital nurse scheduling, shift swapping, leave requests, and workforce coordination across mobile and web dashboards.',
   },
   {
     id: '05',
-    title: 'Radical Design System',
-    category: 'Frontend Craft',
-    src: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop',
-    alt: 'Design System & Component Architecture',
-    description: 'Accessible, themeable design system adopted by 24 squads, cutting design-to-production turnaround by 70%.',
+    title: 'Fabric Production Management',
+    category: 'Project Management',
+    src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1200&auto=format&fit=crop',
+    alt: 'Fabric Production Management Desktop Application',
+    description:
+      'A desktop production management system covering fabric design, dyeing, weaving, wrapping, order tracking, client management, and delivery invoicing.',
   },
 ];
 
@@ -57,36 +62,32 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   onOpenTerminal,
   onExploreJourney,
 }) => {
+  const handleNavigateToProjects = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('app-navigate', { detail: { tab: 'projects', sectionId: 'works-showcase' } })
+      );
+    }
+  };
+
   return (
-    <section id="projects-section" className="relative w-full py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#FAFAFC] dark:bg-[#09080F] text-black dark:text-zinc-100 transition-colors duration-300 overflow-hidden border-t border-zinc-200/80 dark:border-zinc-800/80">
-      
+    <section
+      id="projects-section"
+      className="relative w-full min-h-screen flex flex-col justify-center py-6 sm:py-8 md:py-10 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#FAFAFC] dark:bg-[#09080F] text-black dark:text-zinc-100 transition-colors duration-300 overflow-hidden border-t border-zinc-200/80 dark:border-zinc-800/80"
+    >
       {/* Background Ambient Radial Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-purple-500/10 via-violet-600/5 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-[#FFEE00]/15 via-[#FFEE00]/5 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
 
-      <div className="w-full max-w-[1400px] mx-auto flex flex-col items-center">
-        
+      <div className="w-full max-w-[1400px] mx-auto flex flex-col items-center justify-center my-auto">
         {/* Section Header */}
-        <div className="w-full max-w-4xl mx-auto flex flex-col items-center text-center mb-8 sm:mb-12">
-          
-          {/* Pill Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100/90 dark:bg-purple-950/70 border border-purple-200 dark:border-purple-800/50 text-purple-700 dark:text-purple-300 text-[11px] font-bold font-mono uppercase tracking-wider mb-3 shadow-2xs"
-          >
-            <FolderGit2 className="w-3.5 h-3.5" />
-            <span>Featured Case Studies & Builds</span>
-          </motion.div>
-
+        <div className="w-full max-w-4xl mx-auto flex flex-col items-center text-center mb-4 sm:mb-5 lg:mb-6">
           {/* Headline: Projects that made me */}
           <motion.h2
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-zinc-950 dark:text-white tracking-tight uppercase leading-tight font-sans"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-950 dark:text-white tracking-tight uppercase leading-tight font-sans"
           >
             Projects that made me
           </motion.h2>
@@ -97,9 +98,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400 mt-3 max-w-2xl mx-auto font-normal leading-relaxed"
+            className="text-xs sm:text-sm md:text-base text-zinc-600 dark:text-zinc-400 mt-2 max-w-2xl mx-auto font-normal leading-relaxed"
           >
-            A curated showcase of high-concurrency systems, AI agentic pipelines, enterprise overhauls, and analytical architectures built for measurable scale.
+            A curated showcase of full-stack platforms, ERP workflows, e-commerce architectures, and enterprise workforce management systems built for scale.
           </motion.p>
         </div>
 
@@ -111,7 +112,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           transition={{ duration: 0.6, delay: 0.2 }}
           className="w-full"
         >
-          <ElasticGallery items={PROJECTS_LIST} defaultActiveId="03" />
+          <ElasticGallery items={PROJECTS_LIST} defaultActiveId="01" className="py-0 sm:py-1" />
         </motion.div>
 
         {/* Bottom CTA / Terminal Prompt */}
@@ -120,30 +121,28 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-10 sm:mt-14 flex flex-wrap items-center justify-center gap-4"
+          className="mt-7 sm:mt-8 lg:mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
         >
+          <button
+            onClick={handleNavigateToProjects}
+            className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-full bg-[#FFEE00] text-black text-xs sm:text-sm font-bold hover:bg-[#ffe600] transition-all shadow-md hover:shadow-lg cursor-pointer active:scale-95"
+          >
+            <FolderGit2 className="w-4 h-4" />
+            <span>Explore All Projects & Case Studies</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+
           {onExploreJourney && (
             <button
               onClick={onExploreJourney}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-xs sm:text-sm font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all shadow-md hover:shadow-lg cursor-pointer active:scale-95"
+              className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-xs sm:text-sm font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all shadow-md hover:shadow-lg cursor-pointer active:scale-95"
             >
               <Layers className="w-4 h-4" />
               <span>Explore Milestones & Deep Dive</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           )}
-
-          {onOpenTerminal && (
-            <button
-              onClick={onOpenTerminal}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-300 dark:border-zinc-700 text-xs sm:text-sm font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all shadow-xs hover:shadow-sm cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-              <span>Query Projects via Kavin AI</span>
-            </button>
-          )}
         </motion.div>
-
       </div>
     </section>
   );

@@ -25,53 +25,69 @@ export interface ElasticGalleryProps {
 const DEFAULT_PROJECT_ITEMS: ElasticItemProps[] = [
   {
     id: "01",
-    title: "Neon Cyber Telemetry",
-    category: "Distributed Systems",
-    src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop",
-    alt: "Neon Cyber Telemetry",
-    description: "High-frequency streaming engine handling 120k+ concurrent WebSocket connections with sub-15ms latency.",
+    title: "Event Management System",
+    category: "Software Development",
+    src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+    alt: "Event Management System Platform",
+    description:
+      "A full-stack event management platform where clients share requirements and budgets, managers assign teams, and members track tasks through completion.",
   },
   {
     id: "02",
-    title: "Neural Agent Matrix",
-    category: "AI & Agents",
-    src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
-    alt: "Neural Agent Matrix",
-    description: "Self-orchestrating autonomous LLM pipelines and vector grounding microservices.",
+    title: "ERP System",
+    category: "Software Development",
+    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+    alt: "Startup ERP Platform",
+    description:
+      "A startup-focused ERP platform for team onboarding, task assignment, daily progress tracking, leave management, notifications, and project status monitoring.",
   },
   {
     id: "03",
-    title: "Enterprise Core OS",
-    category: "Cloud Architecture",
-    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-    alt: "Enterprise Core Architecture",
-    description: "End-to-end migration of legacy monolithic architectures to modern event-driven Kubernetes clusters.",
+    title: "Sibling Shoes",
+    category: "Software Development",
+    src: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop",
+    alt: "Sibling Shoes E-Commerce Platform",
+    description:
+      "An online shoe shopping platform where customers can explore footwear, manage their cart, and move through a streamlined e-commerce shopping experience.",
   },
   {
     id: "04",
-    title: "Predictive Intelligence",
-    category: "Data Analytics",
-    src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-    alt: "Predictive Intelligence Dashboard",
-    description: "Machine learning behavioral analytics and central data mart surfacing actionable revenue metrics.",
+    title: "Hospital Nurse Shift Management",
+    category: "Project Management",
+    src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop",
+    alt: "Hospital Nurse Shift Management Platform",
+    description:
+      "A German-market SaaS platform for hospital nurse scheduling, shift swapping, leave requests, and workforce coordination across mobile and web dashboards.",
   },
   {
     id: "05",
-    title: "Radical UI Design System",
-    category: "Frontend Craft",
-    src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
-    alt: "Radical UI Design System",
-    description: "Strict Swiss typography scale, zero-runtime tokens, and physics-driven micro-interactions.",
+    title: "Fabric Production Management",
+    category: "Project Management",
+    src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1200&auto=format&fit=crop",
+    alt: "Fabric Production Management Desktop Application",
+    description:
+      "A desktop production management system covering fabric design, dyeing, weaving, wrapping, order tracking, client management, and delivery invoicing.",
   },
 ];
 
 export function ElasticGallery({
   items = DEFAULT_PROJECT_ITEMS,
-  defaultActiveId = "03",
+  defaultActiveId = "01",
   className,
   onSelectProject,
 }: ElasticGalleryProps) {
   const [activeId, setActiveId] = useState<string | null>(defaultActiveId);
+
+  const handleActionClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("app-navigate", {
+          detail: { tab: "projects", sectionId: "works-showcase" },
+        })
+      );
+    }
+  };
 
   return (
     <div className={cn("w-full py-6 sm:py-8", className)}>
@@ -96,7 +112,7 @@ export function ElasticGallery({
                 isActive ? "flex-[4]" : "flex-[1]",
                 // Brightness logic for focus
                 isActive
-                  ? "brightness-100 ring-1 ring-purple-500/40 shadow-[0_20px_50px_-10px_rgba(124,58,237,0.3)]"
+                  ? "brightness-100 ring-1 ring-[#FFEE00]/60 shadow-[0_20px_50px_-10px_rgba(255,238,0,0.25)]"
                   : "brightness-60 hover:brightness-85"
               )}
             >
@@ -111,7 +127,7 @@ export function ElasticGallery({
                     "object-cover transition-transform duration-1000",
                     isActive ? "scale-105" : "scale-115"
                   )}
-                  priority={item.id === "01" || item.id === "03"}
+                  priority={item.id === "01" || item.id === "02"}
                 />
                 {/* Dark Vignette Gradient Overlay for Readability */}
                 <div
@@ -128,7 +144,7 @@ export function ElasticGallery({
                   className={cn(
                     "font-mono text-xs font-bold px-2.5 py-1 rounded-full backdrop-blur-md transition-all duration-300",
                     isActive
-                      ? "bg-purple-500/80 text-white border border-purple-300/40 shadow-sm"
+                      ? "bg-[#FFEE00] text-black font-extrabold border border-[#FFEE00] shadow-sm"
                       : "bg-black/50 text-zinc-300 border border-white/10"
                   )}
                 >
@@ -158,7 +174,7 @@ export function ElasticGallery({
                 >
                   {/* Category Tag */}
                   <div className="flex items-center gap-2">
-                    <span className="rounded-full border border-purple-400/40 bg-purple-950/60 px-3 py-1 text-[10px] sm:text-xs font-bold font-mono uppercase tracking-wider text-purple-200 backdrop-blur-md shadow-xs">
+                    <span className="rounded-full border border-[#FFEE00]/50 bg-black/75 px-3 py-1 text-[10px] sm:text-xs font-bold font-mono uppercase tracking-wider text-[#FFEE00] backdrop-blur-md shadow-xs">
                       {item.category}
                     </span>
                   </div>
@@ -176,8 +192,11 @@ export function ElasticGallery({
                   )}
 
                   {/* Call to Action */}
-                  <div className="mt-2 inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-purple-300 hover:text-white transition-colors cursor-pointer w-fit">
-                    <span>Explore System Architecture</span>
+                  <div
+                    onClick={handleActionClick}
+                    className="mt-2 inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-[#FFEE00] hover:text-white transition-colors cursor-pointer w-fit"
+                  >
+                    <span>View Project In Projects Tab</span>
                     <ArrowUpRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </div>

@@ -74,7 +74,7 @@ export const DEFAULT_ACHIEVEMENTS: FeatureItem[] = [
     label: "24hrs HACKATHON",
     title: "Hackathon Organizer",
     icon: Trophy,
-    image: "...",
+    image: "/36 hrs hackathion.jpeg",
     description:
       "Organizing large-scale hackathons by bringing participants, teams, mentors, judges, and ideas together.",
     metric: "200+ Participants",
@@ -94,7 +94,7 @@ export const DEFAULT_ACHIEVEMENTS: FeatureItem[] = [
     label: "PAPER PRESENTATIONS",
     title: "Paper Presenter",
     icon: Trophy,
-    image: "...",
+    image: "/Paper Presentatiin.jpeg",
     description:
       "Presenting technical ideas and research across competitions, developing the ability to explain complex concepts with clarity.",
     metric: "5+ Recognitions",
@@ -229,7 +229,7 @@ export function FeatureCarousel({
         <div className="flex-1 min-h-[460px] md:min-h-[540px] lg:h-auto relative bg-[#0E0C16] dark:bg-[#07060B] flex items-center justify-center py-12 md:py-16 lg:py-12 px-4 sm:px-8 lg:px-10 overflow-hidden border-t lg:border-t-0 lg:border-l border-zinc-800/80">
 
           {/* Ambient Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-purple-600/15 blur-3xl rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-[#FFEE00]/15 blur-3xl rounded-full pointer-events-none" />
 
           <div className="relative w-full max-w-[420px] aspect-[4/5] flex items-center justify-center">
             {features.map((feature, index) => {
@@ -301,7 +301,7 @@ export function FeatureCarousel({
                             {feature.label}
                           </span>
                           {feature.metric && (
-                            <div className="bg-purple-500/80 text-white px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider shadow-md border border-purple-300/40 backdrop-blur-md">
+                            <div className="bg-[#FFEE00] text-zinc-950 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold uppercase tracking-wider shadow-md border border-[#FFEE00]/80 backdrop-blur-md">
                               {feature.metric}
                             </div>
                           )}

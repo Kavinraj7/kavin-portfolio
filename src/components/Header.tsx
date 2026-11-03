@@ -6,13 +6,11 @@ import {
   User,
   FolderGit2,
   Compass,
-  Sparkles,
-  Sun,
-  Moon,
   Mail,
   Menu,
 } from 'lucide-react';
 import { soundFx } from '../utils/audio';
+import { scrollToTop } from '../utils/scroll';
 import CircularNavigation, { NavItem } from '@/components/ui/cicular-navigation-bar';
 import { Button } from '@/components/ui/button';
 
@@ -40,14 +38,10 @@ export const Header: React.FC<HeaderProps> = ({
     setIsNavOpen((prev) => !prev);
   };
 
-  const toggleTheme = () => {
-    soundFx.playConfirm();
-    setIsDarkMode(!isDarkMode);
-  };
-
   const handleTabClick = (tab: NavTab) => {
     soundFx.playSelect();
     onSelectTab(tab);
+    scrollToTop();
   };
 
   const handleContactClick = () => {
@@ -83,19 +77,6 @@ export const Header: React.FC<HeaderProps> = ({
       name: 'Journey',
       icon: Compass,
       onClick: () => handleTabClick('journey'),
-    },
-    {
-      name: 'AI Chat',
-      icon: Sparkles,
-      onClick: () => {
-        soundFx.playTerminal();
-        onOpenTerminal();
-      },
-    },
-    {
-      name: isDarkMode ? 'Light' : 'Dark',
-      icon: isDarkMode ? Sun : Moon,
-      onClick: toggleTheme,
     },
     {
       name: 'Contact',

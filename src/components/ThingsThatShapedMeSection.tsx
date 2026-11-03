@@ -21,22 +21,13 @@ export const ThingsThatShapedMeSection: React.FC = () => {
   return (
     <section
       id="things-that-shaped-me"
-      className="relative z-30 w-full py-20 sm:py-28 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#FAFAFC] dark:bg-[#09080F] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 overflow-hidden border-t border-zinc-200/60 dark:border-zinc-800/60"
+      className="relative z-30 w-full min-h-screen py-14 sm:py-20 md:py-24 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#FAFAFC] dark:bg-[#09080F] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 overflow-hidden border-t border-zinc-200/60 dark:border-zinc-800/60 flex flex-col justify-center items-center"
     >
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="max-w-7xl mx-auto w-full my-auto flex flex-col justify-center">
 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100/80 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/40 text-purple-700 dark:text-purple-300 text-xs font-bold font-mono uppercase tracking-wider mb-4 shadow-xs"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Foundational Drivers · Core DNA</span>
-          </motion.div>
+
 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

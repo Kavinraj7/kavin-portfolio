@@ -80,7 +80,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-[#FAFAFC] dark:bg-[#09080F] text-black dark:text-white antialiased selection:bg-black selection:text-white overflow-x-hidden">
+      <body className="bg-[#FAFAFC] dark:bg-[#09080F] text-black dark:text-white antialiased selection:bg-black selection:text-white overflow-x-clip">
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import {
@@ -11,18 +12,17 @@ import {
   Briefcase,
   Cpu,
   Database,
-  Users,
   Sparkles,
   Layers,
   CheckCircle2,
 } from "lucide-react";
 
-export type DomainKey = "all" | "software" | "management" | "ai" | "data" | "hr";
+export type DomainKey = "all" | "software" | "management" | "ai" | "data";
 
 export interface ProjectShowcaseItem {
   id: string;
   title: string;
-  domainKey: "software" | "management" | "ai" | "data" | "hr";
+  domainKey: "software" | "management" | "ai" | "data";
   domainLabel: string;
   summary: string;
   technologies: string[];
@@ -44,313 +44,425 @@ export const SHOWCASE_DOMAINS: { key: DomainKey; label: string; icon: React.Comp
   { key: "management", label: "PROJECT MANAGEMENT", icon: Briefcase },
   { key: "ai", label: "AI / ML", icon: Cpu },
   { key: "data", label: "DATA ANALYTICS", icon: Database },
-  { key: "hr", label: "HR / PEOPLE", icon: Users },
 ];
 
 export const SHOWCASE_PROJECTS: ProjectShowcaseItem[] = [
   // 1. SOFTWARE DEVELOPMENT
   {
-    id: "pickmycareer",
-    title: "PickMyCareer",
+    id: "event-management",
+    title: "Event Management System",
     domainKey: "software",
     domainLabel: "Software Development",
     summary:
-      "An AI-powered career guidance platform that helps students discover the right path through behavioral assessments, interactive reports, and personalized career roadmaps.",
-    technologies: ["NEXT.JS", "TAILWIND CSS", "MAGIC UI", "RAZORPAY", "TYPESCRIPT"],
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop",
-    role: "Lead Full-Stack Engineer",
+      "A full-stack event management platform where clients share their event requirements and budgets, managers assign teams, and team members track and update tasks through completion.",
+    technologies: ["SPRING BOOT", "REACT.JS", "MYSQL"],
+    image:
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+    role: "Full-Stack Developer",
     caseStudy: {
-      problem: "Students faced fragmented career advice with zero data-backed clarity on market demands and skill alignment.",
-      approach: "Engineered a reactive Next.js 14 application with real-time assessment processing, dynamic PDF generation, and Razorpay subscription pipelines.",
-      result: "Onboarded 12,000+ active student users with 94% reported career clarity and 4.8/5 user satisfaction.",
+      problem:
+        "Managing events involves coordinating client expectations, budgets, multiple teams, and numerous tasks. Without a centralized workflow, tracking progress and ensuring every requirement is completed becomes difficult.",
+      approach:
+        "Developed a full-stack application using Spring Boot, React.js, and MySQL. Clients can submit event requirements and budgets, event managers can review requests and assign teams, and team members can update individual task statuses as work progresses.",
+      result:
+        "Created a centralized workflow for managing event requirements, coordinating teams, and tracking task completion from initial planning through event execution.",
       metrics: [
-        { label: "Active Users", value: "12,000+" },
-        { label: "Assessment Completion", value: "88%" },
-        { label: "Avg Session", value: "18 mins" },
-      ],
-    },
+        { label: "Core Workflow", value: "End-to-End" },
+        { label: "User Roles", value: "3" },
+        { label: "Task Tracking", value: "Centralized" }
+      ]
+    }
   },
   {
-    id: "summit-awards",
-    title: "Summit Awards 2026",
+    id: "visitflow",
+    title: "VisitFlow",
     domainKey: "software",
     domainLabel: "Software Development",
     summary:
-      "The official event platform for a premium networking summit, bringing registrations, ticket bookings, interactive speaker agendas, and live event telemetry together in one seamless experience.",
-    technologies: ["NEXT.JS", "TAILWIND CSS", "GSAP", "RAZORPAY", "FRAMER MOTION"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-    role: "Frontend Architect",
+      "A hospital appointment management system that connects patients, receptionists, and doctors through an organized workflow for doctor availability, appointment requests, and scheduling.",
+    technologies: ["SPRING BOOT", "REACT.JS", "MYSQL"],
+    image:
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop",
+    role: "Full-Stack Developer",
     caseStudy: {
-      problem: "High-traffic summit required zero-latency ticketing and fluid 60fps editorial animations for executive attendee onboarding.",
-      approach: "Built ultra-smooth scroll orchestrations with GSAP & Framer Motion, integrated webhook-verified payment gateways, and configured edge caching.",
-      result: "Handled 45,000+ peak concurrent ticketing requests without downtime, generating $420K+ in presale transactions.",
+      problem:
+        "Hospital appointment scheduling requires coordination between patient requests, doctor availability, and receptionist-managed time slots. Poor coordination can lead to scheduling conflicts and unnecessary waiting.",
+      approach:
+        "Built a full-stack appointment management application using Spring Boot, React.js, and MySQL. Doctors can define their availability, patients can request appointment slots, and receptionists can coordinate requests with available schedules and assign appointments.",
+      result:
+        "Established a structured appointment workflow that helps receptionists coordinate patient requests with doctor availability and manage scheduled visits in one system.",
       metrics: [
-        { label: "Peak Concurrent", value: "45K" },
-        { label: "Ticket Sales", value: "$420K+" },
-        { label: "Uptime", value: "99.99%" },
-      ],
-    },
+        { label: "Primary Workflow", value: "Appointments" },
+        { label: "User Roles", value: "3" },
+        { label: "Scheduling", value: "Availability-Based" }
+      ]
+    }
   },
   {
-    id: "novix-studios",
-    title: "Novix Studios",
+    id: "erp-system",
+    title: "ERP System",
     domainKey: "software",
     domainLabel: "Software Development",
     summary:
-      "A modern portfolio and digital ecosystem for a premier creative agency, designed to showcase high-impact motion work, 3D interactive canvases, and convert high-tier enterprise clients.",
-    technologies: ["NEXT.JS", "TAILWIND CSS", "REACT BITS", "LENIS SCROLL", "THREE.JS"],
-    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop",
-    role: "Creative Technologist",
+      "A startup-focused ERP platform for team onboarding, task assignment, daily progress tracking, leave management, notifications, and project status monitoring.",
+    technologies: ["NEXT.JS", "REACT", "FIREBASE", "FIRESTORE"],
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+    role: "Full-Stack Developer",
     caseStudy: {
-      problem: "Agency needed a marquee portfolio that proved their creative depth while retaining sub-second Google Lighthouse performance.",
-      approach: "Crafted interactive WebGL shader canvases blended with Lenis smooth momentum scrolling and dynamic asset streaming.",
-      result: "Landed 8 Fortune 500 agency client pitches within the first 60 days of launch.",
+      problem:
+        "Managing team members, task assignments, daily updates, leave requests, and project progress across separate tools makes it difficult for project managers to maintain visibility into ongoing work and pending tasks.",
+      approach:
+        "Developed a centralized ERP platform using Next.js, React, Firebase, and Firestore. Project managers can onboard team leads and members, team leads can assign tasks, and team members can post daily updates, change task statuses, and discuss questions through task comments. The platform also supports leave management and notifications.",
+      result:
+        "Brought team coordination, task discussions, progress updates, leave requests, and project monitoring into a unified workspace for startup operations.",
       metrics: [
-        { label: "Client Inquiries", value: "+180%" },
-        { label: "Lighthouse Score", value: "98/100" },
-        { label: "Avg Engagement", value: "3.4 mins" },
-      ],
-    },
+        { label: "Core Modules", value: "5+" },
+        { label: "Progress Updates", value: "Daily" },
+        { label: "Task Collaboration", value: "Integrated" }
+      ]
+    }
+  },
+  {
+    id: "sibling-shoes",
+    title: "Sibling Shoes",
+    domainKey: "software",
+    domainLabel: "Software Development",
+    summary:
+      "An online shoe shopping platform where customers can explore footwear, manage their cart, and move through a streamlined e-commerce shopping experience.",
+    technologies: ["NEXT.JS", "REACT", "AWS", "DYNAMODB", "CLOUDFLARE"],
+    image:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop",
+    role: "Full-Stack Developer",
+    caseStudy: {
+      problem:
+        "Customers need a convenient way to discover available footwear, review their selections, and manage items before purchasing, while the business needs an online storefront supported by suitable backend infrastructure.",
+      approach:
+        "Developed an e-commerce website using Next.js and React, with AWS and DynamoDB supporting the backend data layer and Cloudflare supporting the web infrastructure. The shopping experience includes product browsing and cart management.",
+      result:
+        "Created an online storefront that brings footwear discovery and cart-based shopping together, supported by a modern web stack and cloud technologies.",
+      metrics: [
+        { label: "Product Domain", value: "Footwear" },
+        { label: "Shopping Feature", value: "Cart Management" },
+        { label: "Infrastructure", value: "AWS + Cloudflare" }
+      ]
+    }
+  },
+  {
+    id: "government-schemes",
+    title: "Government Schemes",
+    domainKey: "software",
+    domainLabel: "Software Development",
+    summary:
+      "A personalized government scheme discovery platform that allows users to sign in, provide their details, and explore schemes for which they may be eligible.",
+    technologies: ["NEXT.JS", "FIREBASE"],
+    image:
+      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1200&auto=format&fit=crop",
+    role: "Web Developer",
+    caseStudy: {
+      problem:
+        "People may struggle to discover relevant government schemes because eligibility criteria and application information can be spread across different sources. Finding schemes that match their circumstances can take time.",
+      approach:
+        "Developed a web platform using Next.js and Firebase that allows users to sign in, submit relevant personal details, and explore government schemes matching the eligibility criteria implemented in the application.",
+      result:
+        "Created a more personalized way for users to discover potentially relevant government schemes through a single web interface.",
+      metrics: [
+        { label: "Access", value: "User Sign-In" },
+        { label: "Discovery", value: "Eligibility-Based" },
+        { label: "Platform", value: "Web Application" }
+      ]
+    }
+  },
+  {
+    id: "archaelix",
+    title: "Archaelix",
+    domainKey: "software",
+    domainLabel: "Software Development",
+    summary:
+      "A business website for a digital marketing, IT services, and consulting company, presenting its services and helping businesses explore its digital growth solutions.",
+    technologies: ["REACT.JS"],
+    image:
+      "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=1200&auto=format&fit=crop",
+    role: "Frontend Developer",
+    caseStudy: {
+      problem:
+        "A digital services company needs a clear online presence to communicate its expertise, explain its offerings, and help potential clients understand how its services can support their business goals.",
+      approach:
+        "Developed the website frontend using React.js to present Archaelix's digital marketing, IT services, and business consulting offerings in a structured, accessible format aligned with the company's professional identity.",
+      result:
+        "Created a dedicated web presence for presenting the company's services, communicating its value proposition, and giving prospective clients a starting point to explore its offerings.",
+      metrics: [
+        { label: "Primary Focus", value: "Business Website" },
+        { label: "Service Areas", value: "3" },
+        { label: "Frontend", value: "React.js" }
+      ]
+    }
   },
 
   // 2. PROJECT MANAGEMENT
   {
-    id: "smart-inventory-pm",
-    title: "Supply Chain ERP Migration",
+    id: "hospital-nurse-shift-management",
+    title: "Hospital Nurse Shift Management",
     domainKey: "management",
     domainLabel: "Project Management",
     summary:
-      "End-to-end agile orchestration of a multi-warehouse enterprise resource planning system transition across 4 international logistics hubs.",
-    technologies: ["JIRA", "CONFLUENCE", "SCRUM", "ROADMAPS", "RISK MATRIX"],
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop",
-    role: "Agile Project Manager",
+      "A German-market SaaS platform for hospital nurse scheduling, shift swapping, leave requests, and workforce coordination, supported by mobile and web dashboard experiences.",
+    technologies: [
+      "FLUTTER",
+      "AWS",
+      "DYNAMODB",
+      "SAAS",
+      "WEB DASHBOARDS"
+    ],
+    image:
+      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop",
+    role: "Technical Project Manager",
     caseStudy: {
-      problem: "Legacy inventory tracking caused frequent stockout delays and cross-border customs bottlenecks across 4 facilities.",
-      approach: "Architected 2-week dual-track sprint cadences, established cross-functional stakeholder syncs, and automated burn-up reporting.",
-      result: "Delivered migration 3 weeks ahead of schedule and 12% under budget with zero critical shipment interruptions.",
+      problem:
+        "Hospitals need to coordinate nurse shifts around staffing requirements, availability, leave requests, and shift swaps. Managing these moving parts while following hospital-specific organizational structures requires a clear and reliable workflow.",
+      approach:
+        "Owned sprint planning and coordinated project execution, serving as the primary connection between the client and the development team. Organized requirements into actionable sprints, tracked progress, aligned development with client expectations, and coordinated delivery across the mobile application and web dashboards.",
+      result:
+        "Delivered the project on time, coordinating client requirements and development activities across a platform designed to support hospital shift scheduling, nurse leave requests, shift swaps, and management oversight.",
       metrics: [
-        { label: "Timeline", value: "-3 Weeks" },
-        { label: "Budget Variance", value: "-12%" },
-        { label: "Warehouse Sync", value: "100%" },
-      ],
-    },
+        { label: "Delivery", value: "On Time" },
+        { label: "Platforms", value: "Mobile + Web" },
+        { label: "Core Workflow", value: "Shift Management" }
+      ]
+    }
   },
   {
-    id: "fintech-compliance-pm",
-    title: "Global FinTech Regulatory Gate",
+    id: "investment-platform",
+    title: "Investment Platform",
     domainKey: "management",
     domainLabel: "Project Management",
     summary:
-      "Cross-border compliance and SOC-2 Type II audit readiness program managing 6 engineering teams and external cybersecurity auditors.",
-    technologies: ["AGILE SDLC", "LINEAR", "NOTION", "MILESTONE TRACKING"],
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
-    role: "Technical Program Manager",
+      "An investment platform for wood-based investment packages, with investor submissions, administrator approval workflows, and email-based delivery of investment proofs.",
+    technologies: [
+      "NEXT.JS",
+      "AWS",
+      "DYNAMODB",
+      "INVESTMENT WORKFLOWS",
+      "EMAIL NOTIFICATIONS"
+    ],
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
+    role: "Project Manager",
     caseStudy: {
-      problem: "Rapid fintech scaling required strict PCI-DSS & SOC-2 compliance approvals prior to North American banking integration.",
-      approach: "Constructed comprehensive traceability matrices, dependency graphs, and weekly executive steerco risk heatmaps.",
-      result: "Achieved 100% audit compliance approval in first review with zero high-severity remediation findings.",
+      problem:
+        "Managing package-based investments requires a structured process for collecting investor submissions, reviewing requests, recording approval decisions, and communicating supporting proofs to investors.",
+      approach:
+        "Coordinated project requirements and development workflows for a platform built with Next.js, AWS, and DynamoDB. The product workflow allows investors to select investment packages and submit investments, while administrators review and approve submissions and proofs are sent through email.",
+      result:
+        "Structured the investment process around investor submissions, administrator approvals, and email communication, helping bring the platform's core investment workflow into one digital experience.",
       metrics: [
-        { label: "Compliance Pass", value: "100%" },
-        { label: "Remediations", value: "0" },
-        { label: "Audit Timeline", value: "4 Months" },
-      ],
-    },
+        { label: "Investment Model", value: "Package-Based" },
+        { label: "Approval Flow", value: "Admin Review" },
+        { label: "Communication", value: "Email-Based" }
+      ]
+    }
   },
   {
-    id: "telehealth-launch-pm",
-    title: "TeleHealth 2.0 Patient Portal",
+    id: "fabric-production-management",
+    title: "Fabric Production Management",
     domainKey: "management",
     domainLabel: "Project Management",
     summary:
-      "Agile product delivery management for an enterprise telehealth video consultations and electronic health record integration system.",
-    technologies: ["SCRUM", "ASANA", "HIPAA COMPLIANCE", "SPRINT PLANNING"],
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop",
-    role: "Lead Project Manager",
+      "A desktop production management system covering fabric design, dyeing, weaving, wrapping, order tracking, client management, and delivery invoicing.",
+    technologies: [
+      "ELECTRON",
+      "DESKTOP APPLICATION",
+      "PRODUCTION WORKFLOWS",
+      "ORDER MANAGEMENT",
+      "INVOICE MANAGEMENT"
+    ],
+    image:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1200&auto=format&fit=crop",
+    role: "Project Manager",
     caseStudy: {
-      problem: "High patient abandonment rates due to clunky pre-consultation medical intake forms.",
-      approach: "Conducted sprint retrospective process overhauls, decoupled patient intake into progressive micro-steps, and unified doctor workflows.",
-      result: "Boosted completed patient appointments by 42% and reduced clinic admin overtime by 28 hours/week.",
+      problem:
+        "Fabric production involves multiple connected stages, from initial design through dyeing, weaving, wrapping, and final delivery. Managing production activities, customer orders, and invoicing across these stages requires coordinated workflows and clear operational visibility.",
+      approach:
+        "Worked on coordinating the product requirements and project workflow for an Electron-based desktop application. The system brings production stages together with order management, client information, and delivery invoice workflows to support the operational lifecycle.",
+      result:
+        "Organized the production lifecycle into a centralized desktop application, connecting manufacturing stages with client, order, and invoicing processes.",
       metrics: [
-        { label: "Consultations", value: "+42%" },
-        { label: "Drop-off Rate", value: "-60%" },
-        { label: "Sprint Velocity", value: "+28%" },
-      ],
-    },
+        { label: "Platform", value: "Desktop App" },
+        { label: "Production Flow", value: "End-to-End" },
+        { label: "Business Areas", value: "Production + Orders" }
+      ]
+    }
   },
 
   // 3. AI / MACHINE LEARNING
   {
-    id: "deep-vision-qa",
-    title: "DeepVision Automated QA",
+    id: "face-anonymization",
+    title: "Face Anonymization System",
     domainKey: "ai",
     domainLabel: "AI / Machine Learning",
     summary:
-      "Computer vision pipeline utilizing YOLOv8 and convolutional neural networks to detect manufacturing micro-defects on assembly lines in real-time.",
-    technologies: ["PYTHON", "PYTORCH", "YOLOV8", "OPENCV", "FASTAPI"],
-    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop",
-    role: "Computer Vision Engineer",
+      "A computer vision system that detects and anonymizes faces across images, videos, and real-time webcam feeds to support privacy-conscious visual data processing.",
+    technologies: [
+      "PYTHON",
+      "OPENCV",
+      "MEDIAPIPE",
+      "NUMPY",
+      "PANDAS",
+      "SCIKIT-LEARN"
+    ],
+    image:
+      "https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=1200&auto=format&fit=crop",
+    role: "AI/ML Developer",
     caseStudy: {
-      problem: "Manual visual inspection on high-speed manufacturing lines missed 4.2% of microscopic hairline fracture defects.",
-      approach: "Trained edge-optimized YOLOv8 object detection models on 85,000 augmented industrial imaging frames with TensorRT inference.",
-      result: "Attained 99.4% precision at 60 FPS continuous real-time video stream processing.",
+      problem:
+        "Visual data can contain identifiable faces, creating privacy concerns when images and videos are used, shared, or analyzed. Manually anonymizing faces across different media types can be time-consuming.",
+      approach:
+        "Developed a Python-based solution using MediaPipe for face detection and OpenCV for image processing and anonymization. Supported image uploads, video processing, and live webcam input, with NumPy and Pandas for data handling.",
+      result:
+        "Built a face anonymization tool capable of processing multiple visual input types and masking detected faces to help protect personal identity in visual data.",
       metrics: [
-        { label: "Accuracy", value: "99.4%" },
-        { label: "Inference Latency", value: "14ms" },
-        { label: "Defect Catch Rate", value: "+38%" },
-      ],
-    },
+        { label: "Input Types", value: "3" },
+        { label: "Processing Modes", value: "Image + Video + Live" },
+        { label: "Core Function", value: "Face Anonymization" }
+      ]
+    }
   },
   {
-    id: "neural-doc-rag",
-    title: "NeuralDoc Enterprise RAG",
+    id: "sign-language-detection",
+    title: "Sign Language Detection System",
     domainKey: "ai",
     domainLabel: "AI / Machine Learning",
     summary:
-      "Retrieval-Augmented Generation system index analyzing 500k+ enterprise legal contracts and technical documentation with grounded citations.",
-    technologies: ["LANGCHAIN", "QDRANT", "LLAMA-3", "FASTAPI", "DOCKER"],
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
-    role: "AI / LLM Engineer",
+      "A real-time gesture recognition system combining webcam input, MediaPipe hand tracking, and machine learning to identify supported sign language gestures.",
+    technologies: [
+      "PYTHON",
+      "OPENCV",
+      "MEDIAPIPE",
+      "NUMPY",
+      "PANDAS",
+      "SCIKIT-LEARN"
+    ],
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
+    role: "AI/ML Developer",
     caseStudy: {
-      problem: "Legal teams spent 20+ hours per contract audit manually tracing clause precedents across thousands of legacy PDFs.",
-      approach: "Built semantic chunking pipelines with hybrid dense/sparse vector retrieval in Qdrant and LLM reranking models.",
-      result: "Reduced research turnaround time from 20 hours to 45 seconds with 98% factual grounding score.",
+      problem:
+        "Recognizing hand gestures in real time requires reliable hand tracking and classification. A system that identifies supported signs from camera input can serve as a foundation for more accessible gesture-based communication.",
+      approach:
+        "Built a Python-based pipeline using OpenCV to capture webcam frames, MediaPipe to track hand landmarks, and a trained scikit-learn model to classify supported gestures.",
+      result:
+        "Developed a real-time sign language gesture recognition prototype that connects camera-based hand tracking with machine learning classification.",
       metrics: [
-        { label: "Search Speedup", value: "96%" },
-        { label: "Docs Indexed", value: "500K+" },
-        { label: "Hallucination Rate", value: "<0.8%" },
-      ],
-    },
-  },
-  {
-    id: "audio-synth-ai",
-    title: "VocalSense Emotion Audio AI",
-    domainKey: "ai",
-    domainLabel: "AI / Machine Learning",
-    summary:
-      "Deep learning acoustic model classifying sentiment, stress, and intent in customer support voice calls for automated sentiment routing.",
-    technologies: ["PYTORCH", "LIBROSA", "TRANSFORMERS", "WHISPER", "DOCKER"],
-    image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop",
-    role: "ML Researcher",
-    caseStudy: {
-      problem: "Customer service escalations occurred too late due to delayed text-only transcript keyword tagging.",
-      approach: "Engineered spectrogram transformer models extracting pitch, cadence, and vocal jitter features alongside real-time Whisper transcripts.",
-      result: "Identified customer distress 3.5 minutes earlier than human supervisors, lowering customer churn by 22%.",
-      metrics: [
-        { label: "Emotion F1-Score", value: "92.6%" },
-        { label: "Early Warning", value: "3.5 mins" },
-        { label: "Churn Reduction", value: "22%" },
-      ],
-    },
+        { label: "Input Mode", value: "Real-Time Webcam" },
+        { label: "Recognition Type", value: "Hand Gestures" },
+        { label: "ML Framework", value: "Scikit-learn" }
+      ]
+    }
   },
 
   // 4. DATA ANALYTICS
+  {
+    id: "zomato-bi",
+    title: "Zomato Restaurant Analytics",
+    domainKey: "data",
+    domainLabel: "Data Analytics",
+    summary:
+      "Interactive business intelligence dashboard exploring restaurant performance, customer ratings, pricing patterns, and geographic distribution to uncover meaningful trends in restaurant data.",
+    technologies: ["EXCEL", "PYTHON", "MYSQL", "POWER BI"],
+    image:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop",
+    role: "Data Analyst",
+    caseStudy: {
+      problem:
+        "Restaurant datasets contain multiple dimensions, including ratings, pricing, locations, and restaurant categories. Comparing these attributes across regions can be difficult without a consolidated analytical view.",
+      approach:
+        "Prepared and analyzed restaurant data using the tools applied in the project, then designed an interactive Power BI dashboard with visualizations and key metrics to explore restaurant performance and regional patterns.",
+      result:
+        "Created an interactive dashboard that makes restaurant data easier to filter, compare, and interpret, supporting exploratory analysis of restaurant and customer trends.",
+      metrics: [
+        { label: "Primary Tool", value: "Power BI" },
+        { label: "Analysis Focus", value: "Restaurant Trends" },
+        { label: "Interaction", value: "Interactive Filters" }
+      ]
+    }
+  },
   {
     id: "netflix-bi",
     title: "Netflix Global Catalog BI",
     domainKey: "data",
     domainLabel: "Data Analytics",
     summary:
-      "Interactive business intelligence telemetry exploring Netflix content strategy, genre distribution dynamics, and international licensing shift.",
-    technologies: ["POWER BI", "SQL", "PYTHON", "DAX", "TABLEAU"],
-    image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=1200&auto=format&fit=crop",
+      "Interactive business intelligence dashboard exploring Netflix's content catalog, genre distribution, release patterns, and international content coverage.",
+    technologies: ["EXCEL", "PYTHON", "MYSQL", "POWER BI"],
+    image:
+      "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=1200&auto=format&fit=crop",
     role: "BI & Data Analyst",
     caseStudy: {
-      problem: "Catalog strategy required multi-dimensional slicing to reveal licensing trends, original production surges, and regional coverage.",
-      approach: "Engineered automated SQL transformation pipelines, calculated complex DAX metrics, and designed an executive dark-mode dashboard.",
-      result: "Revealed original content distribution scaling by 4.2x in APAC regions with instant query drill-down.",
+      problem:
+        "A large streaming catalog can be difficult to analyze without a structured view of titles, genres, release years, and regional content distribution. Understanding these patterns requires interactive filtering and clear visual summaries.",
+      approach:
+        "Prepared and analyzed Netflix catalog data using Excel, Python, and MySQL as applicable to the workflow, then built an interactive Power BI dashboard to explore genre distribution, release trends, and content categories.",
+      result:
+        "Developed a visual analytics dashboard that helps users explore Netflix catalog composition and compare content trends through interactive reports.",
       metrics: [
-        { label: "Titles Analyzed", value: "8,800+" },
-        { label: "Query Speedup", value: "65%" },
-        { label: "Countries Mapped", value: "40+" },
-      ],
-    },
+        { label: "Primary Tool", value: "Power BI" },
+        { label: "Analysis Focus", value: "Content Catalog" },
+        { label: "Exploration", value: "Interactive Reports" }
+      ]
+    }
   },
   {
-    id: "zomato-restaurant-analytics",
-    title: "Zomato DineOut Predictive Engine",
+    id: "road-accident-bi",
+    title: "Road Accident Analytics",
     domainKey: "data",
     domainLabel: "Data Analytics",
     summary:
-      "Market density and customer sentiment analysis analyzing 9,500+ restaurants across Indian metros to optimize cuisine pricing tiers.",
-    technologies: ["PYTHON", "SEABORN", "SCIKIT-LEARN", "PANDAS", "EXCEL"],
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+      "Interactive road safety dashboard examining accident severity, location patterns, contributing factors, and time-based trends to support data-driven exploration.",
+    technologies: ["EXCEL", "PYTHON", "MYSQL", "POWER BI"],
+    image:
+      "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=1200&auto=format&fit=crop",
     role: "Data Analyst",
     caseStudy: {
-      problem: "New restaurant ventures experienced high failure rates due to poorly matched pricing brackets and local cuisine saturation.",
-      approach: "Applied k-means spatial clustering and sentiment NLP on 250k+ user reviews to construct a predictive success index.",
-      result: "Delivered pricing recommendations adopted by 35+ partner kitchens resulting in 18% higher margin capture.",
+      problem:
+        "Road accident datasets can contain extensive records about accident locations, severity, and contributing factors. Identifying recurring patterns and high-risk areas requires clear visual analysis.",
+      approach:
+        "Organized and analyzed road accident data using the tools applied in the project, then developed a Power BI dashboard with interactive charts and location-based visualizations to explore severity and time patterns.",
+      result:
+        "Created an interactive dashboard that helps users investigate road accident patterns and compare trends across relevant locations, periods, and accident categories.",
       metrics: [
-        { label: "Restaurants Evaluated", value: "9,500+" },
-        { label: "Reviews Modeled", value: "250K+" },
-        { label: "Margin Growth", value: "+18%" },
-      ],
-    },
+        { label: "Primary Tool", value: "Power BI" },
+        { label: "Analysis Focus", value: "Road Safety" },
+        { label: "Key Dimensions", value: "Location + Time" }
+      ]
+    }
   },
   {
-    id: "ecommerce-cohort-analytics",
-    title: "E-Commerce LTV & Retention Matrix",
+    id: "hr-analytics-bi",
+    title: "HR Workforce Analytics",
     domainKey: "data",
     domainLabel: "Data Analytics",
     summary:
-      "Customer lifetime value, cohort churn matrix, and purchase frequency forecasting analyzing over $14M in annual gross merchandise volume.",
-    technologies: ["SQL", "BIGQUERY", "METABASE", "PYTHON", "STATSMODELS"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-    role: "Analytics Engineer",
+      "A workforce analytics dashboard presenting employee demographics, attendance, performance indicators, and turnover patterns through interactive Power BI visualizations.",
+    technologies: ["EXCEL", "PYTHON", "MYSQL", "POWER BI"],
+    image:
+      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1200&auto=format&fit=crop",
+    role: "Data Analyst",
     caseStudy: {
-      problem: "Paid acquisition costs rose while 60-day repeat purchase attribution remained untracked.",
-      approach: "Built multi-touch attribution models and monthly retention cohort tables in BigQuery with automated Metabase sync.",
-      result: "Pinpointed top 5% repeat buyer persona drivers, enabling marketing to reduce CAC by 31%.",
+      problem:
+        "Workforce data can be spread across employee records, attendance information, performance indicators, and turnover reports. A consolidated dashboard can make these metrics easier to monitor and compare.",
+      approach:
+        "Prepared and analyzed HR data using the tools applied in the project, then created a Power BI dashboard to present employee demographics, attendance, performance indicators, and turnover patterns in an interactive format.",
+      result:
+        "Built a centralized workforce analytics dashboard that helps users explore HR indicators, compare workforce patterns, and identify areas for further analysis.",
       metrics: [
-        { label: "GMV Analyzed", value: "$14M+" },
-        { label: "CAC Reduction", value: "31%" },
-        { label: "Cohort Retention", value: "+19%" },
-      ],
-    },
+        { label: "Primary Tool", value: "Power BI" },
+        { label: "Analysis Focus", value: "Workforce Metrics" },
+        { label: "Reporting", value: "Interactive Dashboard" }
+      ]
+    }
   },
 
-  // 5. HR / PEOPLE OPERATIONS
-  {
-    id: "talent-pulse-hr",
-    title: "TalentPulse People Telemetry",
-    domainKey: "hr",
-    domainLabel: "HR / People Operations",
-    summary:
-      "Organizational health & predictive attrition modeling system tracking employee engagement, sentiment pulses, and internal growth pathways.",
-    technologies: ["PEOPLE ANALYTICS", "SURVEY DESIGN", "POWER BI", "EXCEL", "PYTHON"],
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop",
-    role: "People Analytics Lead",
-    caseStudy: {
-      problem: "Rapid remote expansion triggered unexpected key engineer departures and declining satisfaction scores.",
-      approach: "Designed bi-weekly micro-pulse sentiment surveys, mapped flight risk indicators, and instituted transparent manager feedback loops.",
-      result: "Reduced voluntary tech turnover by 34% and improved company-wide eNPS score from +18 to +52.",
-      metrics: [
-        { label: "Turnover Reduction", value: "34%" },
-        { label: "eNPS Score", value: "+52" },
-        { label: "Survey Participation", value: "91%" },
-      ],
-    },
-  },
-  {
-    id: "skills-matrix-hr",
-    title: "Engineering Competency Grid",
-    domainKey: "hr",
-    domainLabel: "HR / People Operations",
-    summary:
-      "Structured career leveling, compensation benchmark, and performance calibration framework adopted across 250+ engineering personnel.",
-    technologies: ["COMPENSATION MODELING", "NOTION", "LEVELING FRAMEWORK", "HRIS"],
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop",
-    role: "Strategic HR Consultant",
-    caseStudy: {
-      problem: "Ambiguous promotion criteria created review friction, salary disparities, and retention anxiety across senior developers.",
-      approach: "Created dual-track IC & Management ladders with clear measurable behavioral rubrics and market-indexed salary bands.",
-      result: "Shortened promotion review cycles by 50% with 96% employee approval on appraisal fairness.",
-      metrics: [
-        { label: "Review Speedup", value: "50%" },
-        { label: "Fairness Score", value: "96%" },
-        { label: "Staff Leveled", value: "250+" },
-      ],
-    },
-  },
+
 ];
 
 interface WorksShowcaseSectionProps {
@@ -363,6 +475,22 @@ export const WorksShowcaseSection: React.FC<WorksShowcaseSectionProps> = ({
 }) => {
   const [selectedDomain, setSelectedDomain] = useState<DomainKey>(initialDomain);
   const [activeProject, setActiveProject] = useState<ProjectShowcaseItem | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Keyboard Escape listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && activeProject) {
+        setActiveProject(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeProject]);
 
   // Sync initial domain when prop changes
   useEffect(() => {
@@ -377,26 +505,35 @@ export const WorksShowcaseSection: React.FC<WorksShowcaseSectionProps> = ({
       ? SHOWCASE_PROJECTS
       : SHOWCASE_PROJECTS.filter((p) => p.domainKey === selectedDomain);
 
-  // Prevent background scrolling when modal is open
+  // Prevent background scrolling and lock Lenis when modal is open
   useEffect(() => {
     if (activeProject) {
       document.body.style.overflow = "hidden";
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+        (window as any).__lenis.stop();
+      }
     } else {
       document.body.style.overflow = "";
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+        (window as any).__lenis.start();
+      }
     }
     return () => {
       document.body.style.overflow = "";
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+        (window as any).__lenis.start();
+      }
     };
   }, [activeProject]);
 
   return (
     <section
       id="works-showcase"
-      className="relative w-full bg-white dark:bg-[#0c1015] text-[#111417] dark:text-[#f2f6f9] border-t border-black/10 dark:border-white/10 select-none py-16 sm:py-24 px-4 sm:px-8 md:px-12 lg:px-16"
+      className="relative w-full min-h-screen bg-white dark:bg-[#0c1015] text-[#111417] dark:text-[#f2f6f9] border-t border-black/10 dark:border-white/10 select-none py-14 sm:py-20 md:py-24 px-4 sm:px-8 md:px-12 lg:px-16 flex flex-col justify-center items-center"
     >
       {/* 1. SECTION HEADER & CENTER FLOATING DOMAIN SWITCHER */}
-      <div className="max-w-[1700px] mx-auto mb-12 sm:mb-16 flex flex-col items-center">
-        
+      <div className="max-w-[1700px] mx-auto mb-12 sm:mb-16 flex flex-col items-center my-auto w-full">
+
         {/* Subtle Section Tag */}
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-4 h-4 text-[#ff6200]" />
@@ -419,11 +556,10 @@ export const WorksShowcaseSection: React.FC<WorksShowcaseSectionProps> = ({
               <button
                 key={domain.key}
                 onClick={() => setSelectedDomain(domain.key)}
-                className={`relative flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-bold tracking-tight uppercase whitespace-nowrap transition-all duration-300 z-10 ${
-                  isActive
-                    ? "text-white dark:text-black"
-                    : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
-                }`}
+                className={`relative flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-bold tracking-tight uppercase whitespace-nowrap transition-all duration-300 z-10 ${isActive
+                  ? "text-white dark:text-black"
+                  : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
+                  }`}
               >
                 {isActive && (
                   <motion.div
@@ -510,158 +646,174 @@ export const WorksShowcaseSection: React.FC<WorksShowcaseSectionProps> = ({
         </div>
       </div>
 
-      {/* 3. COMPACT SPLIT 2-COLUMN CASE STUDY DETAIL MODAL (No Scroll Needed, Isolated Viewport) */}
-      <AnimatePresence>
-        {activeProject && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-8"
-            onWheel={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            onTouchMove={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-          >
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setActiveProject(null)}
-              className="absolute inset-0 bg-black/65 backdrop-blur-md"
-            />
-
-            {/* Split Modal Card (Left Compact Image + Tech Stack | Right Content Only) */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              onClick={(e) => e.stopPropagation()}
+      {/* 3. COMPACT SPLIT 2-COLUMN CASE STUDY DETAIL MODAL (Rendered to body via Portal for true Viewport Centering) */}
+      {mounted && typeof document !== "undefined" && createPortal(
+        <AnimatePresence>
+          {activeProject && (
+            <div
+              className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-5 md:p-8 overflow-y-auto"
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                width: "100vw",
+                height: "100vh",
+                zIndex: 99999,
+              }}
               onWheel={(e) => {
                 e.stopPropagation();
               }}
-              className="relative w-full max-w-4xl xl:max-w-5xl bg-white dark:bg-[#10141a] text-black dark:text-white rounded-[26px] sm:rounded-[30px] shadow-2xl overflow-hidden border border-black/10 dark:border-white/10 z-10 flex flex-col md:flex-row"
+              onTouchMove={(e) => {
+                e.stopPropagation();
+              }}
             >
-              {/* Close Button */}
-              <button
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 onClick={() => setActiveProject(null)}
-                className="absolute top-4 right-4 sm:top-5 sm:right-5 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 flex items-center justify-center transition-colors shadow-sm"
-              >
-                <X className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
+                className="fixed inset-0 bg-black/75 backdrop-blur-md"
+                style={{
+                  position: "fixed",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                }}
+              />
 
-              {/* LEFT SIDE: Shorter Device Image + Tech Stack Below */}
-              <div className="relative w-full md:w-[42%] bg-[#edf2f4] dark:bg-[#151a22] p-5 sm:p-6 md:p-7 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black/10 dark:border-white/10 shrink-0">
-                <div>
-                  {/* Reduced Vertical Image Container */}
-                  <div className="relative w-full h-[180px] sm:h-[210px] md:h-[225px] rounded-2xl overflow-hidden shadow-sm border border-black/5 dark:border-white/10 bg-black/5 dark:bg-black/30">
-                    <Image
-                      src={activeProject.image}
-                      alt={activeProject.title}
-                      fill
-                      priority
-                      className="object-cover object-center"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#ff6200] text-white font-mono font-bold text-[10px] uppercase tracking-wider shadow-sm">
+              {/* Split Modal Card (Left Compact Image + Tech Stack | Right Content Only) */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-4xl xl:max-w-5xl max-h-[90vh] max-h-[90dvh] bg-white dark:bg-[#10141a] text-black dark:text-white rounded-[26px] sm:rounded-[30px] shadow-2xl overflow-hidden border border-black/10 dark:border-white/10 z-10 flex flex-col md:flex-row my-auto"
+              >
+                {/* Close Button */}
+                <button
+                  onClick={() => setActiveProject(null)}
+                  aria-label="Close Project Details"
+                  className="absolute top-4 right-4 sm:top-5 sm:right-5 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 flex items-center justify-center transition-colors shadow-sm cursor-pointer"
+                >
+                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+
+                {/* LEFT SIDE: Shorter Device Image + Tech Stack Below */}
+                <div className="relative w-full md:w-[42%] bg-[#edf2f4] dark:bg-[#151a22] p-5 sm:p-6 md:p-7 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black/10 dark:border-white/10 shrink-0 overflow-y-auto max-h-full">
+                  <div>
+                    {/* Reduced Vertical Image Container */}
+                    <div className="relative w-full h-[180px] sm:h-[210px] md:h-[225px] rounded-2xl overflow-hidden shadow-sm border border-black/5 dark:border-white/10 bg-black/5 dark:bg-black/30">
+                      <Image
+                        src={activeProject.image}
+                        alt={activeProject.title}
+                        fill
+                        priority
+                        className="object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#ff6200] text-white font-mono font-bold text-[10px] uppercase tracking-wider shadow-sm">
+                          {activeProject.domainLabel}
+                        </span>
+                        <h3 className="text-white text-base sm:text-lg font-bold mt-1 drop-shadow-md line-clamp-1">
+                          {activeProject.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Technologies Used Placed Below The Image */}
+                    <div className="mt-4 sm:mt-5">
+                      <h4 className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-2 flex items-center gap-1.5">
+                        <Code2 className="w-3.5 h-3.5 text-[#ff6200]" />
+                        Technologies & Tools
+                      </h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeProject.technologies.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-2.5 py-1 rounded-md bg-white dark:bg-[#1f2630] text-[10.5px] font-mono font-bold uppercase tracking-wider text-black/80 dark:text-white/80 border border-black/10 dark:border-white/10 shadow-xs"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Role Badge on Left Footer */}
+                  <div className="mt-4 pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px] font-mono text-black/60 dark:text-white/60">
+                    <span className="font-bold text-black dark:text-white">Role</span>
+                    <span>{activeProject.role}</span>
+                  </div>
+                </div>
+
+                {/* RIGHT SIDE: Clean Content Only (Fits Naturally, Scrollable If Needed) */}
+                <div className="w-full md:w-[58%] p-5 sm:p-6 md:p-8 flex flex-col justify-between space-y-3.5 sm:space-y-4 overflow-y-auto max-h-full">
+                  {/* Header Info */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#ff6200]">
+                        Case Study
+                      </span>
+                      <span className="text-xs text-black/30 dark:text-white/30">•</span>
+                      <span className="text-[11px] font-semibold text-black/60 dark:text-white/60">
                         {activeProject.domainLabel}
                       </span>
-                      <h3 className="text-white text-base sm:text-lg font-bold mt-1 drop-shadow-md line-clamp-1">
-                        {activeProject.title}
-                      </h3>
+                    </div>
+
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight mb-2 text-black dark:text-white">
+                      {activeProject.title}
+                    </h2>
+
+                    <p className="text-xs sm:text-[13px] text-black/70 dark:text-white/70 leading-relaxed font-normal">
+                      {activeProject.summary}
+                    </p>
+                  </div>
+
+                  {/* Detailed Content Cards */}
+                  <div className="space-y-2.5 sm:space-y-3 flex-1">
+                    <div className="p-3 sm:p-3.5 rounded-xl bg-black/[0.025] dark:bg-white/[0.035] border border-black/5 dark:border-white/5">
+                      <h4 className="font-bold text-[11px] font-mono uppercase tracking-wider text-black/75 dark:text-white/75 mb-1 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#ff6200]" />
+                        Problem & Challenge
+                      </h4>
+                      <p className="text-xs text-black/80 dark:text-white/80 leading-relaxed">
+                        {activeProject.caseStudy.problem}
+                      </p>
+                    </div>
+
+                    <div className="p-3 sm:p-3.5 rounded-xl bg-black/[0.025] dark:bg-white/[0.035] border border-black/5 dark:border-white/5">
+                      <h4 className="font-bold text-[11px] font-mono uppercase tracking-wider text-black/75 dark:text-white/75 mb-1 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                        Engineering & Strategic Approach
+                      </h4>
+                      <p className="text-xs text-black/80 dark:text-white/80 leading-relaxed">
+                        {activeProject.caseStudy.approach}
+                      </p>
+                    </div>
+
+                    <div className="p-3 sm:p-3.5 rounded-xl bg-black/[0.025] dark:bg-white/[0.035] border border-black/5 dark:border-white/5">
+                      <h4 className="font-bold text-[11px] font-mono uppercase tracking-wider text-black/75 dark:text-white/75 mb-1 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        Impact & Results
+                      </h4>
+                      <p className="text-xs text-black/80 dark:text-white/80 leading-relaxed">
+                        {activeProject.caseStudy.result}
+                      </p>
                     </div>
                   </div>
-
-                  {/* Technologies Used Placed Below The Image */}
-                  <div className="mt-4 sm:mt-5">
-                    <h4 className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-2 flex items-center gap-1.5">
-                      <Code2 className="w-3.5 h-3.5 text-[#ff6200]" />
-                      Technologies & Tools
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {activeProject.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 rounded-md bg-white dark:bg-[#1f2630] text-[10.5px] font-mono font-bold uppercase tracking-wider text-black/80 dark:text-white/80 border border-black/10 dark:border-white/10 shadow-xs"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
                 </div>
-
-                {/* Role Badge on Left Footer */}
-                <div className="mt-4 pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px] font-mono text-black/60 dark:text-white/60">
-                  <span className="font-bold text-black dark:text-white">Role</span>
-                  <span>{activeProject.role}</span>
-                </div>
-              </div>
-
-              {/* RIGHT SIDE: Clean Content Only (No Number Cards, Fits Naturally without Scroll) */}
-              <div className="w-full md:w-[58%] p-5 sm:p-6 md:p-8 flex flex-col justify-between space-y-3.5 sm:space-y-4">
-                {/* Header Info */}
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#ff6200]">
-                      Case Study
-                    </span>
-                    <span className="text-xs text-black/30 dark:text-white/30">•</span>
-                    <span className="text-[11px] font-semibold text-black/60 dark:text-white/60">
-                      {activeProject.domainLabel}
-                    </span>
-                  </div>
-
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight mb-2 text-black dark:text-white">
-                    {activeProject.title}
-                  </h2>
-
-                  <p className="text-xs sm:text-[13px] text-black/70 dark:text-white/70 leading-relaxed font-normal">
-                    {activeProject.summary}
-                  </p>
-                </div>
-
-                {/* Detailed Content Cards */}
-                <div className="space-y-2.5 sm:space-y-3 flex-1">
-                  <div className="p-3 sm:p-3.5 rounded-xl bg-black/[0.025] dark:bg-white/[0.035] border border-black/5 dark:border-white/5">
-                    <h4 className="font-bold text-[11px] font-mono uppercase tracking-wider text-black/75 dark:text-white/75 mb-1 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff6200]" />
-                      Problem & Challenge
-                    </h4>
-                    <p className="text-xs text-black/80 dark:text-white/80 leading-relaxed">
-                      {activeProject.caseStudy.problem}
-                    </p>
-                  </div>
-
-                  <div className="p-3 sm:p-3.5 rounded-xl bg-black/[0.025] dark:bg-white/[0.035] border border-black/5 dark:border-white/5">
-                    <h4 className="font-bold text-[11px] font-mono uppercase tracking-wider text-black/75 dark:text-white/75 mb-1 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                      Engineering & Strategic Approach
-                    </h4>
-                    <p className="text-xs text-black/80 dark:text-white/80 leading-relaxed">
-                      {activeProject.caseStudy.approach}
-                    </p>
-                  </div>
-
-                  <div className="p-3 sm:p-3.5 rounded-xl bg-black/[0.025] dark:bg-white/[0.035] border border-black/5 dark:border-white/5">
-                    <h4 className="font-bold text-[11px] font-mono uppercase tracking-wider text-black/75 dark:text-white/75 mb-1 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                      Impact & Results
-                    </h4>
-                    <p className="text-xs text-black/80 dark:text-white/80 leading-relaxed">
-                      {activeProject.caseStudy.result}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 };

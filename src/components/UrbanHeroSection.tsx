@@ -45,10 +45,9 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
   onNavigateProjects,
   onNavigateAbout,
   heroImageSrc = '/kavin1.png',
-  insetThumbnailSrc = '/images/urban_sunglasses_inset.jpg',
+  insetThumbnailSrc = '/peak.png',
 }) => {
   const [mounted, setMounted] = useState(false);
-  const [isHoveringView, setIsHoveringView] = useState(false);
   const [loadingPercent, setLoadingPercent] = useState(0);
   const [isCurtainWiped, setIsCurtainWiped] = useState(false);
   const [curtainRemoved, setCurtainRemoved] = useState(false);
@@ -129,6 +128,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
   const imageY = useTransform(smoothMouseY, [-600, 600], [-10, 10]);
   const textX = useTransform(smoothMouseX, [-600, 600], [6, -6]);
   const textY = useTransform(smoothMouseY, [-600, 600], [4, -4]);
+
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -276,7 +276,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
       {/* ============================================================ */}
       {/* 2. CENTER HERO SUBJECT (Frame 00:01 - Scales up and glides) */}
       {/* ============================================================ */}
-      <div className="absolute left-1/2 -translate-x-1/2 -bottom-12 sm:-bottom-16 md:-bottom-20 lg:-bottom-24 h-[86%] sm:h-[92%] lg:h-[98%] max-h-[940px] w-full max-w-[780px] lg:max-w-[920px] xl:max-w-[1040px] z-10 flex items-end justify-center pointer-events-none">
+      <div className="absolute left-1/2 -translate-x-1/2 -bottom-12 sm:-bottom-16 md:-bottom-20 lg:-bottom-24 h-[86%] sm:h-[92%] lg:h-[98%] max-h-[940px] xl:max-h-[1050px] 2xl:max-h-[1150px] w-full max-w-[780px] lg:max-w-[920px] xl:max-w-[1060px] 2xl:max-w-[1180px] z-10 flex items-end justify-center pointer-events-none">
         <motion.div
           initial={{ opacity: 0, scale: 0.88, y: 50 }}
           animate={{
@@ -333,7 +333,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
             whileHover={{ scale: 1.08, rotate: 3 }}
             className="bg-[#FFEE00] text-black font-black text-lg sm:text-xl px-2.5 py-0.5 tracking-tight shadow-sm inline-block cursor-default"
           >
-            KAVIN-AI
+            MY JOURNEY
           </motion.div>
 
           {/* Description text - Fade & slide in */}
@@ -346,10 +346,10 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
             transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="text-[11px] sm:text-[12px] md:text-[12.5px] text-zinc-700 font-medium leading-[1.42] tracking-normal mt-3"
           >
-            Click VIEW and meet Kavin-AI — an interactive way to explore my journey, skills, projects, experience, and everything that shaped me.
+            Discover the eight phases of my journey, from my first steps in technology to the experiences that shaped my professional growth.
           </motion.p>
 
-          {/* Inset Model Thumbnail Card with VIEW Circle (Frame 00:02 -> 00:03) */}
+                              {/* Inset Luffy Window Card with VIEW Circle */}
           <motion.div
             initial={{ opacity: 0, scale: 0.7, y: 25 }}
             animate={{
@@ -358,24 +358,32 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
               y: isCurtainWiped ? 0 : 25,
             }}
             transition={{ type: 'spring', stiffness: 220, damping: 20, delay: 0.45 }}
-            className="relative mt-4 sm:mt-5 w-[105px] sm:w-[120px] h-[135px] sm:h-[155px] overflow-visible shadow-lg group cursor-pointer"
+            className="relative mt-4 sm:mt-5 w-[105px] sm:w-[120px] h-[135px] sm:h-[155px] overflow-visible shadow-md group cursor-pointer"
             onClick={() => {
               soundFx.playSelect();
-              onNavigateProjects?.();
+              if (onNavigateJourney) {
+                onNavigateJourney();
+              } else {
+                onNavigateProjects?.();
+              }
             }}
           >
-            {/* Thumbnail Box */}
-            <div className="relative w-full h-full overflow-hidden border border-zinc-300 bg-zinc-100 shadow-md">
-              <Image
-                src={insetThumbnailSrc}
-                alt="Fashion Sunglasses Inset"
-                fill
-                sizes="120px"
-                className="object-cover object-top group-hover:scale-108 transition-transform duration-500 filter brightness-95 group-hover:brightness-105"
-              />
+            {/* Window Container without dots */}
+            <div className="relative w-full h-full overflow-hidden border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-md flex items-end justify-center rounded-2xl transition-all duration-300 group-hover:border-zinc-300 dark:group-hover:border-zinc-700">
+              {/* Scaled Luffy Peeking Image */}
+              <div className="relative w-full aspect-[1024/525] flex items-end justify-center scale-[2.4] sm:scale-[2.6] origin-bottom mb-[-1px]">
+                <Image
+                  src={insetThumbnailSrc}
+                  alt="Luffy Peeking Character"
+                  width={1024}
+                  height={525}
+                  className="w-full h-auto object-contain object-bottom select-none pointer-events-none drop-shadow-xs"
+                  priority
+                />
+              </div>
             </div>
 
-            {/* Circular VIEW Badge Button Overlaid on Right Edge - Spins into place */}
+            {/* Circular VIEW Badge Button Overlaid on Right Top Corner */}
             <motion.div
               initial={{ opacity: 0, scale: 0, rotate: -90 }}
               animate={{
@@ -384,13 +392,11 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
                 rotate: isCurtainWiped ? 0 : -90,
               }}
               transition={{ type: 'spring', stiffness: 280, damping: 18, delay: 0.55 }}
-              onMouseEnter={() => setIsHoveringView(true)}
-              onMouseLeave={() => setIsHoveringView(false)}
               whileHover={{
                 scale: 1.15,
                 rotate: 10,
               }}
-              className="absolute -right-5 top-1/2 -translate-y-1/2 w-13 h-13 sm:w-14 sm:h-14 rounded-full border-2 border-[#E5C800] bg-white/95 backdrop-blur-xs flex items-center justify-center text-zinc-950 font-black text-[11px] sm:text-xs tracking-widest shadow-md group-hover:bg-[#FFEE00] group-hover:text-black transition-colors duration-300"
+              className="absolute -top-3 -right-3 sm:-top-3.5 sm:-right-4 w-12 h-12 sm:w-13 sm:h-13 rounded-full border-2 border-[#E5C800] bg-white/95 backdrop-blur-xs flex items-center justify-center text-zinc-950 font-black text-[10px] sm:text-[11px] tracking-widest shadow-md group-hover:bg-[#FFEE00] group-hover:text-black transition-colors duration-300 z-20"
             >
               <span>VIEW</span>
             </motion.div>
@@ -413,7 +419,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
                 opacity: isCurtainWiped ? 1 : 0,
               }}
               transition={{ duration: 0.85, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] font-black text-[#FFEE00] uppercase font-sans pb-1"
+              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] 2xl:text-[192px] font-black text-[#FFEE00] uppercase font-sans pb-1"
               style={{
                 WebkitTextStroke: '1.5px rgba(0,0,0,0.08)',
               }}
@@ -431,7 +437,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
                 opacity: isCurtainWiped ? 1 : 0,
               }}
               transition={{ duration: 0.85, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] font-black text-[#FFEE00] uppercase font-sans pb-1"
+              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] 2xl:text-[192px] font-black text-[#FFEE00] uppercase font-sans pb-1"
               style={{
                 WebkitTextStroke: '1.5px rgba(0,0,0,0.08)',
               }}
@@ -451,7 +457,11 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
               whileTap={{ scale: 0.95 }}
               onClick={() => {
                 soundFx.playSelect();
+                if (onNavigateJourney) {
+                onNavigateJourney();
+              } else {
                 onNavigateProjects?.();
+              }
               }}
               className="absolute -right-12 sm:-right-16 bottom-3 sm:bottom-4 z-25 pointer-events-auto hidden sm:flex items-center text-xs sm:text-[13px] font-bold tracking-widest text-zinc-900 hover:text-black uppercase cursor-pointer transition-colors"
             >
