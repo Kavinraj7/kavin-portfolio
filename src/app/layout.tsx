@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Dancing_Script, Cinzel, Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
+import { Great_Vibes, Cinzel, Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 
-const dancingScript = Dancing_Script({
+const greatVibes = Great_Vibes({
   subsets: ["latin"],
   variable: "--font-cursive",
-  weight: ["400", "700"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -58,7 +58,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dancingScript.variable} ${cinzel.variable} ${plusJakartaSans.variable} ${playfair.variable}`}
+      className={`${greatVibes.variable} ${cinzel.variable} ${plusJakartaSans.variable} ${playfair.variable}`}
       style={{ '--font-heading': 'var(--font-body)' } as React.CSSProperties}
     >
       <head>

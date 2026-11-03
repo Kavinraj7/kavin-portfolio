@@ -120,16 +120,18 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       <BeyondTheProfessionalMe />
 
       {/* 6. Universal Dark Theme Contact Footer */}
-      <ContactSection
-        onOpenTerminal={onOpenTerminal}
-        onNavigate={onNavigate || ((tab, sectionId) => {
-          if (typeof window !== 'undefined') {
-            window.dispatchEvent(
-              new CustomEvent('app-navigate', { detail: { tab, sectionId } })
-            );
-          }
-        })}
-      />
+      <div className="w-full bg-white dark:bg-[#09080F]">
+        <ContactSection
+          onOpenTerminal={onOpenTerminal}
+          onNavigate={onNavigate || ((tab, sectionId) => {
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(
+                new CustomEvent('app-navigate', { detail: { tab, sectionId } })
+              );
+            }
+          })}
+        />
+      </div>
     </div>
   );
 };

@@ -243,7 +243,7 @@ export default function Home() {
                   </div>
 
                   {/* Section 4: Get in Touch with us (Navigation & Contact Footer) */}
-                  <div className="w-full">
+                  <div className="w-full bg-[#FAFAFC] dark:bg-[#09080F]">
                     <ContactSection
                       onOpenTerminal={() => setIsTerminalOpen(true)}
                       onNavigate={handleNavigateTo}
@@ -326,7 +326,7 @@ export default function Home() {
                   </div>
 
                   {/* Universal Dark Theme Contact Footer */}
-                  <div className="w-full">
+                  <div className="w-full bg-[#FAFAFC] dark:bg-[#08070F]">
                     <ContactSection
                       onOpenTerminal={() => setIsTerminalOpen(true)}
                       onNavigate={handleNavigateTo}

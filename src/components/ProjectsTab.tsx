@@ -53,7 +53,7 @@ export const ProjectsTab: React.FC<ProjectsTabProps> = ({
       />
 
       {/* 3. Contact Footer */}
-      <div className="w-full">
+      <div className="w-full bg-white dark:bg-[#0c1015]">
         <ContactSection
           onOpenTerminal={onOpenTerminal}
           onNavigate={onNavigate || ((tab, sectionId) => {

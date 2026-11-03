@@ -122,15 +122,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   ];
 
   return (
-    <footer id="contact-section" className="relative w-full min-h-screen py-14 sm:py-20 px-4 sm:px-8 md:px-12 lg:px-16 bg-[#08070F] text-zinc-100 overflow-hidden border-t border-zinc-800/80 flex flex-col justify-center items-center">
+    <footer id="contact-section" className="relative z-30 w-full rounded-t-[2.25rem] sm:rounded-t-[2.75rem] bg-[#08070F] text-zinc-100 overflow-hidden pt-12 sm:pt-16 pb-8 sm:pb-10 px-5 sm:px-8 md:px-12 lg:px-16 flex flex-col items-center">
 
       {/* Ambient Violet / Gold Glow */}
-      <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[550px] bg-gradient-to-tr from-purple-500/15 via-[#FFEE00]/5 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
+      <div className="absolute -top-20 left-1/3 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-purple-500/15 via-[#FFEE00]/5 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
 
-      <div className="w-full max-w-[1360px] mx-auto flex flex-col gap-10 sm:gap-14 my-auto">
+      <div className="w-full max-w-[1360px] mx-auto flex flex-col gap-8 sm:gap-10">
 
         {/* Main 2-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
           {/* LEFT COLUMN: Contact Typography & Meta Information */}
           <motion.div
@@ -142,18 +142,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           >
             <div>
               {/* Header */}
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.08] font-sans">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-[1.1] font-sans">
                 Let's connect<br />
                 <span className="text-zinc-200">and grow</span>
               </h2>
 
               {/* Subtitle description */}
-              <p className="text-base sm:text-lg text-zinc-400 mt-4 leading-relaxed font-normal max-w-md">
+              <p className="text-sm sm:text-base text-zinc-400 mt-3 sm:mt-4 leading-relaxed font-normal max-w-md">
                 Open to exciting career opportunities, meaningful collaborations, and conversations with people building the future. I'd love to hear from you.
               </p>
 
               {/* Email Block */}
-              <div className="mt-6 sm:mt-8 group">
+              <div className="mt-5 sm:mt-6 group">
                 <div className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-zinc-400">
                   Email:
                 </div>
@@ -161,7 +161,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   <a
                     href="mailto:itskavinoffc@gmail.com"
                     onClick={() => soundFx.playSelect()}
-                    className="flex items-center gap-2.5 text-xl sm:text-2xl lg:text-3xl font-bold text-white hover:text-[#FFEE00] transition-colors cursor-pointer text-left break-all sm:break-normal group/email"
+                    className="flex items-center gap-2.5 text-lg sm:text-xl md:text-2xl font-bold text-white hover:text-[#FFEE00] transition-colors cursor-pointer text-left break-all sm:break-normal group/email"
                     title="Compose email to itskavinoffc@gmail.com"
                   >
                     <span>itskavinoffc@gmail.com</span>
@@ -195,14 +195,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 lg:gap-12">
               {/* Column 1: SITEMAP */}
               <div>
-                <h3 className="text-base sm:text-lg font-bold tracking-[0.14em] text-white uppercase mb-6 sm:mb-7 font-sans">
+                <h3 className="text-xs sm:text-sm font-bold tracking-[0.14em] text-zinc-400 uppercase mb-4 sm:mb-5 font-sans">
                   SITEMAP
                 </h3>
 
-                <div className="flex flex-col space-y-4 sm:space-y-4.5">
+                <div className="flex flex-col space-y-3 sm:space-y-3.5">
                   <button
                     onClick={() => handleNavClick('projects', 'works-showcase')}
-                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-base sm:text-lg font-medium transition-colors cursor-pointer group text-left w-fit"
+                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-sm sm:text-base font-medium transition-colors cursor-pointer group text-left w-fit"
                   >
                     <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 stroke-[2.2]" />
                     <span>My Works</span>
@@ -210,7 +210,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
                   <button
                     onClick={() => handleNavClick('journey', 'experience')}
-                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-base sm:text-lg font-medium transition-colors cursor-pointer group text-left w-fit"
+                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-sm sm:text-base font-medium transition-colors cursor-pointer group text-left w-fit"
                   >
                     <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 stroke-[2.2]" />
                     <span>My Experience</span>
@@ -218,7 +218,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
                   <button
                     onClick={() => handleNavClick('about', 'about-details')}
-                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-base sm:text-lg font-medium transition-colors cursor-pointer group text-left w-fit"
+                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-sm sm:text-base font-medium transition-colors cursor-pointer group text-left w-fit"
                   >
                     <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 stroke-[2.2]" />
                     <span>My Skills</span>
@@ -226,7 +226,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
                   <button
                     onClick={() => handleNavClick('about', 'my-education')}
-                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-base sm:text-lg font-medium transition-colors cursor-pointer group text-left w-fit"
+                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-sm sm:text-base font-medium transition-colors cursor-pointer group text-left w-fit"
                   >
                     <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 stroke-[2.2]" />
                     <span>My Education</span>
@@ -234,7 +234,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
                   <button
                     onClick={() => handleNavClick('journey', 'achievements-section')}
-                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-base sm:text-lg font-medium transition-colors cursor-pointer group text-left w-fit"
+                    className="flex items-center gap-2 text-zinc-300 hover:text-white text-sm sm:text-base font-medium transition-colors cursor-pointer group text-left w-fit"
                   >
                     <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 stroke-[2.2]" />
                     <span>My Achievements</span>
@@ -249,7 +249,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       onClick={() => soundFx.playSelect()}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.96 }}
-                      className="inline-flex items-center gap-2.5 px-6 py-2.5 sm:py-3 rounded-full bg-white hover:bg-zinc-200 text-black font-semibold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all cursor-pointer group active:scale-95"
+                      className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white hover:bg-zinc-200 text-black font-semibold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all cursor-pointer group active:scale-95"
                       title="View My Resume"
                     >
                       <FileText className="w-4 h-4 text-zinc-900" />
@@ -264,11 +264,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
               {/* Column 2: SOCIAL MEDIA */}
               <div>
-                <h3 className="text-base sm:text-lg font-bold tracking-[0.14em] text-white uppercase mb-6 sm:mb-7 font-sans">
+                <h3 className="text-xs sm:text-sm font-bold tracking-[0.14em] text-zinc-400 uppercase mb-4 sm:mb-5 font-sans">
                   SOCIAL MEDIA
                 </h3>
 
-                <div className="flex flex-col space-y-4 sm:space-y-4.5">
+                <div className="flex flex-col space-y-3 sm:space-y-3.5">
                   {socialLinks.map((item) => {
                     const Icon = item.icon;
                     const isHovered = hoveredSocial === item.name;
@@ -282,7 +282,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         onMouseEnter={() => setHoveredSocial(item.name)}
                         onMouseLeave={() => setHoveredSocial(null)}
                         onClick={() => soundFx.playSelect()}
-                        className={`relative flex items-center w-fit text-zinc-300 ${item.hoverColor} text-base sm:text-lg font-medium transition-colors cursor-pointer group text-left py-1`}
+                        className={`relative flex items-center w-fit text-zinc-300 ${item.hoverColor} text-sm sm:text-base font-medium transition-colors cursor-pointer group text-left py-0.5`}
                       >
                         <div className="flex items-center gap-2">
                           <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 stroke-[2.2]" />
@@ -304,7 +304,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                                 {/* Pointer triangle pointing towards wording */}
                                 <div className={`w-2 h-2 rotate-45 -mr-1 z-10 ${item.brandBg}`} />
                                 <div
-                                  className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl ${item.brandBg} text-white flex items-center justify-center shadow-xl ${item.shadow} border border-white/20 shrink-0`}
+                                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-2xl ${item.brandBg} text-white flex items-center justify-center shadow-xl ${item.shadow} border border-white/20 shrink-0`}
                                 >
                                   <Icon className="w-5 h-5 fill-current" />
                                 </div>
@@ -328,21 +328,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="w-full flex items-center justify-start pt-8 sm:pt-10 border-t border-zinc-800/80"
+          className="w-full flex items-center justify-start pt-6 sm:pt-8 border-t border-zinc-800/80"
         >
           <motion.div
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
             onMouseEnter={() => soundFx.playHover()}
             onClick={() => soundFx.playSelect()}
-            className="group cursor-pointer select-none inline-flex items-baseline text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter font-sans"
+            className="group cursor-pointer select-none inline-flex items-baseline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter font-sans"
             title="Kavinraj M"
           >
             <span className="text-white group-hover:text-[#FFEE00] transition-colors duration-300 ease-out">
               Kavinraj
             </span>
-            <span className="text-[#FFEE00] group-hover:text-white ml-2 sm:ml-4 transition-colors duration-300 ease-out">
+            <span className="text-[#FFEE00] group-hover:text-white ml-2 sm:ml-3 transition-colors duration-300 ease-out">
               M
             </span>
           </motion.div>

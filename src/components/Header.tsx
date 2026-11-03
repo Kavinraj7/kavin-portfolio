@@ -90,13 +90,21 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Floating Top Nav (Completely Transparent) */}
       <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none bg-transparent border-none shadow-none transition-all duration-300">
         <div className="h-16 sm:h-20 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between">
-          {/* Left: Only User's Name */}
+          {/* Left: User's Name styled in cursive handwriting font from intro screen */}
           <div className="flex items-center gap-2 pointer-events-auto">
             <button
               onClick={() => handleTabClick('home')}
-              className="group flex items-center gap-1.5 font-display text-xl tracking-tighter uppercase font-black text-black dark:text-white cursor-pointer select-none hover:opacity-75 transition-opacity"
+              className="flex items-center gap-1.5 cursor-pointer select-none"
+              title="Home"
             >
-              <span>KAVIN</span>
+              <span
+                style={{
+                  fontFamily: "var(--font-cursive), 'Great Vibes', 'Dancing Script', cursive",
+                }}
+                className="text-2xl sm:text-3xl md:text-[2.1rem] font-normal leading-none text-black dark:text-white drop-shadow-sm"
+              >
+                Kavin
+              </span>
             </button>
           </div>
 
