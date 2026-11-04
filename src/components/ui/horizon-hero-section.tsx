@@ -100,16 +100,17 @@ export const Component = () => {
       antialias: true,
       alpha: false
     });
+    const isMobileView = typeof window !== 'undefined' && window.innerWidth < 768;
     refs.renderer.setSize(window.innerWidth, window.innerHeight);
-    refs.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    refs.renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobileView ? 1.5 : 2));
 
     // Post-processing
     refs.composer = new EffectComposer(refs.renderer);
     const renderPass = new RenderPass(refs.scene, refs.camera);
     refs.composer.addPass(renderPass);
 
-    // 1. Black Dust Particles Field (3 layers of depth)
-    const dustCount = 1800;
+    // 1. Black Dust Particles Field (adaptive particle count for silky mobile FPS)
+    const dustCount = isMobileView ? 650 : 1800;
     const darkPalette = [
       new THREE.Color('#000000'),
       new THREE.Color('#1F2937'),
@@ -376,7 +377,9 @@ export const Component = () => {
     }
 
     // Animation Loop: Physics-driven Parallax, Sway & Scroll Camera Flight
+    let isVisible = true;
     const animate = () => {
+      if (!isVisible) return;
       refs.animationId = requestAnimationFrame(animate);
       const time = Date.now() * 0.001;
 
@@ -449,6 +452,29 @@ export const Component = () => {
     animate();
     setIsReady(true);
 
+    // IntersectionObserver to pause WebGL render loop when section is scrolled out of viewport
+    let observer: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver !== 'undefined' && containerRef.current) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (!isVisible) {
+                isVisible = true;
+                if (refs.animationId) cancelAnimationFrame(refs.animationId);
+                refs.animationId = requestAnimationFrame(animate);
+              }
+            } else {
+              isVisible = false;
+              if (refs.animationId) cancelAnimationFrame(refs.animationId);
+            }
+          });
+        },
+        { threshold: 0.05 }
+      );
+      observer.observe(containerRef.current);
+    }
+
     const handleResize = () => {
       if (refs.camera && refs.renderer && refs.composer) {
         refs.camera.aspect = window.innerWidth / window.innerHeight;
@@ -461,6 +487,7 @@ export const Component = () => {
     window.addEventListener('resize', handleResize);
 
     return () => {
+      if (observer) observer.disconnect();
       if (refs.animationId) cancelAnimationFrame(refs.animationId);
       window.removeEventListener('resize', handleResize);
 

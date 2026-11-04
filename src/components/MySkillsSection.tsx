@@ -213,7 +213,7 @@ export const MySkillsSection: React.FC = () => {
       </div>
 
       {/* Main Interactive Stage */}
-      <div className="relative z-10 w-full max-w-6xl lg:max-w-7xl mx-auto h-[580px] sm:h-[620px] md:h-[660px] lg:h-[680px]">
+      <div className="relative z-10 w-full max-w-6xl lg:max-w-7xl mx-auto h-auto min-h-[580px] md:h-[660px] lg:h-[680px]">
         <AnimatePresence mode="wait">
           {!isCombined ? (
             /* ============================================================
@@ -227,7 +227,7 @@ export const MySkillsSection: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.99 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="w-full h-full grid grid-cols-1 md:grid-cols-12 grid-rows-2 gap-4 md:gap-5 lg:gap-6"
+              className="w-full h-full grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-4 md:gap-5 lg:gap-6"
             >
               {/* 1. Software Developer: Expanded Width (Col span 8, Row span 1) */}
               <div className="md:col-span-8 h-full p-6 sm:p-7 md:p-8 lg:p-9 rounded-3xl bg-zinc-50/90 dark:bg-zinc-900/80 hover:bg-zinc-100/90 dark:hover:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group relative overflow-hidden backdrop-blur-md">
@@ -490,7 +490,7 @@ export const MySkillsSection: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.99 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="w-full h-full rounded-3xl bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] p-6 sm:p-8 md:p-9 flex flex-col justify-between backdrop-blur-2xl"
+              className="w-full h-auto min-h-[580px] md:h-full rounded-3xl bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-800 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] p-5 sm:p-8 md:p-9 flex flex-col justify-between backdrop-blur-2xl overflow-y-auto"
             >
               {/* 1. Top Navigation Strip: Domain names at header with #FFEE00 hover & active */}
               <div className="w-full flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-zinc-200 dark:border-zinc-800">

@@ -217,9 +217,14 @@ function paintMethodologyPrints(): PaperCurlItem[] {
 
 export const HowIWorkSection: React.FC = () => {
   const [items, setItems] = useState<PaperCurlItem[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setItems(paintMethodologyPrints());
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   return (
@@ -245,14 +250,14 @@ export const HowIWorkSection: React.FC = () => {
           {items.length > 0 ? (
             <PaperCurlCarousel
               items={items}
-              height="650px"
+              height={isMobile ? "380px" : "620px"}
               autoplay={4000}
               loop={true}
               paper="#EDEEE9"
               rail={true}
             />
           ) : (
-            <div className="w-full h-[650px] flex items-center justify-center text-zinc-400 font-mono text-sm">
+            <div className="w-full h-[380px] sm:h-[620px] flex items-center justify-center text-zinc-400 font-mono text-sm">
               Loading methodology sheets...
             </div>
           )}

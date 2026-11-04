@@ -115,7 +115,7 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
           <motion.div
             whileHover={{ scale: 1.08 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 xl:w-36 xl:h-36 2xl:w-40 2xl:h-40 rounded-full bg-white text-black flex items-center justify-center shadow-[0_6px_25px_rgba(0,0,0,0.12)] border-3 sm:border-4 border-black cursor-pointer group"
+            className="relative w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 xl:w-36 xl:h-36 2xl:w-40 2xl:h-40 rounded-full bg-white text-black flex items-center justify-center shadow-[0_6px_25px_rgba(0,0,0,0.12)] border-2 sm:border-4 border-black cursor-pointer group"
           >
             {/* Rotating SVG Perimeter Text */}
             <svg className="absolute inset-0 w-full h-full animate-[spin_24s_linear_infinite]" viewBox="0 0 140 140">
@@ -133,7 +133,7 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
 
             {/* Center Core Badge */}
             <div className="text-center z-10 flex flex-col items-center justify-center select-none px-2">
-              <span className="font-mono font-black text-[10px] sm:text-xs xl:text-sm tracking-wider uppercase text-black group-hover:text-yellow-600 transition-colors">
+              <span className="font-mono font-black text-[7.5px] sm:text-xs xl:text-sm tracking-wider uppercase text-black group-hover:text-yellow-600 transition-colors">
                 PERSPECTIVES
               </span>
             </div>
@@ -157,7 +157,7 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
                   key={card.id}
                   onMouseEnter={() => setHoveredCardId(card.id)}
                   onMouseLeave={() => setHoveredCardId(null)}
-                  className={`relative w-[155px] sm:w-[285px] md:w-[330px] lg:w-[375px] xl:w-[425px] 2xl:w-[465px] min-h-[142px] sm:min-h-[154px] md:min-h-[165px] lg:min-h-[175px] xl:min-h-[182px] 2xl:min-h-[192px] p-3.5 sm:p-4 lg:p-4.5 xl:p-5 2xl:p-5.5 rounded-2xl sm:rounded-3xl bg-white border-2 transition-all duration-300 flex flex-col justify-start group cursor-pointer ${isHovered
+                  className={`relative w-[calc(50%-8px)] sm:w-[285px] md:w-[330px] lg:w-[375px] xl:w-[425px] 2xl:w-[465px] min-h-[142px] sm:min-h-[154px] md:min-h-[165px] lg:min-h-[175px] xl:min-h-[182px] 2xl:min-h-[192px] p-2.5 sm:p-4 lg:p-4.5 xl:p-5 2xl:p-5.5 rounded-2xl sm:rounded-3xl bg-white border-2 transition-all duration-300 flex flex-col justify-start group cursor-pointer ${isHovered
                     ? 'border-yellow-400 shadow-[0_12px_28px_rgba(0,0,0,0.08)] scale-[1.02] z-30'
                     : 'border-black shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:border-yellow-400 z-10'
                     }`}
@@ -200,7 +200,7 @@ export const MoreThanOnePerspectiveSection: React.FC<MoreThanOnePerspectiveSecti
                   key={card.id}
                   onMouseEnter={() => setHoveredCardId(card.id)}
                   onMouseLeave={() => setHoveredCardId(null)}
-                  className={`relative w-[155px] sm:w-[285px] md:w-[330px] lg:w-[375px] xl:w-[425px] 2xl:w-[465px] min-h-[142px] sm:min-h-[154px] md:min-h-[165px] lg:min-h-[175px] xl:min-h-[182px] 2xl:min-h-[192px] p-3.5 sm:p-4 lg:p-4.5 xl:p-5 2xl:p-5.5 rounded-2xl sm:rounded-3xl bg-white border-2 transition-all duration-300 flex flex-col justify-start group cursor-pointer ${isHovered
+                  className={`relative w-[calc(50%-8px)] sm:w-[285px] md:w-[330px] lg:w-[375px] xl:w-[425px] 2xl:w-[465px] min-h-[142px] sm:min-h-[154px] md:min-h-[165px] lg:min-h-[175px] xl:min-h-[182px] 2xl:min-h-[192px] p-2.5 sm:p-4 lg:p-4.5 xl:p-5 2xl:p-5.5 rounded-2xl sm:rounded-3xl bg-white border-2 transition-all duration-300 flex flex-col justify-start group cursor-pointer ${isHovered
                     ? 'border-yellow-400 shadow-[0_12px_28px_rgba(0,0,0,0.08)] scale-[1.02] z-30'
                     : 'border-black shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:border-yellow-400 z-10'
                     }`}

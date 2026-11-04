@@ -167,12 +167,12 @@ function TunnelCard({ card, progress, pointer, total, stage }: TunnelCardProps) 
     >
       <div className="group relative flex flex-col items-center justify-center gap-2 sm:gap-2.5">
         {/* Floating Skill Icon Circle */}
-        <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-zinc-900/95 border-2 border-zinc-300/70 dark:border-zinc-700/80 flex items-center justify-center shadow-lg group-hover:scale-115 group-hover:border-zinc-900 dark:group-hover:border-white group-hover:shadow-2xl transition-all duration-300 backdrop-blur-md">
+        <div className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl sm:rounded-3xl bg-white dark:bg-zinc-900 border-2 border-zinc-300/80 dark:border-zinc-700/80 flex items-center justify-center shadow-lg group-hover:scale-115 group-hover:border-zinc-900 dark:group-hover:border-white group-hover:shadow-2xl transition-all duration-300">
           <Icon className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-zinc-900 dark:text-zinc-100 group-hover:text-black dark:group-hover:text-white transition-colors duration-300 group-hover:rotate-6" />
         </div>
 
         {/* Skill Name Pill */}
-        <div className="px-3 sm:px-3.5 py-1 rounded-full bg-zinc-950/85 dark:bg-zinc-900/90 border border-white/15 text-white backdrop-blur-md shadow-md group-hover:border-white/40 transition-colors duration-300">
+        <div className="px-3 sm:px-3.5 py-1 rounded-full bg-zinc-950 dark:bg-zinc-900 border border-white/15 text-white shadow-md group-hover:border-white/40 transition-colors duration-300">
           <span className="text-[11px] sm:text-xs md:text-sm font-black font-sans uppercase tracking-wider whitespace-nowrap">
             {card.item.name}
           </span>
@@ -222,7 +222,7 @@ export default function PerspectiveTunnelHero({ onViewAllSkills }: PerspectiveTu
     restDelta: 0.0001,
   });
 
-  const pointer = useCameraParallax(!reduce);
+  const pointer = useCameraParallax(!stage.isMobile && !reduce);
 
   // Central Anchor Typography animation
   const titleScale = useTransform(smoothProgress, [0, 0.45, 0.75, 1], [0.8, 1, 1.05, 1.1]);

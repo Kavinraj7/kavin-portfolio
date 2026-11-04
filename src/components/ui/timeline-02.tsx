@@ -251,6 +251,7 @@ export const Timeline = ({
 
     let wheelDeltaAccumulator = 0;
     let resetAccumulatorTimer: ReturnType<typeof setTimeout> | null = null;
+    let touchStartX = 0;
     let touchStartY = 0;
 
     const onWheel = (e: WheelEvent) => {
@@ -299,38 +300,43 @@ export const Timeline = ({
     };
 
     const onTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
     };
 
     const onTouchMove = (e: TouchEvent) => {
+      const touchCurrentX = e.touches[0].clientX;
       const touchCurrentY = e.touches[0].clientY;
-      const diff = touchStartY - touchCurrentY;
-      const currentIdx = activeIndexRef.current;
-      const threshold = 25;
-      const now = Date.now();
+      const diffX = touchStartX - touchCurrentX;
+      const diffY = touchStartY - touchCurrentY;
 
-      if (diff > threshold && currentIdx < items.length - 1) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (now - lastScrollTime.current > 240) {
-          lastScrollTime.current = now;
-          touchStartY = touchCurrentY;
-          setActiveIndex((prev) => Math.min(prev + 1, items.length - 1));
-        }
-      } else if (diff < -threshold && currentIdx > 0) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (now - lastScrollTime.current > 240) {
-          lastScrollTime.current = now;
-          touchStartY = touchCurrentY;
-          setActiveIndex((prev) => Math.max(prev - 1, 0));
+      // Allow natural vertical page scrolling on mobile!
+      // Only switch milestones on clear horizontal swipe without calling preventDefault.
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+        const currentIdx = activeIndexRef.current;
+        const now = Date.now();
+
+        if (diffX > 0 && currentIdx < items.length - 1) {
+          if (now - lastScrollTime.current > 260) {
+            lastScrollTime.current = now;
+            touchStartX = touchCurrentX;
+            touchStartY = touchCurrentY;
+            setActiveIndex((prev) => Math.min(prev + 1, items.length - 1));
+          }
+        } else if (diffX < 0 && currentIdx > 0) {
+          if (now - lastScrollTime.current > 260) {
+            lastScrollTime.current = now;
+            touchStartX = touchCurrentX;
+            touchStartY = touchCurrentY;
+            setActiveIndex((prev) => Math.max(prev - 1, 0));
+          }
         }
       }
     };
 
     el.addEventListener("wheel", onWheel, { passive: false });
     el.addEventListener("touchstart", onTouchStart, { passive: true });
-    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchmove", onTouchMove, { passive: true });
 
     return () => {
       if (resetAccumulatorTimer) clearTimeout(resetAccumulatorTimer);

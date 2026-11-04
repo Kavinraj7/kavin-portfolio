@@ -427,12 +427,12 @@ export const JourneyCardsSection: React.FC = () => {
                       {/* Phase 1 */}
                       <div
                         onClick={() => handleSelectPhase(0)}
-                        className="relative w-full h-full flex flex-col justify-start items-start p-4 sm:p-6 md:p-7 rounded-tl-[27px] sm:rounded-tl-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                        className="relative w-full h-full flex flex-col justify-start items-start p-2.5 sm:p-5 md:p-7 rounded-tl-[27px] sm:rounded-tl-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
                       >
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                        <span className="text-xs sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 1
                         </span>
-                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[9.5px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
                           {JOURNEY_PHASES_DATA[0].category}
                         </span>
                       </div>
@@ -440,12 +440,12 @@ export const JourneyCardsSection: React.FC = () => {
                       {/* Phase 2 */}
                       <div
                         onClick={() => handleSelectPhase(1)}
-                        className="relative w-full h-full flex flex-col justify-start items-start p-4 sm:p-6 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                        className="relative w-full h-full flex flex-col justify-start items-start p-2.5 sm:p-5 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
                       >
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                        <span className="text-xs sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 2
                         </span>
-                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[9.5px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
                           {JOURNEY_PHASES_DATA[1].category}
                         </span>
                       </div>
@@ -453,12 +453,12 @@ export const JourneyCardsSection: React.FC = () => {
                       {/* Phase 3 */}
                       <div
                         onClick={() => handleSelectPhase(2)}
-                        className="relative w-full h-full flex flex-col justify-start items-start p-4 sm:p-6 md:p-7 rounded-tr-[27px] sm:rounded-tr-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                        className="relative w-full h-full flex flex-col justify-start items-start p-2.5 sm:p-5 md:p-7 rounded-tr-[27px] sm:rounded-tr-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
                       >
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                        <span className="text-xs sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 3
                         </span>
-                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[9.5px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
                           {JOURNEY_PHASES_DATA[2].category}
                         </span>
                       </div>
@@ -466,12 +466,12 @@ export const JourneyCardsSection: React.FC = () => {
                       {/* Phase 8 */}
                       <div
                         onClick={() => handleSelectPhase(7)}
-                        className="relative w-full h-full flex flex-col justify-center items-start p-4 sm:p-6 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                        className="relative w-full h-full flex flex-col justify-center items-start p-2.5 sm:p-5 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
                       >
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                        <span className="text-xs sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 8
                         </span>
-                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[9.5px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
                           {JOURNEY_PHASES_DATA[7].category}
                         </span>
                       </div>
@@ -484,12 +484,12 @@ export const JourneyCardsSection: React.FC = () => {
                       {/* Phase 4 */}
                       <div
                         onClick={() => handleSelectPhase(3)}
-                        className="relative w-full h-full flex flex-col justify-center items-start p-4 sm:p-6 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                        className="relative w-full h-full flex flex-col justify-center items-start p-2.5 sm:p-5 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
                       >
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                        <span className="text-xs sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 4
                         </span>
-                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[9.5px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
                           {JOURNEY_PHASES_DATA[3].category}
                         </span>
                       </div>
@@ -497,12 +497,12 @@ export const JourneyCardsSection: React.FC = () => {
                       {/* Phase 7 */}
                       <div
                         onClick={() => handleSelectPhase(6)}
-                        className="relative w-full h-full flex flex-col justify-end items-start p-4 sm:p-6 md:p-7 rounded-bl-[27px] sm:rounded-bl-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                        className="relative w-full h-full flex flex-col justify-end items-start p-2.5 sm:p-5 md:p-7 rounded-bl-[27px] sm:rounded-bl-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
                       >
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                        <span className="text-xs sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 7
                         </span>
-                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[9.5px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
                           {JOURNEY_PHASES_DATA[6].category}
                         </span>
                       </div>
@@ -510,12 +510,12 @@ export const JourneyCardsSection: React.FC = () => {
                       {/* Phase 6 */}
                       <div
                         onClick={() => handleSelectPhase(5)}
-                        className="relative w-full h-full flex flex-col justify-end items-start p-4 sm:p-6 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                        className="relative w-full h-full flex flex-col justify-end items-start p-2.5 sm:p-5 md:p-7 group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
                       >
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                        <span className="text-xs sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 6
                         </span>
-                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[9.5px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
                           {JOURNEY_PHASES_DATA[5].category}
                         </span>
                       </div>
@@ -523,12 +523,12 @@ export const JourneyCardsSection: React.FC = () => {
                       {/* Phase 5 */}
                       <div
                         onClick={() => handleSelectPhase(4)}
-                        className="relative w-full h-full flex flex-col justify-end items-start p-4 sm:p-6 md:p-7 rounded-br-[27px] sm:rounded-br-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
+                        className="relative w-full h-full flex flex-col justify-end items-start p-2.5 sm:p-5 md:p-7 rounded-br-[27px] sm:rounded-br-[35px] group cursor-pointer hover:bg-[#FFEE00]/15 dark:hover:bg-[#FFEE00]/10 transition-colors duration-200"
                       >
-                        <span className="text-sm sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
+                        <span className="text-xs sm:text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-yellow-600 dark:group-hover:text-[#FFEE00] transition-colors">
                           Phase 5
                         </span>
-                        <span className="text-[11px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
+                        <span className="text-[9.5px] sm:text-xs text-zinc-500 font-medium line-clamp-1 mt-0.5">
                           {JOURNEY_PHASES_DATA[4].category}
                         </span>
                       </div>
@@ -554,7 +554,7 @@ export const JourneyCardsSection: React.FC = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -16, scale: 0.97 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="relative w-full max-w-[1140px] flex flex-col bg-white dark:bg-[#13111C] rounded-[26px] sm:rounded-[34px] p-4 sm:p-6 md:p-7 lg:p-8 border border-zinc-200/90 dark:border-zinc-800 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)] overflow-hidden"
+                className="relative w-full max-w-[1140px] flex flex-col bg-white dark:bg-[#13111C] rounded-[26px] sm:rounded-[34px] p-2.5 sm:p-5 md:p-7 lg:p-8 border border-zinc-200/90 dark:border-zinc-800 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.1)] dark:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)] overflow-hidden"
               >
                 {/* Soft Ambient Radial Glow */}
                 <div
@@ -575,7 +575,7 @@ export const JourneyCardsSection: React.FC = () => {
                   </button>
 
                   {/* Phase Stepper Pills (Click any phase to jump) */}
-                  <div className="flex items-center gap-1.5 overflow-x-auto py-1">
+                  <div className="flex items-center gap-1.5 overflow-x-auto max-w-full no-scrollbar py-1">
                     {JOURNEY_PHASES_DATA.map((p, pIdx) => (
                       <button
                         key={p.id}

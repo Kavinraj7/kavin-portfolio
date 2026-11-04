@@ -548,7 +548,7 @@ export const WorksShowcaseSection: React.FC<WorksShowcaseSectionProps> = ({
         </h2>
 
         {/* Center Floating Pill Domain Segment Switcher (All 5 Domains) */}
-        <div className="bg-[#f0f3f5] dark:bg-[#161c24] p-1.5 rounded-full inline-flex items-center gap-1 sm:gap-1.5 shadow-inner border border-black/5 dark:border-white/10 max-w-full overflow-x-auto scrollbar-none">
+        <div className="bg-[#f0f3f5] dark:bg-[#161c24] p-1.5 rounded-full inline-flex items-center gap-1 sm:gap-1.5 shadow-inner border border-black/5 dark:border-white/10 max-w-full overflow-x-auto scrollbar-none touch-pan-x">
           {SHOWCASE_DOMAINS.map((domain) => {
             const isActive = selectedDomain === domain.key;
             const Icon = domain.icon;
@@ -692,7 +692,7 @@ export const WorksShowcaseSection: React.FC<WorksShowcaseSectionProps> = ({
                 exit={{ opacity: 0, scale: 0.95, y: 15 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-4xl xl:max-w-5xl max-h-[90vh] max-h-[90dvh] bg-white dark:bg-[#10141a] text-black dark:text-white rounded-[26px] sm:rounded-[30px] shadow-2xl overflow-hidden border border-black/10 dark:border-white/10 z-10 flex flex-col md:flex-row my-auto"
+                className="relative w-full max-w-4xl xl:max-w-5xl max-h-[92vh] max-h-[92dvh] bg-white dark:bg-[#10141a] text-black dark:text-white rounded-[24px] sm:rounded-[30px] shadow-2xl overflow-y-auto md:overflow-hidden border border-black/10 dark:border-white/10 z-10 flex flex-col md:flex-row my-auto"
               >
                 {/* Close Button */}
                 <button
@@ -707,7 +707,7 @@ export const WorksShowcaseSection: React.FC<WorksShowcaseSectionProps> = ({
                 <div className="relative w-full md:w-[42%] bg-[#edf2f4] dark:bg-[#151a22] p-5 sm:p-6 md:p-7 flex flex-col justify-between border-b md:border-b-0 md:border-r border-black/10 dark:border-white/10 shrink-0 overflow-y-auto max-h-full">
                   <div>
                     {/* Reduced Vertical Image Container */}
-                    <div className="relative w-full h-[180px] sm:h-[210px] md:h-[225px] rounded-2xl overflow-hidden shadow-sm border border-black/5 dark:border-white/10 bg-black/5 dark:bg-black/30">
+                    <div className="relative w-full h-[140px] sm:h-[190px] md:h-[225px] rounded-2xl overflow-hidden shadow-sm border border-black/5 dark:border-white/10 bg-black/5 dark:bg-black/30">
                       <Image
                         src={activeProject.image}
                         alt={activeProject.title}

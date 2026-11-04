@@ -62,7 +62,7 @@ export const ThingsThatShapedMeSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="lg:col-span-2 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-8 sm:p-10 flex flex-col items-center justify-center text-center shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 min-h-[300px]"
+            className="lg:col-span-2 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center text-center shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 min-h-[300px]"
           >
             {/* 100% Badge with Hand-Drawn / Sleek Oval Outline */}
             <div className="relative flex items-center justify-center mb-8">
@@ -110,7 +110,7 @@ export const ThingsThatShapedMeSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="lg:col-span-2 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-8 sm:p-10 flex flex-col items-center justify-center text-center shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 min-h-[300px]"
+            className="lg:col-span-2 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center text-center shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 min-h-[300px]"
           >
             {/* Circular Fingerprint Icon Container with Laser Scan Line */}
             <div className="w-24 h-24 rounded-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 flex items-center justify-center relative overflow-hidden mb-6 shadow-xs">
@@ -144,7 +144,7 @@ export const ThingsThatShapedMeSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-8 sm:p-10 flex flex-col justify-between text-center shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 min-h-[300px]"
+            className="lg:col-span-2 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-6 sm:p-8 md:p-10 flex flex-col justify-between text-center shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 min-h-[300px]"
           >
             {/* Top Download Metric & Wave Graphic */}
             <div className="w-full flex flex-col">
@@ -193,7 +193,7 @@ export const ThingsThatShapedMeSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.25 }}
-            className="lg:col-span-3 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-7 sm:p-9 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300"
+            className="lg:col-span-3 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-5 sm:p-7 md:p-9 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300"
           >
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center w-full">
 
@@ -248,7 +248,7 @@ export const ThingsThatShapedMeSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="lg:col-span-3 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-7 sm:p-9 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300"
+            className="lg:col-span-3 bg-white dark:bg-[#12111A] border border-zinc-200/80 dark:border-zinc-800/80 rounded-[30px] p-5 sm:p-7 md:p-9 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_35px_-5px_rgba(0,0,0,0.5)] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300"
           >
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center w-full">
 

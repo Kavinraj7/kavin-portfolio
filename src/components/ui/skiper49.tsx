@@ -54,11 +54,17 @@ const Carousel_003 = ({
   .Carousal_003 .swiper-slide {
     background-position: center;
     background-size: cover;
-    width: 300px;
-    height: 360px;
+    width: 250px;
+    height: 320px;
     border-radius: 1.25rem;
     overflow: hidden;
     box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.25);
+  }
+  @media (min-width: 640px) {
+    .Carousal_003 .swiper-slide {
+      width: 300px;
+      height: 360px;
+    }
   }
 
   .Carousal_003 .swiper-pagination {

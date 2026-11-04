@@ -223,7 +223,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
       {/* ============================================================ */}
       <div
         style={{ transform: 'none' }}
-        className="absolute left-8 sm:left-12 md:left-16 lg:left-20 xl:left-24 top-20 sm:top-24 md:top-28 z-20 flex flex-col items-start select-none pointer-events-auto"
+        className="absolute left-4 sm:left-12 md:left-16 lg:left-20 xl:left-24 top-16 sm:top-24 md:top-28 z-20 flex flex-col items-start select-none pointer-events-auto"
       >
         <motion.div style={{ x: textX, y: textY }} className="flex flex-col items-start">
           {/* SKU Number */}
@@ -318,7 +318,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
       {/* ============================================================ */}
       <div
         style={{ transform: 'none' }}
-        className="absolute right-8 sm:right-12 md:right-16 lg:right-20 xl:right-24 top-20 sm:top-24 md:top-28 z-20 flex flex-col items-start max-w-[240px] sm:max-w-[270px] md:max-w-[290px] select-none pointer-events-auto"
+        className="absolute right-4 sm:right-12 md:right-16 lg:right-20 xl:right-24 top-16 sm:top-24 md:top-28 z-20 flex flex-col items-end md:items-start max-w-[150px] sm:max-w-[270px] md:max-w-[290px] select-none pointer-events-auto"
       >
         <motion.div style={{ x: textX, y: textY }} className="flex flex-col items-start w-full">
           {/* #2 Badge - Pop in with bounce (Frame 00:02) */}
@@ -344,7 +344,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
               x: isCurtainWiped ? 0 : 30,
             }}
             transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[11px] sm:text-[12px] md:text-[12.5px] text-zinc-700 font-medium leading-[1.42] tracking-normal mt-3"
+            className="hidden md:block text-[11px] sm:text-[12px] md:text-[12.5px] text-zinc-700 font-medium leading-[1.42] tracking-normal mt-3"
           >
             Discover the eight phases of my journey, from my first steps in technology to the experiences that shaped my professional growth.
           </motion.p>
@@ -419,7 +419,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
                 opacity: isCurtainWiped ? 1 : 0,
               }}
               transition={{ duration: 0.85, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] 2xl:text-[192px] font-black text-[#FFEE00] uppercase font-sans pb-1"
+              className="text-[34px] xs:text-[42px] sm:text-[76px] md:text-[110px] lg:text-[140px] xl:text-[168px] 2xl:text-[192px] font-black text-[#FFEE00] uppercase font-sans pb-1 tracking-tight"
               style={{
                 WebkitTextStroke: '1.5px rgba(0,0,0,0.08)',
               }}
@@ -437,7 +437,7 @@ export const UrbanHeroSection: React.FC<UrbanHeroSectionProps> = ({
                 opacity: isCurtainWiped ? 1 : 0,
               }}
               transition={{ duration: 0.85, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[54px] sm:text-[84px] md:text-[116px] lg:text-[144px] xl:text-[168px] 2xl:text-[192px] font-black text-[#FFEE00] uppercase font-sans pb-1"
+              className="text-[34px] xs:text-[42px] sm:text-[76px] md:text-[110px] lg:text-[140px] xl:text-[168px] 2xl:text-[192px] font-black text-[#FFEE00] uppercase font-sans pb-1 tracking-tight"
               style={{
                 WebkitTextStroke: '1.5px rgba(0,0,0,0.08)',
               }}

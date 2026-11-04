@@ -59,7 +59,7 @@ export const MinimalistHero = ({
   return (
     <div
       className={cn(
-        'relative flex h-screen min-h-[680px] w-full flex-col justify-between overflow-hidden bg-background px-6 sm:px-10 md:px-14 lg:px-20 pt-16 sm:pt-20 pb-4 sm:pb-6 font-sans transition-colors duration-300 select-none',
+        'relative flex min-h-[640px] md:h-screen md:min-h-[680px] w-full flex-col justify-between overflow-hidden bg-background px-4 sm:px-10 md:px-14 lg:px-20 pt-16 sm:pt-20 pb-4 sm:pb-6 font-sans transition-colors duration-300 select-none',
         className
       )}
     >
@@ -104,7 +104,7 @@ export const MinimalistHero = ({
           <motion.img
             src={imageSrc}
             alt={imageAlt}
-            className="relative z-10 h-[78vh] sm:h-[84vh] md:h-[88vh] lg:h-[90vh] max-h-[920px] w-auto max-w-none object-contain object-bottom drop-shadow-2xl pointer-events-none mb-0 pb-0 scale-105 sm:scale-110 lg:scale-115 translate-y-3 sm:translate-y-5 md:translate-y-7 origin-bottom"
+            className="relative z-10 h-[50vh] sm:h-[65vh] md:h-[88vh] lg:h-[90vh] max-h-[920px] w-auto max-w-none object-contain object-bottom drop-shadow-2xl pointer-events-none mb-0 pb-0 scale-105 sm:scale-110 lg:scale-115 translate-y-3 sm:translate-y-5 md:translate-y-7 origin-bottom"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
@@ -123,7 +123,7 @@ export const MinimalistHero = ({
           transition={{ duration: 0.6, delay: 0.35 }}
           className="z-20 order-3 md:order-3 md:col-span-4 flex items-center justify-center md:justify-start text-center md:text-left self-center my-auto py-4 pl-0 md:pl-2 overflow-visible"
         >
-          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.75rem] font-black text-foreground tracking-tighter leading-[0.86] select-none whitespace-nowrap">
+          <h1 className="text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[8.75rem] font-black text-foreground tracking-tighter leading-[0.88] select-none whitespace-nowrap">
             <span className="block whitespace-nowrap">{overlayText.part1}</span>
             <span className="block whitespace-nowrap">{overlayText.part2}</span>
           </h1>

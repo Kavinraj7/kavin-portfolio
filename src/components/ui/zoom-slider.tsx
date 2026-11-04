@@ -341,8 +341,10 @@ export function ZoomSliderComp({
 
     const state = stateRef.current;
     const loopWidth = images.length * cardStep;
+    let isVisible = true;
 
     const tick = () => {
+      if (!isVisible) return;
       if (
         !reduceMotion &&
         !state.isDragging &&
@@ -360,6 +362,14 @@ export function ZoomSliderComp({
           ? DRAG_LERP_FACTOR
           : LERP_FACTOR;
       state.current = lerp(state.current, state.target, lerpFactor);
+
+      const diff = Math.abs(state.target - state.current);
+      if (diff < 0.02 && !state.isDragging && Math.abs(state.velocity) < 0.01) {
+        state.current = state.target;
+        positionCards(state.current);
+        state.raf = null;
+        return;
+      }
 
       if (Math.abs(state.current - state.target) < 0.01) {
         const shift = Math.round(state.current / loopWidth) * loopWidth;
@@ -384,11 +394,19 @@ export function ZoomSliderComp({
       state.raf = requestAnimationFrame(tick);
     };
 
+    const wakeUp = () => {
+      if (!state.raf && isVisible) {
+        state.raf = requestAnimationFrame(tick);
+      }
+    };
+
     const onWheel = (event: WheelEvent) => {
       state.target -= event.deltaY * SCROLL_PER_PX;
+      wakeUp();
     };
 
     const beginDrag = (clientX: number, clientY: number) => {
+      wakeUp();
       state.isDragging = true;
       state.lastX = clientX;
       state.lastY = clientY;
@@ -405,6 +423,7 @@ export function ZoomSliderComp({
       const delta = rawDelta * direction;
 
       state.target += delta;
+      wakeUp();
       state.velocity = lerp(state.velocity, delta, 0.5);
       state.lastX = clientX;
       state.lastY = clientY;
@@ -439,7 +458,27 @@ export function ZoomSliderComp({
 
     state.raf = requestAnimationFrame(tick);
 
+    let observer: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver !== 'undefined' && stripRef.current) {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            isVisible = true;
+            wakeUp();
+          } else {
+            isVisible = false;
+            if (state.raf) {
+              cancelAnimationFrame(state.raf);
+              state.raf = null;
+            }
+          }
+        });
+      }, { threshold: 0.05 });
+      observer.observe(stripRef.current);
+    }
+
     return () => {
+      if (observer) observer.disconnect();
       if (state.raf) cancelAnimationFrame(state.raf);
       if (element) {
         element.removeEventListener('wheel', onWheel);
